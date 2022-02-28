@@ -4,46 +4,83 @@ import tracker from '../api/tracker'
 import { navigate } from '../navigationRef';
 const authReducer = (state,action) => {
   switch(action.type){
-
     case 'add_error':
       return {...state,errorMessage:action.payload}
-    case 'signup':
+    case 'signin':
       return {errorMessage:'',token:action.payload}
+    case 'clear_error':
+      return {...state, errorMessage:''}
+    case 'signout':
+      return {token:null, errorMessage:''}
     default:
       return state
   }
 }
 
-const signUp = (dispatch) => {
-  return async ({email,password}) => {
+const clearError = dispatch => () => {
+  dispatch({type:'clear_error'})
+}
+
+const signUp = dispatch => async ({username,email,password}) => {
 
     try {
-      const response = await tracker.post('/signup',{email,password})
+  //    console.log(email)
+      const response = await tracker.post('/signup',{username,email,password})
+     //console.log(response.data.token)
       await AsyncStorage.setItem('token',response.data.token)
-      dispatch({type:'signup',payload:response.data.token})
+     // console.log(response)
+      dispatch({type:'signin',payload:response.data.token})
       navigate('TrackList')
     }
     catch(error)
     {
+      //console.log(error)
       dispatch({type:'add_error',payload:'Something went wrong with SignUp'})
     }
   }
+
+const tryLocalSignin = dispatch => async ()=> {
+
+  const token = await AsyncStorage.getItem('token')
+  if(token)
+  {
+    dispatch({type:'signin',payload:token})
+    navigate('TrackList')
+  }
+  else{
+    navigate('Splash')
+  }
+
+
 }
 
-const signin = (dispatch) => {
-  return ({email,password}) => {
+const signout = dispatch => async ()=> {
+  await AsyncStorage.removeItem('token')
+  dispatch({type:'signout'})
+  navigate('loginFlow')
+}
+
+const signin = dispatch => async ({email,password}) => {
+  try{
+    const response = await tracker.post('/signin',{email,password})
+    await AsyncStorage.setItem('token',response.data.token)
+    dispatch({type:'signin',payload:response.data.token})
+    navigate('TrackList')
+  }
+  catch(error)
+  {
+    dispatch({
+      type:'add_error',
+      payload:'Something went wrong with sign in'
+    })
 
   }
 }
 
-const signout  = (dispatch) => {
-  return ({email}) => {
 
-  }
-}
 
 export const {Provider,Context} = createDataContext(
   authReducer,
-  {signUp,signin},
+  {signUp,signin,clearError,tryLocalSignin,signout},
   {token:null, errorMessage:''}
 )
