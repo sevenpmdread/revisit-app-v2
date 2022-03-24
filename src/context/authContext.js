@@ -28,6 +28,8 @@ const signUp = dispatch => async ({username,email,password}) => {
       const response = await tracker.post('/signup',{username,email,password})
      //console.log(response.data.token)
       await AsyncStorage.setItem('token',response.data.token)
+      await AsyncStorage.setItem('username',username)
+
      // console.log(response)
       dispatch({type:'signin',payload:response.data.token})
       navigate('TrackList')

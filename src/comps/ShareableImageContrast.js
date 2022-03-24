@@ -13,9 +13,12 @@ import {
   NotoSerifJP_900Black
 } from '@expo-google-fonts/noto-serif-jp'
 import * as Sharing from 'expo-sharing';
-const ShareableImageQuestion = ({text,question,color}) => {
+const ShareableImageContrast = ({prevanswer,newanswer,questionnew}) => {
   Sharing.isAvailableAsync().then((accepted)=>{console.log(accepted)})
-   text = text ? text : "I am waiting to disappear. I am tryingto devour my mind one project at atime. I understand too much, and feeltoo little, I am trying to rebuild my perspectives.I am trying to rebuild my perspectives. I am trying to build a sculpture out of time"
+   //var prevanswer = "I am waiting to disappear. I am tryingto devour my mind one project at atime. I understand too much, and feeltoo little, I am trying to rebuild my perspectives.I am trying to rebuild my perspectives. I am trying to build a sculpture out of time"
+   //var newanswer = "This is an answer text with a new type, this isThis is an answer text with a new type, this isThis is an answer text with a new type, this isThis is an answer tThis is an answer text with a new type, this isThis is an answer text with this isThis is an answer tThis is an answer text with a new type, this isThis is an answer text with this isThis is an answer tThis is an answer text with a new type"
+   //var questionnew = "What does it mean to be in love? Can you be with somebody for life and be happy?"
+//   text = text ? text : "I am waiting to disappear. I am tryingto devour my mind one project at atime. I understand too much, and feeltoo little, I am trying to rebuild my perspectives.I am trying to rebuild my perspectives. I am trying to build a sculpture out of time"
  // const [uri,setUri] = useState('')
   let [fontsLoaded] = useFonts({
     // "Intermedium": Inter_500Medium,
@@ -31,7 +34,7 @@ const ShareableImageQuestion = ({text,question,color}) => {
   const shareDummyImage = async() => {
     try {
       const uri = await captureRef(viewRef,{
-        format:"jpg",
+        format:"jpeg",
         quality:1,
       //  result:"base64"
       });
@@ -102,45 +105,60 @@ const ShareableImageQuestion = ({text,question,color}) => {
       </View>
       </Card>
      */}
-     <View style={{borderWidth:2,borderColor:color,padding:0,margin:12}}>
-    <ImageBackground  imageStyle={{borderRadius:0,borderWidth:0,opacity:1}} resizeMode= 'contain' source={require('../../assets/magcover.png')} style={{marginVertical:0,marginBottom:16,marginHorizontal:12, paddingHorizontal:0,paddingBottom:0,paddingTop:0}}>
+     <View style={{padding:0,margin:6,height:400}}>
+     <Text style={{marginTop:0,fontSize:12,color:"white",fontFamily:"Notoregular",opacity:1,padding:0,paddingTop:12,paddingLeft:135}}>108 days apart</Text>
+    <ImageBackground  imageStyle={{borderRadius:0,borderWidth:0,opacity:1}} resizeMode= 'contain' source={require('../../assets/greenmagcover2.png')} style={{marginVertical:0,marginBottom:16,marginHorizontal:12, paddingHorizontal:0,paddingBottom:0,paddingTop:0}}>
      <View style={{
        backgroundColor:"transparent",
-        height:350,
-      //  width:400,
-        margin:0,
-        textAlignVertical:"center",
+       height:280,
+       //width:400,
+        marginVertical:12,
+        marginHorizontal:6,
+
+       // textAlignVertical:"center",
         marginBottom:0,
 
         padding:20,
         }}>
         <View style={{flexDirection:"row"}}>
-        <View style={{width:135,flexDirection:"column",justifyContent:"space-between",height:275}}>
-          <Text style={{fontSize:16,color:"black",fontFamily:"Notoregular",textDecorationLine:"underline",width:130,marginTop:40,opacity:0.6}}>{question}</Text>
+        <View style={{width:135,flexDirection:"column",height:450,justifyContent:"flex-start"}}>
+          <Text style={{fontSize:10,color:"black",fontFamily:"Notoregular",textDecorationLine:"underline",width:130,marginTop:4,opacity:0.7}}>{questionnew}</Text>
+          <Text style={{fontSize:7.5,color:"black",fontFamily:"Notoregular",width:130,marginTop:0,opacity:0.7}}>{prevanswer}</Text>
+          <Text style={{fontSize:6,color:"black",fontFamily:"Notoregular",textAlign:"center",opacity:0.6,marginTop:56}}>16/11/21</Text>
             <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:0,textAlignVertical:"bottom",alignSelf:"stretch",alignItems:"baseline"}}>
-            <Text style={{marginTop:0,fontSize:6,color:"black",fontFamily:"Notoregular",opacity:0.7,textAlignVertical:"bottom"}}>Answered</Text>
-            <Text style={{marginTop:0,fontSize:6,color:"black",fontFamily:"Notoregular",opacity:0.7}}>23,002 times</Text>
+            {/* <Text style={{marginTop:0,fontSize:6,color:"black",fontFamily:"Notoregular",opacity:0.7,textAlignVertical:"bottom"}}>Answered</Text>
+            <Text style={{marginTop:0,fontSize:6,color:"black",fontFamily:"Notoregular",opacity:0.7}}>23,002 times</Text> */}
             </View>
         </View>
-        <View style={{width:135,marginTop:10,justifyContent:"space-between",height:264}}>
-        <Image
-      source={require('../../assets/quesright.png')}
-      resizeMode='center'
-      style={{height:140,width:180,opacity:0.6,marginTop:70,marginLeft:10}}
-      />
-          {/* <Text style={{fontSize:7.5,color:"black",fontFamily:"Notoregular",width:130,marginTop:0,opacity:0.7}}>{text}</Text> */}
-          {/* <Text style={{fontSize:6,color:"black",fontFamily:"Notoregular",width:130,marginTop:0,opacity:0.7,marginBottom:0,textDecorationLine:"underline"}}>by annon2993</Text> */}
-            <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:0,marginLeft:38,width:140}}>
+        <View style={{width:135,marginLeft:38,marginTop:10,justifyContent:"space-between",height:240}}>
+          <Text style={{fontSize:7.5,color:"white",fontFamily:"Notoregular",width:130,marginTop:0,opacity:0.9,marginBottom:0,paddingBottom:0}}>{newanswer}</Text>
+          <Text style={{fontSize:6,color:"white",fontFamily:"Notoregular",width:130,marginTop:0,opacity:0.9,marginBottom:0,textDecorationLine:"underline",padding:0}}>by annon2993</Text>
+          <Text style={{fontSize:6,color:"white",fontFamily:"Notoregular",textAlign:"center",opacity:0.8}}>04/03/22</Text>
+
+            {/* <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:0}}>
             <Text style={{marginTop:0,fontSize:4,color:"black",fontFamily:"Notoregular",opacity:0.8}}>REVISIT BY</Text>
             <Text style={{marginTop:0,fontSize:4,color:"black",fontFamily:"Notoregular",opacity:0.8}}>THESURREALSERVICE</Text>
-            </View>
+            </View> */}
         </View>
+
         </View>
 
 
      </View>
     </ImageBackground>
+    <View style={{flexDirection:"row"}}>
+    <View style={{flexDirection:"row",justifyContent:"space-between",width:155,paddingLeft:35,paddingTop:0,paddingBottom:25,marginBottom:0}}>
+    <Text style={{marginTop:0,fontSize:6,color:"white",fontFamily:"Notoregular",opacity:0.9,textAlignVertical:"bottom",padding:0}}>Answered</Text>
+    <Text style={{marginTop:0,fontSize:6,color:"white",fontFamily:"Notoregular",opacity:0.9}}>23,002 times</Text>
     </View>
+    <View style={{flexDirection:"row",justifyContent:"space-between",width:205,paddingLeft:65,paddingTop:0,paddingBottom:25,marginBottom:0}}>
+    <Text style={{marginTop:0,fontSize:6,color:"white",fontFamily:"Notoregular",opacity:0.9}}>Revisit by</Text>
+    <Text style={{marginTop:0,fontSize:6,color:"white",fontFamily:"Notoregular",opacity:0.9}}>TheSurrealService.com</Text>
+    </View>
+    </View>
+
+    </View>
+
       </View>
       <TouchableOpacity style={{padding:8,borderWidth:0,borderColor:"grey",width:75,marginLeft:18,marginBottom:8,borderRadius:12}} onPress={shareDummyImage}>
         <Text style={styles.sharebutton}>Share</Text>
@@ -150,7 +168,7 @@ const ShareableImageQuestion = ({text,question,color}) => {
   ) : <></>
 }
 
-export default ShareableImageQuestion
+export default ShareableImageContrast
 
 const styles = StyleSheet.create({
   sharebutton:{
@@ -239,12 +257,14 @@ const styles = StyleSheet.create({
     paddingTop:20
   },
   container:{
-    backgroundColor:"transparent",
+    backgroundColor:"black",
   //  flex:1,
     padding:0,
+    borderWidth:1,
+   borderColor:"white",
     margin:6,
     borderWidth:0,
-    //marginTop:200,
+    marginTop:200,
    // borderRadius:8,
   //  overflow:"hidden",
 

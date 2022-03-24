@@ -18,9 +18,10 @@ const CategoryDrillScreen = ({navigation}) => {
   //   "Intermedium": Inter_500Medium,
   //   "InterRegular":Inter_400Regular
   //  });
-  console.log("post",post)
+//  console.log("post",post)
 
    return post.item.type !== "more" ?  (
+
     <ScrollView  style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
     <View style={styles.container}>
     <View style={styles.header}>
@@ -32,7 +33,6 @@ const CategoryDrillScreen = ({navigation}) => {
             </Card>
             <View style={styles.questionrow}>
             <TouchableOpacity
-            activeOpacity={.7}
             tvParallaxProperties={{enabled:false}}
             style={styles.button}
 
@@ -51,8 +51,7 @@ const CategoryDrillScreen = ({navigation}) => {
      // scrollEventThrottle={16}
    //   snapToInterval={400}
       snapToAlignment ="start"
-          decelerationRate={0}
-          bounces={true}
+
           // onScrollBeginDrag={()=>
           // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
           // {useNativeDriver:true})}

@@ -5,23 +5,32 @@ import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { categoryanswers } from '../dummydata';
-//import { useFonts, Inter_500Medium,Inter_400Regular} from '@expo-google-fonts/inter';
+import { useFonts, Inter_500Medium,Inter_400Regular} from '@expo-google-fonts/inter';
 import posts from '../dummydata';
 import RenderCategoryAnswers from './RenderCategoryAnswers';
 import CategoryDrillScreen from './CategoryDrillScreen';
 const RenderCategoryfeed = ({post,navigation}) => {
-  // let [fontsLoaded] = useFonts({
-  //   "Intermedium": Inter_500Medium,
-  //   "InterRegular":Inter_400Regular
-  //  });
+  let [fontsLoaded] = useFonts({
+    "Intermedium": Inter_500Medium,
+    "InterRegular":Inter_400Regular
+   });
   console.log(navigation)
    return post.item.type !== "more" ?  (
     <View >
             <Card containerStyle={{marginVertical:0,marginBottom:2,marginHorizontal:0,backgroundColor:'transparent',borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingBottom:2,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
             <View>
-            <TouchableOpacity onPress={()=>navigation.navigate("CategoryDrill",{
-              post:post
-            })}>
+            <TouchableOpacity onPress={()=>
+            {
+             try {
+                navigation.navigate("CategoryDrill",{
+              post:post})
+             }
+             catch(err)
+             {
+               console.log(err)
+             }
+            }
+            }>
             <Text style={styles.questionText}>{post.item.question_text}</Text>
             </TouchableOpacity>
             </View>
@@ -29,8 +38,6 @@ const RenderCategoryfeed = ({post,navigation}) => {
 
             <View style={styles.questionrow}>
             <TouchableOpacity
-            activeOpacity={.7}
-            tvParallaxProperties={{enabled:false}}
             style={styles.button}
 
       >
@@ -49,7 +56,6 @@ const RenderCategoryfeed = ({post,navigation}) => {
    //   snapToInterval={400}
       snapToAlignment ="start"
           decelerationRate={0}
-          bounces={true}
           // onScrollBeginDrag={()=>
           // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
           // {useNativeDriver:true})}
@@ -58,7 +64,6 @@ const RenderCategoryfeed = ({post,navigation}) => {
       return <RenderCategoryAnswers post={item}/>}
       }
       keyExtractor={item => item.answer_id}
-      showsVerticalScrollIndicator={false}
       />
     </View>
   ) : (

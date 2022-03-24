@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useRef,useEffect} from 'react';
 import {
   View,
   Text,
@@ -22,9 +22,81 @@ import CategoryQuestion from '../comps/CategoryQuestions';
 import { quesdescs } from '../dummydata';
 import CardSpacer from '../comps/CardSpacer';
 import { withNavigation } from 'react-navigation'
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
 
 const NewHomeScreen = ({navigation}) => {
 
+
+async function schedulePushNotification() {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      icon:"./assets/notification-icon.png",
+      title: "I have created my own personal hell, one step at a time I have reversed into complete ...",
+      body: 'Would you like to update this response on "What are you going through right now?"',
+      data: { data: 'goes here' },
+    },
+    trigger: { seconds: 2 },
+  });
+}
+
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'Revisit',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
+}
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
@@ -34,10 +106,14 @@ const NewHomeScreen = ({navigation}) => {
   const {height} = Dimensions.get("screen");
   const height_logo = height * 0.28;
   return (
-    <ScrollView  style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView  style={{ flexGrow: 1 }} contentContainerStyle={{ flexGrow: 1 }} nestedScrollEnabled={true}>
     <View style={styles.container}>
     <View style={styles.header}>
+    <TouchableOpacity  onPress={async () => {
+          await schedulePushNotification();
+        }}>
     <Text style= {styles.headerTitle}>Hi, anon124!</Text>
+    </TouchableOpacity>
     <Feather name="bell" size={24} color="white" style={{marginTop:10}}/>
     </View>
     <Questionofday/>

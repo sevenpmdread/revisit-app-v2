@@ -1,4 +1,5 @@
-import React, {useContext} from 'react'
+import React, {useContext,useEffect} from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native'
 import {Button} from 'react-native-elements'
 import { Feather } from '@expo/vector-icons';
@@ -7,6 +8,12 @@ import NavSwap from './NavSwap';
 import { Context as AuthContext } from '../context/authContext'
 
 const AccountScreen = () => {
+
+  useEffect(() => {
+    const username = AsyncStorage.getItem('username')
+    console.log(AsyncStorage.getAllKeys())
+   },[AsyncStorage.getAllKeys()])
+
 
   const {signout} = useContext(AuthContext)
   return (
@@ -23,7 +30,7 @@ const AccountScreen = () => {
       resizeMode='contain'
       style={{height:140,width:180}}
       />
-      <Text style={styles.username}>adit-1anon0bu</Text>
+      <Text style={styles.username}></Text>
       </View>
       <View style={{flexDirection:'row',paddingBottom:8}}>
       <Button

@@ -9,7 +9,7 @@ import {
   Animated,
   StatusBar,
   Image,
-  ImageBackground,Button,
+  ImageBackground,Button,ScrollView,
   TouchableHighlight
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -40,24 +40,22 @@ const DATA = [
 ];
 const CategoryQuestion = ({type,desc,imagesrc,navigation}) => {
   const expanded = true;
-  const scrollX = useRef(new Animated.Value(expanded ? 1 : 0)).current
   // let [fontsLoaded] = useFonts({
   //   "Intermedium": Inter_500Medium,
   //   "InterRegular":Inter_400Regular
   //  });
   //console.log(fontsLoaded)
   const {height} = Dimensions.get("screen");
-const height_logo = height * 0.28;
 //   console.log(imagesrc,typeof imagesrc)
 //   console.log(require('../../assets/categorygrowth.png'))
 //  console.log(image)
  var image = type === 'Existential'? require('../../assets/categoryexistential.png') :  type === 'Confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'Growth' ?   require('../../assets/categorygrowth.png') : require('../../assets/categorypersonal.png')
-  console.log( type.toLowerCase())
+ // console.log( type.toLowerCase())
   const name = type.toLowerCase()
 
   return (
     <View>
-      <TouchableHighlight onPress={()=>navigation.navigate('Category')}>
+      <TouchableHighlight onPress={()=>{return navigation.navigate('Category')}}>
       <ImageBackground  imageStyle={{borderRadius:26,width:'auto',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',opacity:0.8}} resizeMode= 'cover' source={image} style={{marginVertical:0,marginBottom:16,marginHorizontal:0, paddingHorizontal:16,paddingBottom:16,paddingTop:12}}>
             <Text style={styles.qod}>{type}</Text>
             <Text style={styles.questionText}>{type} Questions</Text>
@@ -83,6 +81,7 @@ const height_logo = height * 0.28;
      <FlatList
      contentContainerStyle={{marginLeft:8}}
       horizontal={true}
+      nestedScrollEnabled={true}
       style={styles.feed}
        data = {categoryquestions}
      // scrollEventThrottle={16}

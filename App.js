@@ -1,3 +1,8 @@
+import 'react-native-gesture-handler';
+import {
+  BaseButton,
+  GestureHandlerRootView
+} from 'react-native-gesture-handler';
 import React from 'react'
 //import {createStackNavigator} from  '@react-navigation/stack'
 //import { NavigationContainer } from '@react-navigation/native';
@@ -31,6 +36,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import ShareableImage from './src/comps/ShareableImage';
 import ShareableImageMag from './src/comps/ShareableImageMag';
 import ShareableImageQuestion from './src/comps/ShareableImageQuestion';
+import ShareableImageContrast from './src/comps/ShareableImageContrast';
+import MainCreateScreen from './src/screens/MainCreateScreen';
+import CreateList from './src/comps/CreateList';
+import ShareableImageCard from './src/comps/ShareableImageCard';
+import ShareCardContrast from './src/comps/ShareCardContrast';
+import ShareCardQuestion from './src/comps/ShareCardQuestion';
+import ChooseBackgroundImage from './src/comps/ChooseBackground';
 //import { createStackNavigator } from '@react-navigation/stack';
 
 // const Stack = createStackNavigator();
@@ -58,10 +70,38 @@ import ShareableImageQuestion from './src/comps/ShareableImageQuestion';
 //const Stack = createStackNavigator();
 
 const switchNavigator = createSwitchNavigator({
-  //Share:ShareableImageQuestion,
-  //Category:CategoryScreen,
+ // Main:MainCreateScreen,
+  //Share:ShareCardQuestion,
+ // Category:CategoryScreen,
    // Share:ShareableImage,
-    ResolveAuth:loadingScreen,
+   //BackgroundImage:ChooseBackgroundImage,
+   ResolveAuth:loadingScreen,
+   createFlow: createStackNavigator({
+    MainCreate:{
+      screen:MainCreateScreen,
+      navigationOptions:{
+        headerTransparent:"true",
+        headerTintColor:'transparent',
+        color:'transparent',
+       //headerStyle:{backgroundColor:"grey"},
+       HeaderTitle:"Home"
+      }
+
+    },
+    Create:{
+      screen:CreateScreen,
+      navigationOptions:{
+        headerTransparent:"true",
+        headerTintColor:'transparent',
+        color:'transparent',
+       //headerStyle:{backgroundColor:"grey"},
+       HeaderTitle:"Home"
+      }
+    },
+    SignIn:NewSignInScreen,
+},navigationOptions = {
+    headerShown: false,
+  }),
     loginFlow: createStackNavigator({
         Splash:SplashScreen,
         SignUp:NewSignUpScreen,
@@ -114,8 +154,8 @@ const switchNavigator = createSwitchNavigator({
             <Image source={require('./assets/exploreicon.png')} resizeMode='center'/>
             ),
         }},
-        Create:{
-          screen: CreateScreen,
+        MainCreate:{
+          screen: MainCreateScreen,
           navigationOptions:{
           tabBarLabel:"Answer",
 
@@ -219,9 +259,6 @@ const switchNavigator = createSwitchNavigator({
         CategoryDrill:{
           screen: CategoryDrillScreen,
           navigationOptions:{
-            tabBarOptions:{
-
-            },
             headerTransparent:"true",
             headerTintColor:'white',
             color:'white',

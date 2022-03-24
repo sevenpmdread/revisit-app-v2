@@ -188,6 +188,15 @@ export var categoryanswers = [
     answer_text:"I can't even imagine a life lived without the guidance of an eternal creator, science has erorded faith to logic, but logic time and again has failed as an instrument to dismantle life",
      response_num:"3",
     pinned_num:"4",
+    contrast:{
+      prevanswer:{
+        date:"12/02/22",
+        answer:"I don't understand faith, it seems on it's exterior to be a coping mechanism or box for my ego,but there is also something elsuive which my teenage mind doesn't understand"
+      },
+      newanswer:{
+        date:"12/02/22",
+        answer:"This idea that someone who is wiser, all powerfull will alaways want the best for you, even when you don't want the best for yourself.I have made faith a malleable assett of mine, but it feels more intuitive now"}
+    },
     type:'existential'
 
 

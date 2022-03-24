@@ -1,4 +1,4 @@
-import React,{useRef} from 'react';
+import React,{isValidElement, useRef,useState} from 'react';
 import {
   View,
   Text,
@@ -23,17 +23,46 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { fonts } from 'react-native-elements/dist/config';
 import { categoryquestions } from '../dummydata';
 import RenderCategoryQuestions from './RenderCategoryQuestions';
-import RenderCategoryfeed from './RenderCategoryfeed';
-const Categoryfeed = ({type,desc,imagesrc,navigation}) => {
+import RenderCreateQuestions from './RenderCreateQuestions';
+//import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+];
+const CreateList = ({type,desc,imagesrc,navigation}) => {
+  const [visible,setVisible] = useState(false)
   const expanded = true;
+  const scrollX = useRef(new Animated.Value(expanded ? 1 : 0)).current
+  // let [fontsLoaded] = useFonts({
+  //   "Intermedium": Inter_500Medium,
+  //   "InterRegular":Inter_400Regular
+  //  });
+  //console.log(fontsLoaded)
+  const {height} = Dimensions.get("screen");
+const height_logo = height * 0.28;
+//   console.log(imagesrc,typeof imagesrc)
+//   console.log(require('../../assets/categorygrowth.png'))
+//  console.log(image)
  var image = type === 'Existential'? require('../../assets/categoryexistential.png') :  type === 'Confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'Growth' ?   require('../../assets/categorygrowth.png') : require('../../assets/categorypersonal.png')
-  console.log( type.toLowerCase())
+ // console.log( type.toLowerCase())
   const name = type.toLowerCase()
 
   return (
     <View>
-      <TouchableHighlight>
-      <ImageBackground  imageStyle={{borderRadius:26,width:'auto',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',opacity:0.8}} resizeMode= 'cover' source={image} style={{marginVertical:0,marginBottom:16,marginHorizontal:0, paddingHorizontal:16,paddingBottom:16,paddingTop:12}}>
+      <TouchableHighlight onPress={()=>{
+        console.log(visible)
+        return setVisible(!visible)}}>
+      <ImageBackground  imageStyle={{borderRadius:26,width:'auto',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',opacity:0.8,marginHorizontal:24}} resizeMode= 'cover' source={image} style={{marginVertical:0,marginBottom:16,marginHorizontal:0, paddingHorizontal:40,paddingBottom:16,paddingTop:12}}>
             <Text style={styles.qod}>{type}</Text>
             <Text style={styles.questionText}>{type} Questions</Text>
             <Text style={styles.questionsub}>{desc}</Text>
@@ -56,15 +85,22 @@ const Categoryfeed = ({type,desc,imagesrc,navigation}) => {
 
 
      <FlatList
-     contentContainerStyle={{marginLeft:8}}
+
+     contentContainerStyle={{marginLeft:8,display:visible ? "flex": "none"}}
+    // horizontal={true}
       style={styles.feed}
        data = {categoryquestions}
+     // scrollEventThrottle={16}
+   //   snapToInterval={400}
       snapToAlignment ="start"
           decelerationRate={0}
           bounces={true}
+          // onScrollBeginDrag={()=>
+          // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
+          // {useNativeDriver:true})}
       renderItem={(item)=>
-       {
-      return <RenderCategoryfeed navigation={navigation} post={item}/>}
+       {//console.log(item)
+       return visible ? <RenderCreateQuestions nav = {navigation} post={item}/> : <></>}
       }
       keyExtractor={item => item.question_id}
       showsVerticalScrollIndicator={false}
@@ -74,7 +110,7 @@ const Categoryfeed = ({type,desc,imagesrc,navigation}) => {
   );
 };
 
-export default Categoryfeed;
+export default CreateList;
 
 const styles = StyleSheet.create({
   feed: {

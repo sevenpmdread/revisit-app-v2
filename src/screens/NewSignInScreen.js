@@ -23,6 +23,7 @@ import { NavigationEvents } from 'react-navigation'
 
 const NewSignInScreen = ({navigation}) => {
   const {state,signin,clearError} = useContext(AuthContext)
+  console.log(state.errorMessage)
   const [username,setusername] = useState('')
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')

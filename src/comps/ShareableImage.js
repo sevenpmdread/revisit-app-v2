@@ -3,7 +3,6 @@ import { StyleSheet, Text, View,Image, ViewPropTypes,TouchableOpacity,Button } f
 import { Card } from 'react-native-elements'
 import {captureRef} from 'react-native-view-shot'
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
-import { share } from 'react-native-cq-share'
 import * as Sharing from 'expo-sharing';
 const ShareableImage = ({text,question}) => {
   Sharing.isAvailableAsync().then((accepted)=>{console.log(accepted)})

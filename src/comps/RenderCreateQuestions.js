@@ -7,28 +7,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { BottomSheet, ListItem } from 'react-native-elements';
 //import { ColorPicker } from 'react-native-color-picker'
 import { ColorPicker } from "react-native-btr";
-import * as ImagePicker from 'expo-image-picker';
 //import { useFonts, Inter_500Medium,Inter_400Regular} from '@expo-google-fonts/inter';
 import posts from '../dummydata';
 import ShareCardQuestion from './ShareCardQuestion';
 import ShareableImageQuestion from './ShareableImageQuestion';
-const RenderCategoryQuestions = ({post,nav}) => {
-  const [image, setImage] = useState(null);
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-      console.log("IMAGE -> ",image);
-    }
-  };
+const RenderCreateQuestions = ({post,nav}) => {
   const [selectedColor, setSelectedColor] = useState("#AC2929");
   function setColor(color) {
     setSelectedColor(color);
@@ -48,11 +31,18 @@ const RenderCategoryQuestions = ({post,nav}) => {
   //   "InterRegular":Inter_400Regular
   //  });
  // console.log(post)
-   return post.item.type !== "more" ?  (
+   return  (
     <View >
-            <Card containerStyle={{marginVertical:0,marginBottom:16,marginHorizontal:8,elevation:0,backgroundColor:'transparent',borderWidth:1,borderColor:'rgba(255, 255, 255, 0.2)',width:240,minHeight:265,borderRadius:16,paddingBottom:5,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
+            <Card  containerStyle={{marginVertical:0,marginBottom:16,marginHorizontal:24,elevation:0,backgroundColor:'transparent',borderWidth:1,borderColor:'rgba(255, 255, 255, 0.4)',minHeight:135,borderRadius:16,paddingBottom:5,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
             <View>
-            <Text style={styles.questionText}>{post.item.question_text}</Text>
+              <TouchableOpacity>
+            <Text style={styles.questionText} onPress={()=>
+      { console.log("Pressed")
+        return nav.navigate("Create",{
+        post:post
+      })}
+      }>{post.item.question_text}</Text>
+      </TouchableOpacity>
             <View style={styles.questionrow}>
                 <TouchableOpacity   onPress= {() => setIsVisible(true)}>
                 <Entypo name="share" size={20} color="white" style={{paddingRight:10}}/>
@@ -78,8 +68,9 @@ const RenderCategoryQuestions = ({post,nav}) => {
               <View style={{margin:0,padding:0}}>
              { l.title != "Cancel" ?
              <View>
-             <ColorPicker colors = {["#ffffff","#121212","#654A8A","#2B7644","#A46F31","#B43A6D","#443AB4","#179089"]} selectedColor={selectedColor} onSelect={setColor} />
-             <ShareCardQuestion textcolor = {selectedColor} sentimage={image} color={selectedColor} question={post.item.question_text}/>
+            <ColorPicker colors = {["#AC2929","#C8B32B","#654A8A","#2B7644","#A46F31","#B43A6D","#443AB4","#179089"]} selectedColor={selectedColor} onSelect={setColor} />
+
+             <ShareCardQuestion color={selectedColor} question={post.item.question_text}/>
             </View>
              :
              <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>}
@@ -89,27 +80,17 @@ const RenderCategoryQuestions = ({post,nav}) => {
 })}
       </BottomSheet>
     </View>
-  ) : (
-    <View >
-    <Card containerStyle={{marginVertical:0,marginBottom:16,marginHorizontal:8,elevation:5,backgroundColor:'black',borderWidth:1,borderColor:'rgba(255, 255, 255, 0.4)',width:240,minHeight:265,borderRadius:16,paddingBottom:5,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
-    <View>
-    <TouchableOpacity>
-    <Text style={styles.readmore}>{post.item.question_text}</Text>
-    </TouchableOpacity>
-    </View>
-    </Card>
-</View>
   )
 };
 
-export default RenderCategoryQuestions;
+export default RenderCreateQuestions;
 
 const styles = StyleSheet.create({
   cardfooter: {
     fontSize:10,
     paddingTop:3,
    // paddingRight:26,
-    paddingLeft:36,
+    paddingLeft:156,
    opacity:0.6,
     color:'white',
   // fontFamily:'InterRegular'

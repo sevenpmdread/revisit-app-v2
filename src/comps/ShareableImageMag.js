@@ -12,7 +12,6 @@ import {
   NotoSerifJP_700Bold,
   NotoSerifJP_900Black
 } from '@expo-google-fonts/noto-serif-jp'
-import { share } from 'react-native-cq-share'
 import * as Sharing from 'expo-sharing';
 const ShareableImageMag = ({text,question}) => {
   Sharing.isAvailableAsync().then((accepted)=>{console.log(accepted)})

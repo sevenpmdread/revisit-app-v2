@@ -1,31 +1,19 @@
 import React from 'react';
 import {
   View,
-  Text,
-  TouchableOpacity,
   Dimensions,
   StyleSheet,
   StatusBar,
   FlatList,
-  Image,
-  ImageBackground,Button,
-  SafeAreaView, ScrollView,
+ScrollView,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import {Entypo} from '@expo/vector-icons'
-import { Card, withTheme } from 'react-native-elements';
-import NavLink from '../comps/NavLink'
+
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
-import { fonts } from 'react-native-elements/dist/config';
-import Questionofday from '../comps/Questionofday';
-import CategoryQuestion from '../comps/CategoryQuestions';
-//import { quesdescs } from '../dummydata';
+
 import CardSpacer from '../comps/CardSpacer';
 import Categoryfeed from '../comps/CategoryPagefeed';
 
 const CategoryScreen = ({navigation}) => {
-
-
   const quesdescs = [
     {
       type:'Existential',
@@ -38,11 +26,8 @@ const CategoryScreen = ({navigation}) => {
     "InterRegular":Inter_400Regular,
     "InterSemi":Inter_600SemiBold
    });
-  // console.log(fontsLoaded)
-  const {height} = Dimensions.get("screen");
-const height_logo = height * 0.28;
   return (
-    <ScrollView  style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView>
     <View style={styles.container}>
     <View style={styles.header}>
     </View>
@@ -50,16 +35,12 @@ const height_logo = height * 0.28;
     <FlatList
     data={quesdescs}
     renderItem={(item)=>
-      {//console.log(item)
-    console.log("navigation -> ",navigation)
+      {
+
      return <Categoryfeed navigation={navigation} type={item.item.type} desc={item.item.desc} imagesrc={item.item.src}/>}
      }
     keyExtractor={item => item.type}
     />
-    {/* <CategoryQuestion type='Existential'/>
-    <CategoryQuestion type='Confrontational'/> */}
-
-
     </View>
     </ScrollView>
   );

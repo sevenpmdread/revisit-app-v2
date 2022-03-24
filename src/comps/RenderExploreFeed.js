@@ -16,7 +16,7 @@ const RenderExploreFeed = ({post,navigation}) => {
     "InterRegular":Inter_400Regular,
     "Interlight":Inter_300Light
    });
- console.log(navigation)
+ //console.log(navigation)
    return post.item.type !== "more" ?  (
     <View >
             <View style={{flexDirection:"row"}}>
@@ -83,7 +83,6 @@ const RenderExploreFeed = ({post,navigation}) => {
       return <RenderCategoryAnswers post={item}/>}
       }
       keyExtractor={item => item.answer_id}
-      showsVerticalScrollIndicator={false}
       />
     </View>
   ) : (
