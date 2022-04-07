@@ -82,7 +82,7 @@ data = {categoryquestions}
     data={quesdescs}
     renderItem={(item)=>
       {//console.log(item)
-    console.log(item.item.type)
+    //console.log(item.item.type)
      return <CreateList type={item.item.type} desc={item.item.desc} imagesrc={item.item.src} navigation={navigation}/>}
      }
     keyExtractor={item => item.type}

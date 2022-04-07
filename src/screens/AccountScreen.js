@@ -6,17 +6,21 @@ import { Feather } from '@expo/vector-icons';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import NavSwap from './NavSwap';
 import { Context as AuthContext } from '../context/authContext'
+//import { getPinsbythisuser } from '../context/restapi';
+//import Avatar from 'react-native-boring-avatars';
+const AccountScreen = ({navigation}) => {
 
-const AccountScreen = () => {
-
+ // const [state,signout] = useContext(AuthContext)
+    const avatarcolors = ['#4B3E4D','#1E8C93','#DBD8A2','#C4AC30','#D74F33']
   useEffect(() => {
-    const username = AsyncStorage.getItem('username')
-    console.log(AsyncStorage.getAllKeys())
+    const username =  AsyncStorage.getItem('username')
+   // console.log(AsyncStorage.getAllKeys())
    },[AsyncStorage.getAllKeys()])
 
 
-  const {signout} = useContext(AuthContext)
+  const {state,signout} = useContext(AuthContext)
   return (
+
     <View style={styles.container}>
     <View  style={styles.header}>
       <View style={styles.settings}>
@@ -24,13 +28,10 @@ const AccountScreen = () => {
         <Text style={{color:'white',paddingLeft:12,fontFamily:'InterRegular',fontSize:18}}>Sign out</Text>
         </TouchableOpacity>
       </View>
+      <View>
+      </View>
       <View style={{flexDirection:'row',justifyContent:'space-between',paddingBottom:24}}>
-      <Image
-      source={require('../../assets/useravatar.png')}
-      resizeMode='contain'
-      style={{height:140,width:180}}
-      />
-      <Text style={styles.username}></Text>
+      <Text style={styles.username}>{state.username}</Text>
       </View>
       <View style={{flexDirection:'row',paddingBottom:8}}>
       <Button
@@ -53,7 +54,7 @@ const AccountScreen = () => {
     />
    </View>
     </View>
-<NavSwap/>
+<NavSwap navigation={navigation} />
 
 
 </View>

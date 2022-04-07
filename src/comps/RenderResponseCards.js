@@ -5,7 +5,7 @@ import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@ex
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-const RenderResponseCards = ({answer,zindex,scale,opacity,bottom}) => {
+const RenderResponseCards = ({answertext,answer,zindex,scale,opacity,bottom}) => {
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
@@ -42,13 +42,13 @@ const RenderResponseCards = ({answer,zindex,scale,opacity,bottom}) => {
 
   }} >
         <View style={{height:240}}>
-        <Text style={{color:'white',fontFamily:'InterRegular',fontSize:18,opacity:0.8,overflow:'hidden'}} >{answer}</Text>
+        <Text style={{color:'white',fontFamily:'InterRegular',fontSize:18,opacity:0.8,overflow:'hidden'}} >{answertext}</Text>
         </View>
-        <View style={{flexDirection:'row',paddingVertical:8}}>
-        <Text style={{color:'white',fontFamily:'InterRegular',fontSize:12,opacity:0.4,paddingTop:16}} >by anonen899</Text>
-        <View style={{paddingTop:12,flexDirection:'row',paddingLeft:120}}>
+        <View style={{flexDirection:'row',paddingVertical:8,justifyContent:'space-between'}}>
+        <Text style={{color:'white',fontFamily:'InterRegular',fontSize:12,opacity:0.4,paddingTop:16}} >by {answer.isAnonymous ? answer.username : 'anonymous'}</Text>
+        <View style={{paddingTop:12,flexDirection:'row'}}>
         <TouchableOpacity >
-        <MaterialCommunityIcons name="pin-outline" size={36} color="white" style={{paddingRight:8}} />
+        <MaterialCommunityIcons name="pin" size={36} color="white" style={{paddingRight:8}} />
         </TouchableOpacity>
         <TouchableOpacity >
         <Entypo name="share" size={36} color="white" />

@@ -38,8 +38,9 @@ const DATA = [
     title: 'Third Item',
   },
 ];
-const CategoryQuestion = ({type,desc,imagesrc,navigation}) => {
+const CategoryQuestion = ({type,desc,questions,navigation}) => {
   const expanded = true;
+  //console.log("received questions",questions)
   // let [fontsLoaded] = useFonts({
   //   "Intermedium": Inter_500Medium,
   //   "InterRegular":Inter_400Regular
@@ -48,14 +49,17 @@ const CategoryQuestion = ({type,desc,imagesrc,navigation}) => {
   const {height} = Dimensions.get("screen");
 //   console.log(imagesrc,typeof imagesrc)
 //   console.log(require('../../assets/categorygrowth.png'))
-//  console.log(image)
- var image = type === 'Existential'? require('../../assets/categoryexistential.png') :  type === 'Confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'Growth' ?   require('../../assets/categorygrowth.png') : require('../../assets/categorypersonal.png')
+  //console.log(type,desc)
+  type = type.charAt(0).toUpperCase() + type.slice(1);
+ var image = type === 'Existential'? require('../../assets/categoryexistential.png') :  type === 'Confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'Growth' ?   require('../../assets/categorygrowth.png') : type === 'Vent' ? require('../../assets/categoryvent.png') :require('../../assets/categorypersonal.png')
  // console.log( type.toLowerCase())
   const name = type.toLowerCase()
 
   return (
     <View>
-      <TouchableHighlight onPress={()=>{return navigation.navigate('Category')}}>
+      <TouchableHighlight onPress={()=>{return navigation.navigate('Category',{
+            questions,type,desc
+          })}}>
       <ImageBackground  imageStyle={{borderRadius:26,width:'auto',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',opacity:0.8}} resizeMode= 'cover' source={image} style={{marginVertical:0,marginBottom:16,marginHorizontal:0, paddingHorizontal:16,paddingBottom:16,paddingTop:12}}>
             <Text style={styles.qod}>{type}</Text>
             <Text style={styles.questionText}>{type} Questions</Text>
@@ -83,7 +87,7 @@ const CategoryQuestion = ({type,desc,imagesrc,navigation}) => {
       horizontal={true}
       nestedScrollEnabled={true}
       style={styles.feed}
-       data = {categoryquestions}
+       data = {questions}
      // scrollEventThrottle={16}
    //   snapToInterval={400}
       snapToAlignment ="start"
@@ -93,10 +97,11 @@ const CategoryQuestion = ({type,desc,imagesrc,navigation}) => {
           // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
           // {useNativeDriver:true})}
       renderItem={(item)=>
-       {//console.log(item)
+       {
+        // console.log("item in categoryquestions",item)
       return <RenderCategoryQuestions nav = {navigation} post={item}/>}
       }
-      keyExtractor={item => item.question_id}
+      keyExtractor={item => item.id}
       showsVerticalScrollIndicator={false}
       />
     <CardSpacer/>

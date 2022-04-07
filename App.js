@@ -13,11 +13,6 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator, HeaderTitle } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import AccountScreen from "./src/screens/AccountScreen";
-import SigninScreen from "./src/screens/SigninScreen";
-import SignupScreen from "./src/screens/SignupScreen";
-import TrackCreateScreen from "./src/screens/TrackCreateScreen";
-import TrackDetailScreen from "./src/screens/TrackDetailScreen";
-import TrackListScreen from "./src/screens/TrackListScreen";
 import { Provider as AuthProvider } from './src/context/authContext';
 import { setNavigator } from './src/navigationRef';
 import loadingScreen from './src/screens/loadingScreen';
@@ -43,6 +38,7 @@ import ShareableImageCard from './src/comps/ShareableImageCard';
 import ShareCardContrast from './src/comps/ShareCardContrast';
 import ShareCardQuestion from './src/comps/ShareCardQuestion';
 import ChooseBackgroundImage from './src/comps/ChooseBackground';
+import RenderResponses from './src/comps/RenderResponses';
 //import { createStackNavigator } from '@react-navigation/stack';
 
 // const Stack = createStackNavigator();
@@ -70,8 +66,8 @@ import ChooseBackgroundImage from './src/comps/ChooseBackground';
 //const Stack = createStackNavigator();
 
 const switchNavigator = createSwitchNavigator({
- // Main:MainCreateScreen,
-  //Share:ShareCardQuestion,
+ // Main:AccountScreen,
+ // Share:ShareCardQuestion,
  // Category:CategoryScreen,
    // Share:ShareableImage,
    //BackgroundImage:ChooseBackgroundImage,
@@ -256,6 +252,7 @@ const switchNavigator = createSwitchNavigator({
           HeaderTitle:"Home"
          }
         },
+        RenderResponses:RenderResponses,
         CategoryDrill:{
           screen: CategoryDrillScreen,
           navigationOptions:{

@@ -48,11 +48,12 @@ const RenderCategoryQuestions = ({post,nav}) => {
   //   "InterRegular":Inter_400Regular
   //  });
  // console.log(post)
+   var count  = post.item.count ? post.item.count.responsecount : 0
    return post.item.type !== "more" ?  (
     <View >
             <Card containerStyle={{marginVertical:0,marginBottom:16,marginHorizontal:8,elevation:0,backgroundColor:'transparent',borderWidth:1,borderColor:'rgba(255, 255, 255, 0.2)',width:240,minHeight:265,borderRadius:16,paddingBottom:5,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
             <View>
-            <Text style={styles.questionText}>{post.item.question_text}</Text>
+            <Text style={styles.questionText}>{post.item.text}</Text>
             <View style={styles.questionrow}>
                 <TouchableOpacity   onPress= {() => setIsVisible(true)}>
                 <Entypo name="share" size={20} color="white" style={{paddingRight:10}}/>
@@ -60,7 +61,7 @@ const RenderCategoryQuestions = ({post,nav}) => {
                 <TouchableOpacity >
                 <Feather name="clock" size={24} color="white" style={{paddingHorizontal:8}}/>
                 </TouchableOpacity >
-                <Text style={styles.cardfooter}>Answered 2 times</Text>
+                <Text style={styles.cardfooter}>Answered {count} times</Text>
             </View>
             </View>
             </Card>
@@ -79,7 +80,7 @@ const RenderCategoryQuestions = ({post,nav}) => {
              { l.title != "Cancel" ?
              <View>
              <ColorPicker colors = {["#ffffff","#121212","#654A8A","#2B7644","#A46F31","#B43A6D","#443AB4","#179089"]} selectedColor={selectedColor} onSelect={setColor} />
-             <ShareCardQuestion textcolor = {selectedColor} sentimage={image} color={selectedColor} question={post.item.question_text}/>
+             <ShareCardQuestion textcolor = {selectedColor} sentimage={image} color={selectedColor} question={post.item.text} count={count}/>
             </View>
              :
              <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>}

@@ -1,4 +1,4 @@
-import React,{useState,useRef,useEffect} from 'react';
+import React,{useState,useRef,useEffect,useContext} from 'react';
 import {
   View,
   Text,
@@ -23,10 +23,35 @@ import { quesdescs } from '../dummydata';
 import CardSpacer from '../comps/CardSpacer';
 import { withNavigation } from 'react-navigation'
 import * as Notifications from 'expo-notifications';
-import Constants from 'expo-constants';
-
+import { Context } from '../context/authContext';
+import LoadingScreennew from './Loadingnew';
 const NewHomeScreen = ({navigation}) => {
 
+  const {state,fetchHomedata} = useContext(Context)
+  const [isLoading,setLoading] = useState(false)
+ // const [username,setusername] = useState('')
+  const [arrdata,setdata] = useState(null)
+  var categoryquesnew = []
+  useEffect( async () => {
+
+   await fetchHomedata()
+    //console.log("state.homescreendata.questions",state)
+    var categorycount = state.homescreendata.nbHits
+    for(let i = 0; i <  categorycount;i++)
+    {
+     let obj = {}
+     obj.type = state.homescreendata.questions[i]._id
+     obj.questions = state.homescreendata.questions[i].questions
+     obj.desc = state.homescreendata.questions[i].questions[0].desc
+     categoryquesnew[i] = obj
+    }
+   // console.log("in effect",categoryquesnew)
+    setdata(categoryquesnew)
+   // setusername(state.username)
+   // console.log(username)
+    setLoading(true)
+
+   },[isLoading])
 
 async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
@@ -42,7 +67,6 @@ async function schedulePushNotification() {
 
 async function registerForPushNotificationsAsync() {
   let token;
-  if (Constants.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
     if (existingStatus !== 'granted') {
@@ -55,9 +79,7 @@ async function registerForPushNotificationsAsync() {
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
-  } else {
-    alert('Must use physical device for Push Notifications');
-  }
+
 
   if (Platform.OS === 'android') {
     Notifications.setNotificationChannelAsync('default', {
@@ -102,40 +124,48 @@ async function registerForPushNotificationsAsync() {
     "InterRegular":Inter_400Regular,
     "InterSemi":Inter_600SemiBold
    });
-  // console.log(fontsLoaded)
+   //console.log(arrdata)
   const {height} = Dimensions.get("screen");
   const height_logo = height * 0.28;
-  return (
+  return   (
+
     <ScrollView  style={{ flexGrow: 1 }} contentContainerStyle={{ flexGrow: 1 }} nestedScrollEnabled={true}>
     <View style={styles.container}>
     <View style={styles.header}>
     <TouchableOpacity  onPress={async () => {
           await schedulePushNotification();
         }}>
-    <Text style= {styles.headerTitle}>Hi, anon124!</Text>
+    <Text style= {styles.headerTitle}>Hi, {state.username}!</Text>
     </TouchableOpacity>
     <Feather name="bell" size={24} color="white" style={{marginTop:10}}/>
     </View>
     <Questionofday/>
     <CardSpacer/>
-    <FlatList
-    data={quesdescs}
-    renderItem={(item)=>
-      {//console.log(item)
-    console.log(item.item.type)
-     return <CategoryQuestion type={item.item.type} desc={item.item.desc} imagesrc={item.item.src} navigation={navigation}/>}
-     }
-    keyExtractor={item => item.type}
-    />
-    {/* <CategoryQuestion type='Existential'/>
-    <CategoryQuestion type='Confrontational'/> */}
+    {
+      isLoading ?
+      <FlatList
+      data={arrdata}
+      renderItem={(item)=>
+      {
+       return <CategoryQuestion type={item.item.type} desc={item.item.desc} questions={item.item.questions} navigation={navigation}/>}
+       }
+      keyExtractor={item => item.type}
+      /> :
 
 
+
+
+      <LoadingScreennew/>
+
+    }
     </View>
     </ScrollView>
-  );
+
+  )
+
 };
 
+export var arrdata
 
 export default withNavigation(NewHomeScreen);
 
@@ -172,7 +202,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:16
   },
   header:{
-    paddingTop:56,
+    paddingTop:24,
     paddingBottom:16,
     alignItems:"flex-start",
     flexDirection:'row',

@@ -4,19 +4,21 @@ import { Card,Button } from 'react-native-elements'
 import RenderResponseCards from './RenderResponseCards'
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import { youranswers } from '../dummydata';
-const RenderYourPins = ({question,answers}) => {
+const RenderYourPins = ({question,questionid,answers}) => {
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
     "InterSemi":Inter_600SemiBold
    });
-   var length = youranswers.length
+   var length = answers.length
+   var marginbottom = length > 1 ? 0 : 36
+
   //console.log(length)
 var count = 0
   return (
     <View>
       <View style={styles.questioncard}>
-      <Card  containerStyle={{backgroundColor:'black',borderRadius:12,paddingHorizontal:16,paddingTop:12,borderWidth:1,paddingBottom:20,borderColor:'#434343'}}>
+      <Card  containerStyle={{backgroundColor:'black',borderRadius:12,paddingHorizontal:16,paddingTop:12,borderWidth:1,paddingBottom:20,borderColor:'#434343',marginBottom:marginbottom}}>
       <Text style={styles.question} onPress={()=> console.log("hello")}>{question}</Text>
       </Card>
 
@@ -24,17 +26,11 @@ var count = 0
       <FlatList
     //  onPress={()=> console.log("hello")}
       //  onStartShouldSetResponderCapture={() => {return true}}
-        data={youranswers}
+        data={answers}
     contentContainerStyle={{
 
 
 }}
-    contentContainerStyle={{
-
-   //   backgroundColor:'red'
-     // marginTop:20,
-     // zIndex:9999999
-    }}
     style={{
    //   height:300
       //marginTop:10,
@@ -44,10 +40,9 @@ var count = 0
     }}
     renderItem={(item)=>
     {
-      console.log(1 - 0.1*(length-1) + 0.1*(item.index))
      // return <ResponderTest />
      // return <Sample answer={item.item.answertext} scale={1 - 0.1*(length-1) + 0.1*(item.index)} />
-     return <RenderResponseCards  answer={item.item.answertext} zindex={length - item.index} scale={1 - 0.1*(length-1) + 0.1*(item.index)} opacity={0.6 +  0.2*(item.index)} bottom={130*item.index}/>
+     return <RenderResponseCards  answertext={item.item.answertext.answer_text} answer={item.item.answertext} zindex={length - item.index} scale={1 - 0.1*(length-1) + 0.1*(item.index)} opacity={0.6 +  0.2*(item.index)} bottom={130*item.index}/>
     }
     }
     keyExtractor={(item) => {

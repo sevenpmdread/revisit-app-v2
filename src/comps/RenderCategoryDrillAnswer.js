@@ -31,7 +31,7 @@ const RenderCategoryDrillAnswers = ({post,nav}) => {
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular
    });
-  console.log("sfusdkjf", post)
+ // console.log("sfusdkjf", post)
    return !post.item.contrast ? post.item.type !== "more" ?  (
     <View style={{margin:0,paddingHorizontal:0}}>
             <Card containerStyle={{marginTop:20,marginVertical:0,marginBottom:16,marginHorizontal:12,elevation:0,backgroundColor:'transparent',borderWidth:1,borderColor:'rgba(255, 255, 255, 0.4)',borderRadius:16,paddingBottom:5,dispplay:'flex',flexGrow:1,flexDirection:'column'}}>
@@ -49,7 +49,7 @@ const RenderCategoryDrillAnswers = ({post,nav}) => {
                   <TouchableOpacity >
                   <Feather name="clock" size={32} color="white" style={{paddingHorizontal:8}}/>
                   </TouchableOpacity >
-                </View>
+            </View>
                 </View>
             </View>
             </Card>

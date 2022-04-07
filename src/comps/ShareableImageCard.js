@@ -13,9 +13,10 @@ import {
   NotoSerifJP_900Black
 } from '@expo-google-fonts/noto-serif-jp'
 import * as ImagePicker from 'expo-image-picker';
+import LinearGradient from 'react-native-linear-gradient';
 
 import * as Sharing from 'expo-sharing';
-const ShareableImageCard = ({textcolor,color,text,question}) => {
+const ShareableImageCard = ({textcolor,color,text,question,username}) => {
   const [image, setImage] = useState(null);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -110,8 +111,9 @@ const ShareableImageCard = ({textcolor,color,text,question}) => {
       //  marginTop:100,
      //   paddingHorizontal:30
       }}>
-     {image ? <ImageBackground source={{ uri: image }} style={{ margin:15,padding:15,marginBottom:0}} >
-       <View style={{maxHeight:350}}>
+     {image ?
+     <ImageBackground source={{ uri: image }} imageStyle={{opacity:0.8}} style={{ margin:15,padding:0,marginBottom:0}} >
+       <View style={{maxHeight:400,minHeight:200,justifyContent:"space-between",flexDirection:'column'}}>
       <Text style={{ color:textcolor,
     fontFamily:'Intermedium',
     fontSize:36,
@@ -127,27 +129,33 @@ const ShareableImageCard = ({textcolor,color,text,question}) => {
     textDecorationLine:'underline',
     paddingHorizontal:16,
     opacity:0.9,
-    paddingVertical:6,
+    paddingVertical:12,
     fontSize:8}}>REVISIT BY                                                      THESURREALSERVICE.COM</Text>
+
       </View>
       </View>
+
       </ImageBackground> :
-      <Card containerStyle={{backgroundColor:color,borderColor:"black",maxHeight:400}}>
+      <Card containerStyle={{backgroundColor:color,borderColor:"black",minHeight:100}}>
+      <View style={{flexDirection:'column',justifyContent:'space-between',minHeight:100}}>
       <Text style={styles.questionText}>{question}</Text>
-      <View style={{flexDirection:"row",justifyContent:"space-between"}}>
       <Text style={styles.tss}>REVISIT BY                                                      THESURREALSERVICE.COM</Text>
       </View>
-      </Card>}
-      <Card containerStyle={{backgroundColor:"#DDDBDC",borderColor:"black",minHeight:310,marginBottom:10}}>
-      <View style={{flexDirection:"column",justifyContent:"space-between",paddingTop:12}}>
+      </Card>
+      }
+      <Card containerStyle={{backgroundColor:"#f3f3f3",borderColor:"black",marginBottom:10}}>
+      <View style={{flexDirection:"column",justifyContent:"space-between",minHeight:150}}>
+      <View style={{paddingTop:12}}>
       <Text style={styles.answerText}>{text}</Text>
-
-      <Text style={styles.byuser}>by anon3302</Text>
+      </View>
+      <View>
+      <Text style={styles.byuser}>by {username}</Text>
       <View style={{flexDirection:"row",justifyContent:"space-between"}}>
       <Text style={styles.bydate}>25/02/22</Text>
       <Text style={styles.sharedfrom}>[shared from the app]</Text>
       </View>
 
+      </View>
       </View>
       </Card>
       </Card>
@@ -162,6 +170,10 @@ const ShareableImageCard = ({textcolor,color,text,question}) => {
 export default ShareableImageCard
 
 const styles = StyleSheet.create({
+  linearGradient: {
+    flex: 1,
+    opacity:0.2
+  },
   sharebutton:{
     color:"white",
     fontFamily:"InterRegular",
@@ -187,7 +199,7 @@ const styles = StyleSheet.create({
     alignSelf:'flex-start',
     color:'black',
     fontFamily:'InterSemi',
-  //  textDecorationLine:'underline',
+    textDecorationLine:'underline',
     paddingHorizontal:12,
     opacity:0.9,
     paddingVertical:6,
@@ -241,7 +253,7 @@ const styles = StyleSheet.create({
   //  paddingLeft:8,
     paddingHorizontal:12,
     paddingVertical:12,
-    marginBottom:56
+   // marginBottom:56
    // letterSpacing:0.5,
 
   },

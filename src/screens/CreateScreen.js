@@ -76,12 +76,12 @@ const CreateScreen = ({navigation}) => {
           </ListItem>
         ))}
       </BottomSheet>
-      <Button
-       title='Answered 23,003 times'
+      {/* <Button
+       title='Post Anonmously'
        titleStyle={{fontFamily:'Intermedium',fontSize:12,color:'white'}}
-       buttonStyle={{backgroundColor:'#161611',borderRadius:20,paddingHorizontal:0,marginHorizontal:18,fontFamily:'InterRegular',fontSize:8,opacity:0.8,borderColor:'#F5F5F5',borderWidth:1}}
-       containerStyle={{width:220,backgroundColor:'black',fontFamily:'InterRegular',fontSize:8,marginHorizontal:2,marginBottom:12}}
-       />
+       buttonStyle={{backgroundColor:'#161611',borderRadius:20,paddingHorizontal:0,marginHorizontal:0,fontFamily:'InterRegular',fontSize:8,opacity:0.8,borderColor:'#F5F5F5',borderWidth:1}}
+       containerStyle={{width:220,backgroundColor:'#161611',fontFamily:'InterRegular',fontSize:8,marginHorizontal:12,marginBottom:12}}
+       /> */}
       <View style={styles.input}>
       <TextInput
         autoCorrect={false}
@@ -130,12 +130,13 @@ const styles = StyleSheet.create({
 
   },
   input:{
-    minHeight:270,
+    minHeight:200,
     paddingHorizontal:20,
     paddingVertical:12,
     marginHorizontal:20,
     borderColor:'#D8D8D8',
     marginTop:10,
+    opacity:0.9,
    //borderWidth:2,
     elevation:5,
     backgroundColor:'#F3F3F3',
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
    // paddingHorizontal:16
   },
   header:{
-    marginTop:36,
+    marginTop:0,
     height:80,
     padding:12,
     backgroundColor: '#222222',

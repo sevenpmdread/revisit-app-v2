@@ -4,20 +4,30 @@ import { Card,Button } from 'react-native-elements'
 import RenderResponseCards from './RenderResponseCards'
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import { youranswers } from '../dummydata';
-const RenderResponseQuestion = ({question,answers}) => {
+import { TouchableOpacity } from 'react-native-gesture-handler';
+const RenderResponseQuestion = ({question,questionid,answers,navigation}) => {
+ console.log("NAVIGATION",navigation)
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
     "InterSemi":Inter_600SemiBold
    });
-   var length = youranswers.length
+   var length = answers.length
+   var marginbottom =  32
   //console.log(length)
 var count = 0
   return (
     <View>
       <View style={styles.questioncard}>
-      <Card  containerStyle={{backgroundColor:'black',borderRadius:12,paddingHorizontal:16,paddingTop:12,borderWidth:1,paddingBottom:20,borderColor:'#434343'}}>
-      <Text style={styles.question} onPress={()=> console.log("hello")}>{question}</Text>
+      <Card  containerStyle={{backgroundColor:'black',borderRadius:12,paddingHorizontal:16,paddingTop:12,borderWidth:1,paddingBottom:20,borderColor:'#434343',marginBottom:marginbottom}}>
+      <Text style={styles.question} onPress={()=>
+      {
+        console.log("NAVIGATION ON PRESS",navigation)
+        return navigation.navigate("RenderResponses",{
+              question,questionid,
+              answers
+      })}
+        }>{question}</Text>
       <Button
        title='Contrast'
        titleStyle={{fontFamily:'Intermedium',fontSize:12,color:'white'}}
@@ -26,15 +36,11 @@ var count = 0
        />
       </Card>
 
-      <View style={{marginHorizontal:20,marginBottom:340,marginTop:0,paddingTop:0,marginTop:-20}} onPress={()=> console.log("hello")}>
+      <View style={{marginHorizontal:20,marginBottom:340,marginTop:0,paddingTop:0,marginTop:-20}}>
       <FlatList
     //  onPress={()=> console.log("hello")}
       //  onStartShouldSetResponderCapture={() => {return true}}
-        data={youranswers}
-    contentContainerStyle={{
-
-
-}}
+        data={answers}
     contentContainerStyle={{
 
    //   backgroundColor:'red'
@@ -50,10 +56,10 @@ var count = 0
     }}
     renderItem={(item)=>
     {
-      console.log(1 - 0.1*(length-1) + 0.1*(item.index))
+
      // return <ResponderTest />
      // return <Sample answer={item.item.answertext} scale={1 - 0.1*(length-1) + 0.1*(item.index)} />
-     return <RenderResponseCards  answer={item.item.answertext} zindex={length - item.index} scale={1 - 0.1*(length-1) + 0.1*(item.index)} opacity={0.6 +  0.2*(item.index)} bottom={130*item.index}/>
+     return <RenderResponseCards  answertext={item.item.answer_text} answer={item.item} zindex={length - item.index} scale={1 - 0.1*(length-1) + 0.1*(item.index)} opacity={0.8 +  0.2*(item.index)} bottom={130*item.index}/>
     }
     }
     keyExtractor={(item) => {

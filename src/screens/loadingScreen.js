@@ -3,7 +3,7 @@ import { View, Text,StyleSheet } from 'react-native'
 import { Context as AuthContext } from '../context/authContext'
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import LottieView from "lottie-react-native";
-const loadingScreen = () => {
+const LoadingScreen = () => {
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
@@ -22,14 +22,12 @@ const loadingScreen = () => {
         style={styles.animation}
         autoPlay
       />
-      <Text style={styles.loadinginput}>
-        Who are you trying to become ?
-      </Text>
+
     </View>
   )
 }
 
-export default loadingScreen
+export default LoadingScreen
 
 const styles = StyleSheet.create({
   animation:{

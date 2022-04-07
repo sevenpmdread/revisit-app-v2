@@ -60,7 +60,7 @@ const height_logo = height * 0.28;
   return (
     <View>
       <TouchableHighlight onPress={()=>{
-        console.log(visible)
+      //  console.log(visible)
         return setVisible(!visible)}}>
       <ImageBackground  imageStyle={{borderRadius:26,width:'auto',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',opacity:0.8,marginHorizontal:24}} resizeMode= 'cover' source={image} style={{marginVertical:0,marginBottom:16,marginHorizontal:0, paddingHorizontal:40,paddingBottom:16,paddingTop:12}}>
             <Text style={styles.qod}>{type}</Text>

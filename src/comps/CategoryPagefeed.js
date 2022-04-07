@@ -12,22 +12,18 @@ import {
   ImageBackground,Button,
   TouchableHighlight
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import {Entypo} from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Card, withTheme } from 'react-native-elements';
-import NavLink from '../comps/NavLink'
+
 import CardSpacer from './CardSpacer';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { fonts } from 'react-native-elements/dist/config';
-import { categoryquestions } from '../dummydata';
-import RenderCategoryQuestions from './RenderCategoryQuestions';
 import RenderCategoryfeed from './RenderCategoryfeed';
-const Categoryfeed = ({type,desc,imagesrc,navigation}) => {
+const Categoryfeed = ({type,desc,questions,navigation}) => {
+  //console.log("in rendercategroy feed",questions)
+
   const expanded = true;
- var image = type === 'Existential'? require('../../assets/categoryexistential.png') :  type === 'Confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'Growth' ?   require('../../assets/categorygrowth.png') : require('../../assets/categorypersonal.png')
-  console.log( type.toLowerCase())
+ var image = type === 'Existential'? require('../../assets/categoryexistential.png') :  type === 'Confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'Growth' ?   require('../../assets/categorygrowth.png') :  type === 'Vent' ?   require('../../assets/categoryvent.png') : require('../../assets/categorypersonal.png')
+//  console.log( type.toLowerCase())
   const name = type.toLowerCase()
 
   return (
@@ -58,15 +54,16 @@ const Categoryfeed = ({type,desc,imagesrc,navigation}) => {
      <FlatList
      contentContainerStyle={{marginLeft:8}}
       style={styles.feed}
-       data = {categoryquestions}
+       data = {questions}
       snapToAlignment ="start"
           decelerationRate={0}
           bounces={true}
       renderItem={(item)=>
        {
+       //  console.log("in rendercategroy feed",item)
       return <RenderCategoryfeed navigation={navigation} post={item}/>}
       }
-      keyExtractor={item => item.question_id}
+      keyExtractor={item => item.id}
       showsVerticalScrollIndicator={false}
       />
     <CardSpacer/>

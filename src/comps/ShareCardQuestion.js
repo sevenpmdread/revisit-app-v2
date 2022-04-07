@@ -17,7 +17,7 @@ import * as Sharing from 'expo-sharing';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const ShareCardQuestion = ({textcolor,color,text,question}) => {
+const ShareCardQuestion = ({textcolor,color,text,question,count}) => {
   const [image, setImage] = useState(null);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -113,7 +113,7 @@ const ShareCardQuestion = ({textcolor,color,text,question}) => {
       //  marginTop:100,
      //   paddingHorizontal:30
       }}>
-      {image ? <ImageBackground source={{ uri: image }} style={{ margin:15,padding:15,marginBottom:0 }} >
+      {image ? <ImageBackground source={{ uri: image }} style={{ margin:15,padding:15,marginBottom:0,minHeight:250,flexDirection:"column",justifyContent:"space-between" }} >
       <Text style={{ color:textcolor,
     fontFamily:'Intermedium',
     fontSize:36,
@@ -122,7 +122,7 @@ const ShareCardQuestion = ({textcolor,color,text,question}) => {
   //  paddingLeft:8,
     paddingHorizontal:16,
     paddingVertical:16}}>{question}</Text>
-      <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+      <View>
       <Text style={{ alignSelf:'flex-start',
     color:textcolor,
     fontFamily:'InterSemi',
@@ -131,12 +131,29 @@ const ShareCardQuestion = ({textcolor,color,text,question}) => {
     opacity:0.9,
     paddingVertical:6,
     fontSize:8}}>REVISIT BY                                                      THESURREALSERVICE.COM</Text>
-      </View>
+      <Text style={{alignSelf:'flex-start',
+    color:textcolor,
+    fontFamily:'InterRegular',
+    //textDecorationLine:'underline',
+    paddingHorizontal:16,
+    opacity:0.9,
+    paddingVertical:6,
+    fontSize:6}}>ANSWERED {count} TIMES</Text>
+    </View>
+
       </ImageBackground> :
-      <Card containerStyle={{backgroundColor:color,borderColor:"black",maxHeight:400}}>
+      <Card containerStyle={{backgroundColor:color,borderColor:"black",minHeight:300,flexDirection:"column",justifyContent:"space-between" }}>
       <Text style={styles.questionText}>{question}</Text>
-      <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-      <Text style={styles.tss}>REVISIT BY                                                      THESURREALSERVICE.COM</Text>
+      <View>
+       <Text style={styles.tss}>REVISIT BY                                                      THESURREALSERVICE.COM</Text>
+       <Text style={{alignSelf:'flex-start',
+    color:'black',
+    fontFamily:'Intermedium',
+    //textDecorationLine:'underline',
+    paddingHorizontal:16,
+    opacity:0.9,
+    paddingVertical:6,
+    fontSize:7}}>ANSWERED {count} TIMES</Text>
       </View>
       </Card>}
       <Card containerStyle={{backgroundColor:"#DDDBDC",borderColor:"black",height:150,marginBottom:0}}>

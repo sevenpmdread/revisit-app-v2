@@ -1,29 +1,44 @@
-import React from 'react'
+import React, { useContext,useEffect,useState,useCallback } from 'react'
 import { View, ScrollView, StyleSheet, Image,TouchableOpacity,FlatList,TouchableHighlight } from 'react-native';
 import { Text, Card, Button, Icon } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { categoryanswers } from '../dummydata';
 import { useFonts, Inter_500Medium,Inter_400Regular} from '@expo-google-fonts/inter';
-import posts from '../dummydata';
 import RenderCategoryAnswers from './RenderCategoryAnswers';
-import CategoryDrillScreen from './CategoryDrillScreen';
+import { Context as ReponseContext } from '../context/authContext';
+import LoadingScreen from '../screens/loadingScreen';
+import LoadingScreenew from '../screens/Loadingnew'
+import { getAnswersforid } from '../context/restapi';
 const RenderCategoryfeed = ({post,navigation}) => {
+  //const {state,getAnswersforid} = useContext(ReponseContext)
+  const [answers,setanswers] = useState([])
+  const [isLoading,setLoading] = useState(true)
+  useEffect(()=>{
+    const fetchData = async () => {
+    const data  =   await getAnswersforid(post.item.id,10,0)
+    console.log(data)
+    setanswers(data)
+    setLoading(false)
+   console.log("answers",answers)
+  }
+  fetchData()
+
+}, [])
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular
    });
-  console.log(navigation)
-   return post.item.type !== "more" ?  (
+ // console.log(navigation)
+   return   (
     <View >
-            <Card containerStyle={{marginVertical:0,marginBottom:2,marginHorizontal:0,backgroundColor:'transparent',borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingBottom:2,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
+            <Card containerStyle={{marginVertical:0,elevation:0,marginBottom:2,marginHorizontal:0,backgroundColor:'transparent',borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingBottom:2,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
             <View>
             <TouchableOpacity onPress={()=>
             {
              try {
                 navigation.navigate("CategoryDrill",{
-              post:post})
+              post:post,
+              answers
+            })
              }
              catch(err)
              {
@@ -31,7 +46,7 @@ const RenderCategoryfeed = ({post,navigation}) => {
              }
             }
             }>
-            <Text style={styles.questionText}>{post.item.question_text}</Text>
+            <Text style={styles.questionText}>{post.item.text}</Text>
             </TouchableOpacity>
             </View>
             </Card>
@@ -47,35 +62,27 @@ const RenderCategoryfeed = ({post,navigation}) => {
                 <Feather name="more-vertical" size={26} color="white" style={{marginTop:12,textAlign:'left',opacity:0.7}}/>
                 </TouchableOpacity >
             </View>
-            <FlatList
-     contentContainerStyle={{marginLeft:8}}
-      horizontal={true}
-      style={styles.feed}
-       data = {categoryanswers}
-     // scrollEventThrottle={16}
-   //   snapToInterval={400}
-      snapToAlignment ="start"
-          decelerationRate={0}
-          // onScrollBeginDrag={()=>
-          // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
-          // {useNativeDriver:true})}
-      renderItem={(item)=>
-       {//console.log(item)
-      return <RenderCategoryAnswers post={item}/>}
-      }
-      keyExtractor={item => item.answer_id}
-      />
-    </View>
-  ) : (
-    <View >
-    <View>
-    <TouchableOpacity>
-    <Text style={styles.readmore}>Load more</Text>
-    </TouchableOpacity>
-    </View>
+{ answers.length ?
+                <FlatList
+              contentContainerStyle={{marginLeft:8}}
+               horizontal={true}
+               style={styles.feed}
+                data = {answers}
+               snapToAlignment ="start"
+                   decelerationRate={0}
+               renderItem={(item)=>
+                {
+               return <RenderCategoryAnswers post={item} question={post.item.text} width={{showfull:false}} />}
+               }
+               keyExtractor={item => item._id}
+               />
+               :
+    <LoadingScreenew/>
+              }
 
-</View>
-  )
+
+             </View>)
+
 };
 
 export default RenderCategoryfeed;

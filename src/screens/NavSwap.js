@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import { Animated, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import Constants from 'expo-constants';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import YourPins from './YourPins';
 import YourResponses from './YourResponses';
-const FirstRoute = () => (
-  <YourResponses/>
+const FirstRoute = (navigation) => (
+
+  <YourResponses navigation={navigation}/>
 );
 const SecondRoute = () => (
   <YourPins/>
@@ -15,6 +15,7 @@ const SecondRoute = () => (
 
 
 export default class NavSwap extends React.Component {
+
   state = {
     index: 0,
     routes: [
@@ -25,9 +26,11 @@ export default class NavSwap extends React.Component {
 
   _handleIndexChange = (index) => this.setState({ index });
 
+
+
   _renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
-
+    console.log("fhsgdfjhsdgfhsdgfsdf",props.navigation)
     return (
       <View style={styles.tabBar}>
         {props.navigationState.routes.map((route, i) => {
@@ -60,14 +63,19 @@ export default class NavSwap extends React.Component {
   };
 
   _renderScene = SceneMap({
-    responses: FirstRoute,
+    responses: ()=>{
+      console.log("this.props",this.props)
+      return FirstRoute(this.props.navigation)
+    },
     pins: SecondRoute,
   });
 
   render() {
+    console.log("THIS PROPS",this.props.navigation)
     return (
       <TabView
         navigationState={this.state}
+        navigation = {this.props.navigation}
         renderScene={this._renderScene}
         renderTabBar={this._renderTabBar}
         onIndexChange={this._handleIndexChange}

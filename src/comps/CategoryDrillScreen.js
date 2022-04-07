@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { View, ScrollView, StyleSheet, Image,TouchableOpacity,FlatList } from 'react-native';
 import { Text, Card, Button, Icon } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
@@ -9,9 +9,26 @@ import { categoryanswers } from '../dummydata';
 import posts from '../dummydata';
 import RenderCategoryAnswers from './RenderCategoryAnswers';
 import RenderCategoryDrillAnswers from './RenderCategoryDrillAnswer';
+import { getAnswersforid } from '../context/restapi';
 const CategoryDrillScreen = ({navigation}) => {
  // console.log("fjhsdfjsd = ", navigation.getParam('post'))
-  const  post = navigation.getParam('post')
+ const  post = navigation.getParam('post')
+ const answerstemp = navigation.getParam('answers')
+ console.log("sdhfvsdfhvsdfsdfsd sdfjhfsd post answer", post,answerstemp)
+ const [answers,setanswers] = useState(answerstemp)
+ const [isLoading,setLoading] = useState(true)
+ const [fetch,setFetch] = useState(0)
+ useEffect(()=>{
+   const fetchData = async (fetch) => {
+   const data  =   await getAnswersforid(post.item.id,10 + fetch*10,0)
+   console.log(data)
+   setanswers(data)
+   setLoading(false)
+  console.log("answers",answers)
+ }
+ fetchData(fetch)
+
+}, [fetch])
   //const post = item
 
   // let [fontsLoaded] = useFonts({
@@ -20,20 +37,19 @@ const CategoryDrillScreen = ({navigation}) => {
   //  });
 //  console.log("post",post)
 
-   return post.item.type !== "more" ?  (
+   return (
 
     <ScrollView  style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
     <View style={styles.container}>
     <View style={styles.header}>
     </View>
-            <Card containerStyle={{marginVertical:0,marginBottom:2,marginHorizontal:0,elevation:5,backgroundColor:'transparent',borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',borderRadius:16,paddingBottom:2,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
+            <Card containerStyle={{marginVertical:0,marginBottom:2,marginHorizontal:12,elevation:0,backgroundColor:'transparent',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',borderRadius:16,paddingBottom:12,display:'flex',flexGrow:0,flexDirection:'column',paddingHorizontal:24}}>
             <View>
-            <Text style={styles.questionText}>{post.item.question_text}</Text>
+            <Text style={styles.questionText}>{post.item.text}</Text>
             </View>
-            </Card>
+
             <View style={styles.questionrow}>
             <TouchableOpacity
-            tvParallaxProperties={{enabled:false}}
             style={styles.button}
 
       >
@@ -43,11 +59,12 @@ const CategoryDrillScreen = ({navigation}) => {
                 <Feather name="more-vertical" size={26} color="white" style={{marginTop:12,textAlign:'left',opacity:0.7}}/>
                 </TouchableOpacity >
             </View>
+            </Card>
             <FlatList
      contentContainerStyle={{marginLeft:8}}
     //  horizontal={true}
       style={styles.feed}
-       data = {categoryanswers}
+       data = {answers}
      // scrollEventThrottle={16}
    //   snapToInterval={400}
       snapToAlignment ="start"
@@ -57,23 +74,24 @@ const CategoryDrillScreen = ({navigation}) => {
           // {useNativeDriver:true})}
       renderItem={(item)=>
        {//console.log(item)
-      return <RenderCategoryDrillAnswers post={item}/>}
+      return <RenderCategoryAnswers post={item} question={post.item.text}  width={{showfull:true}}/>}
       }
-      keyExtractor={item => item.answer_id}
+      keyExtractor={item => item._id}
       showsVerticalScrollIndicator={false}
       />
+    <View>
+      <TouchableOpacity onPress={()=>setFetch(fetch+1)}>
+      <Text style={{color:'white',fontFamily:'Intermedium',alignSelf:'center',padding:12,paddingBottom:24}}>Load more</Text>
+      </TouchableOpacity>
+    </View>
     </View>
     </ScrollView>
-  ) : (
-    <View >
-    <View>
-    <TouchableOpacity>
-    <Text style={styles.readmore}>Load more</Text>
-    </TouchableOpacity>
-    </View>
-
-</View>
   )
+};
+CategoryDrillScreen.navigationOptions = () => {
+  return {
+    headerShown: false,
+  };
 };
 
 export default CategoryDrillScreen;
@@ -85,7 +103,7 @@ const styles = StyleSheet.create({
   //  / paddingHorizontal:16
   },
   header:{
-    paddingTop:56,
+    paddingTop:0,
     paddingBottom:16,
     alignItems:"flex-start",
     flexDirection:'row',
@@ -107,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     alignContent:'center',
     alignItems:'center',
-    marginBottom:32
+    marginBottom:0
 
   },
   cardfooter: {
@@ -151,13 +169,13 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     display:'flex',
     flex:2,
-   alignContent:'flex-end',
+  // alignContent:'flex-end',
    textAlign:'justify',
    alignItems:'baseline',
     textAlignVertical:'bottom',
     flexDirection:'column',
     marginTop:0,
-    paddingLeft:16,
+   // paddingLeft:16,
     //paddingTop:30,
     paddingBottom:5,
    marginBottom:1,

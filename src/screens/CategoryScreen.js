@@ -13,14 +13,20 @@ import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@ex
 import CardSpacer from '../comps/CardSpacer';
 import Categoryfeed from '../comps/CategoryPagefeed';
 
-const CategoryScreen = ({navigation}) => {
-  const quesdescs = [
-    {
-      type:'Existential',
-      desc:'What is the nature of your reality? Dismantle what you find meaningful in this universe one response at a time.',
-      src:'../../assets/categoryexistential.png'
-    },
-  ]
+const CategoryScreen = ({route,navigation}) => {
+  let quesdescs = []
+  let obj = {}
+  obj.type = navigation.getParam('type')
+  obj.desc = navigation.getParam('desc')
+  obj.questions = navigation.getParam('questions')
+  quesdescs.push(obj)
+  // const quesdescs = [
+  //   {
+  //     type:'Existential',
+  //     desc:'What is the nature of your reality? Dismantle what you find meaningful in this universe one response at a time.',
+  //     src:'../../assets/categoryexistential.png'
+  //   },
+  // ]
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
@@ -32,22 +38,23 @@ const CategoryScreen = ({navigation}) => {
     <View style={styles.header}>
     </View>
     <CardSpacer/>
-    <FlatList
+    <Categoryfeed navigation={navigation} type={obj.type} desc={obj.desc} questions={obj.questions} />
+    {/* <FlatList
     data={quesdescs}
     renderItem={(item)=>
       {
 
-     return <Categoryfeed navigation={navigation} type={item.item.type} desc={item.item.desc} imagesrc={item.item.src}/>}
+     return <Categoryfeed navigation={navigation} type={item.item.type} desc={item.item.desc} questions={item.item.questions}/>}
      }
     keyExtractor={item => item.type}
-    />
+    /> */}
     </View>
     </ScrollView>
   );
 };
 CategoryScreen.navigationOptions = () => {
   return {
-    headerShown: true,
+    headerShown: false,
   };
 };
 
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:16
   },
   header:{
-    paddingTop:56,
+    paddingTop:0,
     paddingBottom:16,
     alignItems:"flex-start",
     flexDirection:'row',
