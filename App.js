@@ -39,6 +39,7 @@ import ShareCardContrast from './src/comps/ShareCardContrast';
 import ShareCardQuestion from './src/comps/ShareCardQuestion';
 import ChooseBackgroundImage from './src/comps/ChooseBackground';
 import RenderResponses from './src/comps/RenderResponses';
+import Questionofday from './src/comps/Questionofday';
 //import { createStackNavigator } from '@react-navigation/stack';
 
 // const Stack = createStackNavigator();
@@ -66,7 +67,7 @@ import RenderResponses from './src/comps/RenderResponses';
 //const Stack = createStackNavigator();
 
 const switchNavigator = createSwitchNavigator({
- // Main:AccountScreen,
+  //Main:Questionofday,
  // Share:ShareCardQuestion,
  // Category:CategoryScreen,
    // Share:ShareableImage,
@@ -252,7 +253,16 @@ const switchNavigator = createSwitchNavigator({
           HeaderTitle:"Home"
          }
         },
-        RenderResponses:RenderResponses,
+        RenderResponses:{
+          screen:RenderResponses,
+          navigationOptions:{
+           // headerTransparent:"false",
+            headerTintColor:'white',
+            color:'white',
+           headerStyle:{backgroundColor:"#121212",color:'white'},
+           HeaderTitle:"Home"
+          }
+        },
         CategoryDrill:{
           screen: CategoryDrillScreen,
           navigationOptions:{

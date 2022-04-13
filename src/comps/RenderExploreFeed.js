@@ -10,41 +10,88 @@ import { useFonts, Inter_500Medium,Inter_400Regular,Inter_300Light} from '@expo-
 import posts from '../dummydata';
 import RenderCategoryAnswers from './RenderCategoryAnswers';
 import CategoryDrillScreen from './CategoryDrillScreen';
+import TimeAgo from 'react-native-timeago';
+
 const RenderExploreFeed = ({post,navigation}) => {
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
     "Interlight":Inter_300Light
    });
- //console.log(navigation)
-   return post.item.type !== "more" ?  (
+   //console.log("DATA TDATTADTATDATD",post)
+
+   var category = '#' + post.category
+   if(post.answers.length ==0)
+   {
+     return(
+       <View>
+      <View style={{flexDirection:"row"}}>
+      <Button
+title={category}
+titleStyle={{fontFamily:'Interlight',fontSize:11,color:'white',opacity:0.7,fontStyle:"italic"}}
+buttonStyle={{backgroundColor:'#1A1A1A',borderRadius:20,paddingHorizontal:0,fontFamily:'InterRegular',fontSize:8,opacity:0.8}}
+containerStyle={{width:105,fontFamily:'InterRegular',fontSize:8,marginBottom:6,marginRight:6,marginTop:24}}
+/>
+      </View>
+      <Card containerStyle={{marginVertical:8,marginTop:1,marginBottom:2,marginHorizontal:0,backgroundColor:'#171717',elevation:5,borderRadius:12,borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingVertical:18,paddingLeft:22,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
+      <View>
+      <TouchableOpacity onPress={()=>navigation.navigate("CategoryDrill",{
+        post:post
+      })}>
+      <Text style={styles.questionText}>{post.question_text}</Text>
+      </TouchableOpacity>
+      </View>
+      <View style={styles.questionrow}>
+      <TouchableOpacity
+      activeOpacity={.7}
+      tvParallaxProperties={{enabled:false}}
+      style={styles.button}
+
+>
+  <Text> Answer</Text>
+</TouchableOpacity>
+
+
+<TouchableOpacity >
+<Feather name="more-vertical" size={26} color="white" style={{marginTop:12,textAlign:'left',opacity:0.7}}/>
+</TouchableOpacity >
+</View>
+      </Card>
+      <View style={{paddingHorizontal:20,marginVertical:20,backgroundColor:'#121212',padding:12,borderRadius:12}}>
+        <Text style={{color:'white',opacity:0.6}}>BE THE FIRST ONE TO ANSWER THIS QUESTION</Text>
+      </View>
+      </View>
+
+     )
+   }
+   else {
+   var responsecount = post.metadata[0].responsecount + ' responses'
+   return  (
     <View >
             <View style={{flexDirection:"row"}}>
             <Button
-      title='#existential'
+      title={category}
       titleStyle={{fontFamily:'Interlight',fontSize:11,color:'white',opacity:0.7,fontStyle:"italic"}}
       buttonStyle={{backgroundColor:'#1A1A1A',borderRadius:20,paddingHorizontal:0,fontFamily:'InterRegular',fontSize:8,opacity:0.8}}
-      containerStyle={{width:85,fontFamily:'InterRegular',fontSize:8,marginBottom:6,marginRight:6,marginTop:24}}
+      containerStyle={{width:105,fontFamily:'InterRegular',fontSize:8,marginBottom:6,marginRight:6,marginTop:24}}
       />
       <Button
-      title='#3.3k responses'
+      title={responsecount}
       titleStyle={{fontFamily:'Interlight',fontSize:11,color:'white',opacity:0.7,fontStyle:"italic"}}
       buttonStyle={{backgroundColor:'#1A1A1A',borderRadius:20,paddingHorizontal:0,fontFamily:'InterRegular',fontSize:8,opacity:0.8}}
-      containerStyle={{width:110,fontFamily:'InterRegular',fontSize:8,marginBottom:6,marginRight:6,marginTop:24}}
+      containerStyle={{width:90,fontFamily:'InterRegular',fontSize:8,marginBottom:6,marginRight:6,marginTop:24}}
       />
-       <Button
-      title='Last answered 2 hrs ago'
-      titleStyle={{fontFamily:'Interlight',fontSize:11,color:'white',opacity:0.7,fontStyle:"italic"}}
-      buttonStyle={{backgroundColor:'#1A1A1A',borderRadius:20,paddingHorizontal:0,fontFamily:'InterRegular',fontSize:8,opacity:0.8}}
-      containerStyle={{width:165,fontFamily:'InterRegular',fontSize:8,marginBottom:6,marginRight:6,marginTop:24}}
-      />
+      <View style={{backgroundColor:'#1A1A1A',borderRadius:20,paddingHorizontal:0,width:165,height:35,marginBottom:6,marginRight:6,marginTop:24,flexDirection:'row'}}>
+      <Text style={{color:'white',fontFamily:'InterRegular',fontSize:11,opacity:0.7,fontStyle:'italic',paddingTop:8,paddingLeft:10}}>Last answered </Text>
+      <TimeAgo  style = {{paddingTop:8,color:'white',alignContent:'center',alignItems:'center',textAlign:'center',fontFamily:'InterRegular',fontSize:11,opacity:0.7,fontStyle:'italic'}} time={post.metadata[0].updatedAt} />
+      </View>
             </View>
             <Card containerStyle={{marginVertical:8,marginTop:1,marginBottom:2,marginHorizontal:0,backgroundColor:'#171717',elevation:5,borderRadius:12,borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingVertical:18,paddingLeft:22,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
             <View>
             <TouchableOpacity onPress={()=>navigation.navigate("CategoryDrill",{
               post:post
             })}>
-            <Text style={styles.questionText}>{post.item.question_text}</Text>
+            <Text style={styles.questionText}>{post.question_text}</Text>
             </TouchableOpacity>
             </View>
             <View style={styles.questionrow}>
@@ -69,7 +116,7 @@ const RenderExploreFeed = ({post,navigation}) => {
      contentContainerStyle={{marginLeft:8}}
       horizontal={true}
       style={styles.feed}
-       data = {categoryanswers}
+       data = {post.answers}
      // scrollEventThrottle={16}
    //   snapToInterval={400}
       snapToAlignment ="start"
@@ -79,22 +126,14 @@ const RenderExploreFeed = ({post,navigation}) => {
           // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
           // {useNativeDriver:true})}
       renderItem={(item)=>
-       {//console.log(item)
-      return <RenderCategoryAnswers post={item}/>}
+       {
+         //console.log("itemitemitemitmei",item)
+      return <RenderCategoryAnswers question={post.question_text} post={item.item} width={{showfull:false}}/>}
       }
       keyExtractor={item => item.answer_id}
       />
     </View>
-  ) : (
-    <View >
-    <View>
-    <TouchableOpacity>
-    <Text style={styles.readmore}>Load more</Text>
-    </TouchableOpacity>
-    </View>
-
-</View>
-  )
+  ) }
 };
 
 export default RenderExploreFeed;

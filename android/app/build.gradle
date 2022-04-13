@@ -95,6 +95,9 @@ apply from: new File(["node", "--print", "require.resolve('react-native/package.
  * the correct one based on the CPU architecture of their device.
  */
 def enableSeparateBuildPerCPUArchitecture = false
+def jscFlavor = 'org.webkit:android-jsc-intl:+'
+
+
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
@@ -112,7 +115,7 @@ def enableProguardInReleaseBuilds = false
  * give correct results when using with locales other than en-US.  Note that
  * this variant is about 6MiB larger per architecture than default.
  */
-def jscFlavor = 'org.webkit:android-jsc:+'
+
 
 /**
  * Whether to enable the Hermes VM.
@@ -193,6 +196,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-svg')
+    implementation project(':@react-native-community_datetimepicker')
+
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

@@ -5,7 +5,8 @@ import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@ex
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-const RenderResponseCards = ({answertext,answer,zindex,scale,opacity,bottom}) => {
+const RenderResponseCards = ({onPress,backgroundColor,textColor,answertext,answer,zindex,scale,opacity,bottom}) => {
+  console.log("RECIEVED ITEMS AT RENDERREPONSE CARDS",zindex)
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
@@ -15,16 +16,18 @@ const RenderResponseCards = ({answertext,answer,zindex,scale,opacity,bottom}) =>
   return (
     <View
 
-    style={{minHeight:22}}
+    style={{height:15}}
     >
       <View
 
 
     style={{
   minWidth:360,
+ // height:40,
    marginHorizontal:6,
    borderWidth:1,
    borderColor:'#414141',
+   //top:bottom,
     position: 'absolute',
     zIndex: zindex,
     padding:20,
@@ -41,7 +44,7 @@ const RenderResponseCards = ({answertext,answer,zindex,scale,opacity,bottom}) =>
 
 
   }} >
-        <View style={{height:240}}>
+        <View style={{height:100}}>
         <Text style={{color:'white',fontFamily:'InterRegular',fontSize:18,opacity:0.8,overflow:'hidden'}} >{answertext}</Text>
         </View>
         <View style={{flexDirection:'row',paddingVertical:8,justifyContent:'space-between'}}>

@@ -2,6 +2,49 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import createDataContext from './createDataContext'
 import tracker from '../api/tracker'
 import { navigate } from '../navigationRef';
+
+
+const fetchHomedata = async() => {
+  try{
+    const token = await AsyncStorage.getItem('token')
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    }
+    const response = await tracker.get('/api/v1/questions/fetchbulk',config)
+    const homedate = await AsyncStorage.setItem('homedate',JSON.stringify(response.data))
+    return response.data
+  }
+  catch(error)
+  {
+    console.log(error)
+    return error
+  }
+}
+
+const explore = async(skip) => {
+  try{
+    const token = await AsyncStorage.getItem('token')
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    }
+    const exploredate = await tracker.get(`api/v1/questions/explore/${skip}`,config)
+    if(skip == 0)
+    {
+      const exploredata = await AsyncStorage.setItem('exploredata',JSON.stringify(exploredate.data))
+    }
+    //console.log(exploredate.data)
+    return exploredate.data
+
+  }
+  catch(error)
+  {
+    console.log(error)
+  }
+}
 const getCount = async(id) => {
   try{
     console.log("IN GET COUNT")
@@ -67,6 +110,31 @@ return error
   }
 }
 
+const answerforid = async (id) => {
+  try{
+    const token = await AsyncStorage.getItem('token')
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+      params: {
+        id
+      }
+    }
+    var data = {
+      "id": id,
+    }
+
+    const response = await tracker.post(`/api/v1/answers/answerforid`,data, {headers:{ Authorization: 'Bearer ' + token}})
+
+    return response.data
+  }
+  catch(error) {
+    console.log(error)
+    return error
+  }
+}
+
 const getAnswersforid = async (id,limit,skip) => {
   try{
     const token = await AsyncStorage.getItem('token')
@@ -90,7 +158,7 @@ const getAnswersforid = async (id,limit,skip) => {
    // config.params = {i}
     // const getcount = await tracker.get(`api/v1/meta/${id}`,config)
 
-   console.log("IN GET ANSWERS FOR ID REST API",response.data)
+  // console.log("IN GET ANSWERS FOR ID REST API",response.data)
     return response.data.answers
   }
   catch(error) {
@@ -102,7 +170,7 @@ const getAnswersforid = async (id,limit,skip) => {
 
 
 const sharepost = async(id) => {
-  console.log("in sharepost")
+ // console.log("in sharepost")
   const token = await AsyncStorage.getItem('token')
   let config = {
     headers: {
@@ -131,7 +199,7 @@ const pinpost = async(id) => {
       "pinnedbyuser": username
     }
     const response = await tracker.post('api/v1/pin/pinpost',data,{headers:{ Authorization: 'Bearer ' + token}})
-    console.log("pinpost",response)
+  //  console.log("pinpost",response)
     return response
   }
   catch(error)
@@ -141,7 +209,7 @@ return error
 }
 const unpinPost = async(id) => {
   try{
-    console.log("pinpost")
+   // console.log("pinpost")
     const token = await AsyncStorage.getItem('token')
     const username = await AsyncStorage.getItem('username')
     var data = {
@@ -149,7 +217,7 @@ const unpinPost = async(id) => {
       "pinnedbyuser": username
     }
     const response = await tracker.post('api/v1/pin/unpin',data,{headers:{ Authorization: 'Bearer ' + token}})
-    console.log("pinpost",response)
+    //console.log("pinpost",response)
     return response
   }
   catch(error)
@@ -161,16 +229,16 @@ return error
 
 const checkpinstatus = async(id) => {
   try{
-    console.log("pin status")
+   // console.log("pin status")
     const token = await AsyncStorage.getItem('token')
     const username = await AsyncStorage.getItem('username')
     var data = {
       "postid": id,
       "username": username
     }
-    console.log("DATA THAT I AM PASSSING TO FINDPOST",data)
+  //  console.log("DATA THAT I AM PASSSING TO FINDPOST",data)
     const response  = await tracker.post(`api/v1/pin/findpost`,data,{headers:{ Authorization: 'Bearer ' + token}})
-    console.log("pin status",response.data)
+  //  console.log("pin status",response.data)
     if(response.data.pin.length >0)
     {
       return 1
@@ -180,8 +248,27 @@ const checkpinstatus = async(id) => {
 
   }
   catch(error) {
+    return error
 
   }
 }
 
-export {getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser}
+const createContrast = async(contrastId,answerId) => {
+  try{
+    const token = await AsyncStorage.getItem('token')
+    const username = await AsyncStorage.getItem('username')
+    var data = {
+      "answerId": answerId,
+      "contrastId": contrastId
+    }
+  //  console.log("DATA THAT I AM PASSSING TO FINDPOST",data)
+    const response  = await tracker.post(`api/v1/answers/createContrast`,data,{headers:{ Authorization: 'Bearer ' + token}})
+    return response.data
+  }
+  catch(error)
+  {
+    return error
+
+  }
+}
+export {fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}

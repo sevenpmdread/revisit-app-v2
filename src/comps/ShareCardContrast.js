@@ -14,7 +14,7 @@ import {
   NotoSerifJP_900Black
 } from '@expo-google-fonts/noto-serif-jp'
 import * as Sharing from 'expo-sharing';
-const ShareCardContrast = ({textcolor,color,prevanswer,newanswer,question}) => {
+const ShareCardContrast = ({textcolor,color,prevanswer,newanswer,question,username,prevdate,newdate,diffdays}) => {
   const [image, setImage] = useState(null);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -109,10 +109,10 @@ const ShareCardContrast = ({textcolor,color,prevanswer,newanswer,question}) => {
       //  marginTop:100,
      //   paddingHorizontal:30
       }}>
-     {image ? <ImageBackground source={{ uri: image }} style={{ margin:15,padding:15,marginBottom:0 }} >
+     {image ? <ImageBackground source={{ uri: image }} imageStyle={{opacity:0.7}} style={{ margin:15,padding:15,marginBottom:0,height:200 }} >
       <Text style={{ color:textcolor,
     fontFamily:'Intermedium',
-    fontSize:36,
+    fontSize:20,
     //includeFontPadding:true,
   // textDecorationLine:'underline',
   //  paddingLeft:8,
@@ -135,18 +135,21 @@ const ShareCardContrast = ({textcolor,color,prevanswer,newanswer,question}) => {
       <Text style={styles.tss}>REVISIT BY                                                      THESURREALSERVICE.COM</Text>
       </View>
       </Card>}
-      <Card containerStyle={{backgroundColor:"#DDDBDC",borderColor:"black",height:155,paddingBottom:2,marginBottom:0,marginTop:10}}>
-      <Text style={styles.prevdate}>ON 21/02/22</Text>
+      <Card containerStyle={{backgroundColor:"#DDDBDC",borderColor:"black",minHeight:80,paddingBottom:2,marginBottom:0,marginTop:10}}>
+      <Text style={styles.prevdate}>On {prevdate}</Text>
+      <View style={{flexDirection:'column',justifyContent:'space-between',minHeight:80}}>
       <Text style={styles.answerText}>{prevanswer}</Text>
-      <Text style={styles.responseby}>response by                                                                                           anonn-233</Text>
-      </Card>
-      <Card containerStyle={{backgroundColor:"#DDDBDC",borderColor:"black",height:165,paddingBottom:12,marginTop:10,marginBottom:10}}>
-      <View style={{flexDirection:"row"}}>
-      <Text style={styles.prevdate}>ON 28/02/22</Text>
-      <Text style={styles.daysafter}>[7 days after previous response]</Text>
       </View>
+      </Card>
+      <Card containerStyle={{backgroundColor:"#DDDBDC",borderColor:"black",minHeight:165,paddingBottom:12,marginTop:10,marginBottom:10}}>
+      <View style={{flexDirection:"row"}}>
+      <Text style={styles.prevdate}>On {newdate}</Text>
+      <Text style={styles.daysafter}>[{diffdays} days after previous response]</Text>
+      </View>
+      <View style={{flexDirection:'column',justifyContent:'space-between',minHeight:80}}>
       <Text style={styles.answerText}>{newanswer}</Text>
-      <Text style={styles.responseby}>response by                                                                                           anonn-233</Text>
+      <Text style={styles.responseby}>contrast by                                                                                           {username}</Text>
+      </View>
       </Card>
       </Card>
       </View>
@@ -186,6 +189,7 @@ const styles = StyleSheet.create({
     color:'black',
     fontFamily:'Intermedium',
     fontSize:7.5,
+    opacity:0.6,
     textDecorationLine:'underline',
     paddingHorizontal:12,
     paddingVertical:12,
@@ -224,6 +228,7 @@ const styles = StyleSheet.create({
   },
   byuser:{
     color:'black',
+    opacity:0.6,
     fontFamily:'Intermedium',
   //  textDecorationLine:'underline',
     fontSize:8,
@@ -240,6 +245,7 @@ const styles = StyleSheet.create({
   //  textAlign:'right'
   },
   daysafter:{
+    opacity:0.3,
     color:'black',
     fontFamily:'Intermedium',
 // fontStyle:"italic",
@@ -253,6 +259,7 @@ const styles = StyleSheet.create({
     color:'black',
     fontFamily:'Intermedium',
     fontSize:12,
+    opacity:0.3,
     //includeFontPadding:true,
   // textDecorationLine:'underline',
   //  paddingLeft:8,

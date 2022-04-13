@@ -20,7 +20,7 @@ const CategoryDrillScreen = ({navigation}) => {
  const [fetch,setFetch] = useState(0)
  useEffect(()=>{
    const fetchData = async (fetch) => {
-   const data  =   await getAnswersforid(post.item.id,10 + fetch*10,0)
+   const data  =   await getAnswersforid(post._id,10 + fetch*10,0)
    console.log(data)
    setanswers(data)
    setLoading(false)
@@ -43,9 +43,9 @@ const CategoryDrillScreen = ({navigation}) => {
     <View style={styles.container}>
     <View style={styles.header}>
     </View>
-            <Card containerStyle={{marginVertical:0,marginBottom:2,marginHorizontal:12,elevation:0,backgroundColor:'transparent',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',borderRadius:16,paddingBottom:12,display:'flex',flexGrow:0,flexDirection:'column',paddingHorizontal:24}}>
+            <Card containerStyle={{marginVertical:8,marginTop:1,marginBottom:2,marginHorizontal:12,backgroundColor:'#171717',elevation:5,borderRadius:12,borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingVertical:18,paddingLeft:22,flexDirection:'column'}}>
             <View>
-            <Text style={styles.questionText}>{post.item.text}</Text>
+            <Text style={styles.questionText}>{post.question_text}</Text>
             </View>
 
             <View style={styles.questionrow}>
@@ -74,7 +74,7 @@ const CategoryDrillScreen = ({navigation}) => {
           // {useNativeDriver:true})}
       renderItem={(item)=>
        {//console.log(item)
-      return <RenderCategoryAnswers post={item} question={post.item.text}  width={{showfull:true}}/>}
+      return <RenderCategoryAnswers post={item} question={post.question_text}  width={{showfull:true}}/>}
       }
       keyExtractor={item => item._id}
       showsVerticalScrollIndicator={false}
@@ -99,7 +99,7 @@ export default CategoryDrillScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#0C0C0C',
   //  / paddingHorizontal:16
   },
   header:{

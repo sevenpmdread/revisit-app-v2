@@ -26,15 +26,11 @@ export default LoadingScreennew
 const styles = StyleSheet.create({
   animation:{
     alignSelf:'center',
-    marginHorizontal:20,
+    marginHorizontal:60,
     marginTop:0,
     width: 100,
-    height: 100,
+    height: 200,
     backgroundColor:'transparent'
-  },
-  container:{
-    flex:1,
-    backgroundColor:'#121212'
   },
   loadinginput:{
     color:'white',

@@ -1,18 +1,40 @@
 import { StyleSheet, Text, View,FlatList, ScrollView } from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import { Card,Button } from 'react-native-elements'
 import RenderResponseCards from './RenderResponseCards'
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import { youranswers } from '../dummydata';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 const RenderResponseQuestion = ({question,questionid,answers,navigation}) => {
- console.log("NAVIGATION",navigation)
+  const [selectedIds, setSelectedId] = useState([]);
+  const renderItem = ({ item,index }) => {
+    const backgroundColor = selectedIds.indexOf(item.id)!=-1 ? "black" : "grey";
+    const color = selectedIds.indexOf(item.id)!=-1 ? 'white' : 'black';
+    console.log("itemitemitemiemm",item)
+    var length = answers.length
+
+    return (
+      <RenderResponseCards
+       // item={item}
+        onPress={() => setSelectedId( selectedIds => [...selectedIds,item._id])}
+        backgroundColor={{ backgroundColor }}
+        textColor={{ color }}
+        answertext={item.answer_text}
+        answer={item}
+        zindex={length - index}
+        scale={1 - 0.1*(length-1) + 0.1*(index)}
+        opacity={0.8 +  0.2*(index)}
+        bottom={50*index}
+
+      />
+    );
+  };
+ //console.log("NAVIGATION",navigation)
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
     "InterSemi":Inter_600SemiBold
    });
-   var length = answers.length
    var marginbottom =  32
   //console.log(length)
 var count = 0
@@ -38,34 +60,13 @@ var count = 0
 
       <View style={{marginHorizontal:20,marginBottom:340,marginTop:0,paddingTop:0,marginTop:-20}}>
       <FlatList
-    //  onPress={()=> console.log("hello")}
-      //  onStartShouldSetResponderCapture={() => {return true}}
-        data={answers}
-    contentContainerStyle={{
-
-   //   backgroundColor:'red'
-     // marginTop:20,
-     // zIndex:9999999
-    }}
-    style={{
-   //   height:300
-      //marginTop:10,
-    //  marginHorizontal:20,
-     // zindex:1000
-
-    }}
-    renderItem={(item)=>
-    {
-
-     // return <ResponderTest />
-     // return <Sample answer={item.item.answertext} scale={1 - 0.1*(length-1) + 0.1*(item.index)} />
-     return <RenderResponseCards  answertext={item.item.answer_text} answer={item.item} zindex={length - item.index} scale={1 - 0.1*(length-1) + 0.1*(item.index)} opacity={0.8 +  0.2*(item.index)} bottom={130*item.index}/>
-    }
-    }
+    data={answers}
+    renderItem={renderItem}
     keyExtractor={(item) => {
-    //  console.log(item.answerid)
      return  item.answerid
     }}
+    extraData={selectedIds}
+
     />
     </View>
       </View>

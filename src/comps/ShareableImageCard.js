@@ -16,7 +16,7 @@ import * as ImagePicker from 'expo-image-picker';
 import LinearGradient from 'react-native-linear-gradient';
 
 import * as Sharing from 'expo-sharing';
-const ShareableImageCard = ({textcolor,color,text,question,username}) => {
+const ShareableImageCard = ({textcolor,color,text,question,username,date}) => {
   const [image, setImage] = useState(null);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -112,11 +112,11 @@ const ShareableImageCard = ({textcolor,color,text,question,username}) => {
      //   paddingHorizontal:30
       }}>
      {image ?
-     <ImageBackground source={{ uri: image }} imageStyle={{opacity:0.8}} style={{ margin:15,padding:0,marginBottom:0}} >
-       <View style={{maxHeight:400,minHeight:200,justifyContent:"space-between",flexDirection:'column'}}>
+     <ImageBackground source={{ uri: image }} imageStyle={{opacity:0.8}} style={{ margin:15,padding:0,marginBottom:0,height:200}} >
+       <View style={{height:200,justifyContent:"space-between",flexDirection:'column'}}>
       <Text style={{ color:textcolor,
     fontFamily:'Intermedium',
-    fontSize:36,
+    fontSize:20,
     //includeFontPadding:true,
   // textDecorationLine:'underline',
   //  paddingLeft:8,
@@ -151,7 +151,7 @@ const ShareableImageCard = ({textcolor,color,text,question,username}) => {
       <View>
       <Text style={styles.byuser}>by {username}</Text>
       <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-      <Text style={styles.bydate}>25/02/22</Text>
+      <Text style={styles.bydate}>{date}</Text>
       <Text style={styles.sharedfrom}>[shared from the app]</Text>
       </View>
 

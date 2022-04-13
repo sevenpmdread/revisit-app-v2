@@ -11,6 +11,7 @@ import {
   ImageBackground,Button,
   SafeAreaView, ScrollView,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
 import {Entypo} from '@expo/vector-icons'
 import { Card, withTheme } from 'react-native-elements';
@@ -25,31 +26,48 @@ import { withNavigation } from 'react-navigation'
 import * as Notifications from 'expo-notifications';
 import { Context } from '../context/authContext';
 import LoadingScreennew from './Loadingnew';
+import { fetchHomedata } from '../context/restapi';
 const NewHomeScreen = ({navigation}) => {
 
-  const {state,fetchHomedata} = useContext(Context)
+  const {state} = useContext(Context)
   const [isLoading,setLoading] = useState(false)
  // const [username,setusername] = useState('')
   const [arrdata,setdata] = useState(null)
   var categoryquesnew = []
-  useEffect( async () => {
+  useEffect(() => {
 
-   await fetchHomedata()
+
+   const  fetchHome = async() => {
+    let response = {}
+     const data  = await AsyncStorage.getItem('homedate')
+     if(data)
+     {
+       response = JSON.parse(data)
+       console.log("in asyncstorage")
+     }
+     else
+     response = await fetchHomedata()
+    // console.log("RESPONSE RESPONSE",response)
+     var categorycount = response.nbHits
+     console.log("obj",response)
+     for(let i = 0; i <  categorycount;i++)
+     {
+      let obj = {}
+      obj.type = response.questions[i]._id
+      obj.questions = response.questions[i].questions
+      obj.desc = response.questions[i].questions[0].desc
+      categoryquesnew[i] = obj
+      console.log("obj",obj)
+     }
+    // console.log("in effect",categoryquesnew)
+     setdata(categoryquesnew)
+    // setusername(state.username)
+    // console.log(username)
+     setLoading(true)
+   }
+
     //console.log("state.homescreendata.questions",state)
-    var categorycount = state.homescreendata.nbHits
-    for(let i = 0; i <  categorycount;i++)
-    {
-     let obj = {}
-     obj.type = state.homescreendata.questions[i]._id
-     obj.questions = state.homescreendata.questions[i].questions
-     obj.desc = state.homescreendata.questions[i].questions[0].desc
-     categoryquesnew[i] = obj
-    }
-   // console.log("in effect",categoryquesnew)
-    setdata(categoryquesnew)
-   // setusername(state.username)
-   // console.log(username)
-    setLoading(true)
+    fetchHome()
 
    },[isLoading])
 
@@ -198,7 +216,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#0C0C0C',
     paddingHorizontal:16
   },
   header:{

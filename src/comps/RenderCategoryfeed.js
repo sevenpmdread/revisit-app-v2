@@ -30,7 +30,7 @@ const RenderCategoryfeed = ({post,navigation}) => {
  // console.log(navigation)
    return   (
     <View >
-            <Card containerStyle={{marginVertical:0,elevation:0,marginBottom:2,marginHorizontal:0,backgroundColor:'transparent',borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingBottom:2,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
+            <Card containerStyle={{marginVertical:8,marginTop:1,marginBottom:2,marginHorizontal:0,backgroundColor:'#171717',elevation:5,borderRadius:12,borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingVertical:18,paddingLeft:22,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
             <View>
             <TouchableOpacity onPress={()=>
             {
@@ -49,8 +49,6 @@ const RenderCategoryfeed = ({post,navigation}) => {
             <Text style={styles.questionText}>{post.item.text}</Text>
             </TouchableOpacity>
             </View>
-            </Card>
-
             <View style={styles.questionrow}>
             <TouchableOpacity
             style={styles.button}
@@ -62,6 +60,7 @@ const RenderCategoryfeed = ({post,navigation}) => {
                 <Feather name="more-vertical" size={26} color="white" style={{marginTop:12,textAlign:'left',opacity:0.7}}/>
                 </TouchableOpacity >
             </View>
+            </Card>
 { answers.length ?
                 <FlatList
               contentContainerStyle={{marginLeft:8}}
@@ -72,7 +71,7 @@ const RenderCategoryfeed = ({post,navigation}) => {
                    decelerationRate={0}
                renderItem={(item)=>
                 {
-               return <RenderCategoryAnswers post={item} question={post.item.text} width={{showfull:false}} />}
+               return <RenderCategoryAnswers post={item.item} question={post.item.text} width={{showfull:false}} />}
                }
                keyExtractor={item => item._id}
                />
@@ -102,7 +101,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     alignContent:'center',
     alignItems:'center',
-    marginBottom:32
+   // marginBottom:32
 
   },
   cardfooter: {
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
     textAlignVertical:'bottom',
     flexDirection:'column',
     marginTop:0,
-    paddingLeft:16,
+    paddingLeft:0,
     //paddingTop:30,
     paddingBottom:5,
    marginBottom:1,
