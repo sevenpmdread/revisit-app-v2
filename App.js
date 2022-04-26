@@ -4,6 +4,7 @@ import {
   GestureHandlerRootView
 } from 'react-native-gesture-handler';
 import React from 'react'
+
 //import {createStackNavigator} from  '@react-navigation/stack'
 //import { NavigationContainer } from '@react-navigation/native';
 //mport { createAppContainer } from "react-navigation";
@@ -40,6 +41,12 @@ import ShareCardQuestion from './src/comps/ShareCardQuestion';
 import ChooseBackgroundImage from './src/comps/ChooseBackground';
 import RenderResponses from './src/comps/RenderResponses';
 import Questionofday from './src/comps/Questionofday';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
+
+LogBox.ignoreAllLogs()
+
 //import { createStackNavigator } from '@react-navigation/stack';
 
 // const Stack = createStackNavigator();
@@ -67,7 +74,7 @@ import Questionofday from './src/comps/Questionofday';
 //const Stack = createStackNavigator();
 
 const switchNavigator = createSwitchNavigator({
-  //Main:Questionofday,
+ // Main:VentScreen,
  // Share:ShareCardQuestion,
  // Category:CategoryScreen,
    // Share:ShareableImage,

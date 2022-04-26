@@ -16,7 +16,7 @@ const RenderResponseCards = ({onPress,backgroundColor,textColor,answertext,answe
   return (
     <View
 
-    style={{height:15}}
+    style={{height:3}}
     >
       <View
 
@@ -24,10 +24,10 @@ const RenderResponseCards = ({onPress,backgroundColor,textColor,answertext,answe
     style={{
   minWidth:360,
  // height:40,
-   marginHorizontal:6,
+   marginHorizontal:0,
    borderWidth:1,
    borderColor:'#414141',
-   //top:bottom,
+   //bottom:bottom,
     position: 'absolute',
     zIndex: zindex,
     padding:20,
@@ -36,11 +36,11 @@ const RenderResponseCards = ({onPress,backgroundColor,textColor,answertext,answe
     backgroundColor: '#222222', // Red
     opacity: opacity,
     elevation:-5,
-    transform: [
+    //  transform: [
 
 
-       { scale: scale }
-      ]
+    //     { scale: 1 }
+    //    ]
 
 
   }} >

@@ -38,7 +38,7 @@ const DATA = [
     title: 'Third Item',
   },
 ];
-const CategoryQuestion = ({type,desc,questions,navigation}) => {
+const CategoryQuestion = ({type,desc,questions,navigation,horizontal}) => {
   const expanded = true;
   //console.log("received questions",questions)
   // let [fontsLoaded] = useFonts({
@@ -62,7 +62,7 @@ const CategoryQuestion = ({type,desc,questions,navigation}) => {
           })}}>
       <ImageBackground  imageStyle={{borderRadius:26,width:'auto',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',opacity:0.8}} resizeMode= 'cover' source={image} style={{marginVertical:0,marginBottom:16,marginHorizontal:0, paddingHorizontal:16,paddingBottom:16,paddingTop:12}}>
             <Text style={styles.qod}>{type}</Text>
-            <Text style={styles.questionText}>{type} Questions</Text>
+            <Text style={styles.questionText}>{type}</Text>
             <Text style={styles.questionsub}>{desc}</Text>
             <View style={styles.questionrow}>
                 <TouchableOpacity style={styles.row}>
@@ -84,7 +84,7 @@ const CategoryQuestion = ({type,desc,questions,navigation}) => {
 
      <FlatList
      contentContainerStyle={{marginLeft:8}}
-      horizontal={true}
+      horizontal={horizontal ? false : true}
       nestedScrollEnabled={true}
       style={styles.feed}
        data = {questions}

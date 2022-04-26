@@ -27,7 +27,27 @@ import * as Notifications from 'expo-notifications';
 import { Context } from '../context/authContext';
 import LoadingScreennew from './Loadingnew';
 import { fetchHomedata } from '../context/restapi';
+import PushNotification from 'react-native-push-notification';
+import { setReminders } from '../context/restapi';
+
 const NewHomeScreen = ({navigation}) => {
+  const createChannel  = () => {
+    PushNotification.createChannel({
+      channelId:'test1',
+      channelName:'channelInitial'
+    },
+
+    )
+
+  }
+
+  const newnotificationhandler = (item) => {
+    PushNotification.localNotification({
+      channelId:'test1',
+      title:"You cicked on " + item,
+      message:"timer set"
+    })
+  }
 
   const {state} = useContext(Context)
   const [isLoading,setLoading] = useState(false)
@@ -36,20 +56,20 @@ const NewHomeScreen = ({navigation}) => {
   var categoryquesnew = []
   useEffect(() => {
 
-
+    //setReminders()
    const  fetchHome = async() => {
-    let response = {}
-     const data  = await AsyncStorage.getItem('homedate')
-     if(data)
-     {
-       response = JSON.parse(data)
-       console.log("in asyncstorage")
-     }
-     else
-     response = await fetchHomedata()
+
+    //  const data  = await AsyncStorage.getItem('homedate')
+    //  if(data)
+    //  {
+    //    response = JSON.parse(data)
+    //    console.log("in asyncstorage")
+    //  }
+    //  else
+    let response = await fetchHomedata()
     // console.log("RESPONSE RESPONSE",response)
      var categorycount = response.nbHits
-     console.log("obj",response)
+    //",response)
      for(let i = 0; i <  categorycount;i++)
      {
       let obj = {}
@@ -57,7 +77,7 @@ const NewHomeScreen = ({navigation}) => {
       obj.questions = response.questions[i].questions
       obj.desc = response.questions[i].questions[0].desc
       categoryquesnew[i] = obj
-      console.log("obj",obj)
+    //  console.log("obj",obj)
      }
     // console.log("in effect",categoryquesnew)
      setdata(categoryquesnew)
@@ -68,6 +88,7 @@ const NewHomeScreen = ({navigation}) => {
 
     //console.log("state.homescreendata.questions",state)
     fetchHome()
+    createChannel()
 
    },[isLoading])
 
@@ -114,7 +135,7 @@ async function registerForPushNotificationsAsync() {
     handleNotification: async () => ({
       shouldShowAlert: true,
       shouldPlaySound: false,
-      shouldSetBadge: false,
+      shouldSetBadge: true,
     }),
   });
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -155,7 +176,7 @@ async function registerForPushNotificationsAsync() {
         }}>
     <Text style= {styles.headerTitle}>Hi, {state.username}!</Text>
     </TouchableOpacity>
-    <Feather name="bell" size={24} color="white" style={{marginTop:10}}/>
+    <Feather name="bell" size={24} color="white" style={{marginTop:10}} onPress={()=>newnotificationhandler('hI')}/>
     </View>
     <Questionofday/>
     <CardSpacer/>
@@ -166,7 +187,7 @@ async function registerForPushNotificationsAsync() {
       renderItem={(item)=>
       {
        return <CategoryQuestion type={item.item.type} desc={item.item.desc} questions={item.item.questions} navigation={navigation}/>}
-       }
+      }
       keyExtractor={item => item.type}
       /> :
 

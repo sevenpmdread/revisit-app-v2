@@ -23,6 +23,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { fonts } from 'react-native-elements/dist/config';
 import { categoryquestions } from '../dummydata';
 import RenderCategoryQuestions from './RenderCategoryQuestions';
+import { AntDesign } from '@expo/vector-icons';
 import RenderCreateQuestions from './RenderCreateQuestions';
 //import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 const DATA = [
@@ -39,7 +40,7 @@ const DATA = [
     title: 'Third Item',
   },
 ];
-const CreateList = ({type,desc,imagesrc,navigation}) => {
+const CreateList = ({type,desc,imagesrc,navigation,questions}) => {
   const [visible,setVisible] = useState(false)
   const expanded = true;
   const scrollX = useRef(new Animated.Value(expanded ? 1 : 0)).current
@@ -53,43 +54,29 @@ const height_logo = height * 0.28;
 //   console.log(imagesrc,typeof imagesrc)
 //   console.log(require('../../assets/categorygrowth.png'))
 //  console.log(image)
- var image = type === 'Existential'? require('../../assets/categoryexistential.png') :  type === 'Confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'Growth' ?   require('../../assets/categorygrowth.png') : require('../../assets/categorypersonal.png')
+ //var image = type === 'existential'? require('../../assets/categoryexistential.png') :  type === 'confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'growth' ?   require('../../assets/categorygrowth.png') : require('../../assets/categorypersonal.png')
  // console.log( type.toLowerCase())
   const name = type.toLowerCase()
 
   return (
-    <View>
+    <View style={{paddingHorizontal:24}}>
       <TouchableHighlight onPress={()=>{
       //  console.log(visible)
         return setVisible(!visible)}}>
-      <ImageBackground  imageStyle={{borderRadius:26,width:'auto',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)',opacity:0.8,marginHorizontal:24}} resizeMode= 'cover' source={image} style={{marginVertical:0,marginBottom:16,marginHorizontal:0, paddingHorizontal:40,paddingBottom:16,paddingTop:12}}>
-            <Text style={styles.qod}>{type}</Text>
+      <View  style={{marginVertical:0,marginBottom:16,marginHorizontal:0, paddingHorizontal:20,paddingBottom:12,paddingTop:12,backgroundColor:"black",borderRadius:12,minHeight:120,justifyContent:"space-evenly",borderWidth:1,borderColor:'grey'}}>
             <Text style={styles.questionText}>{type} Questions</Text>
             <Text style={styles.questionsub}>{desc}</Text>
-            <View style={styles.questionrow}>
-                <TouchableOpacity style={styles.row}>
-                <Ionicons name="help" size={20} color="white" />
-                <Text style={styles.cardfooter}>20 questions</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.row}>
-                <MaterialIcons name="question-answer" size={20} color="white" />
-                <Text style={styles.cardfooter}>Anwered 24 times</Text>
-             </TouchableOpacity >
-                <TouchableOpacity  style={styles.row}>
-                <MaterialCommunityIcons name="pin-outline" size={20} color="white" />
-                <Text style={styles.cardfooter}>Pinned 24 times</Text>
-                </TouchableOpacity>
-            </View>
-    </ImageBackground>
+            <AntDesign name="down" size={16} color="grey" style={{alignSelf:"center",paddingTop:16,opacity:0.6}} />
+    </View>
     </TouchableHighlight>
 
 
-     <FlatList
-
-     contentContainerStyle={{marginLeft:8,display:visible ? "flex": "none"}}
-    // horizontal={true}
+    <FlatList
+     contentContainerStyle={{marginLeft:8}}
+      horizontal={false}
+      nestedScrollEnabled={true}
       style={styles.feed}
-       data = {categoryquestions}
+       data = {questions}
      // scrollEventThrottle={16}
    //   snapToInterval={400}
       snapToAlignment ="start"
@@ -99,10 +86,11 @@ const height_logo = height * 0.28;
           // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
           // {useNativeDriver:true})}
       renderItem={(item)=>
-       {//console.log(item)
-       return visible ? <RenderCreateQuestions nav = {navigation} post={item}/> : <></>}
+       {
+         console.log("item in categoryquestions",item)
+      return visible ?  <RenderCategoryQuestions nav = {navigation} post={item} width={true} onpress={true}/> : <></>}
       }
-      keyExtractor={item => item.question_id}
+      keyExtractor={item => item.id}
       showsVerticalScrollIndicator={false}
       />
     <CardSpacer/>

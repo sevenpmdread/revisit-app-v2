@@ -68,9 +68,9 @@ const RenderCreateQuestions = ({post,nav}) => {
               <View style={{margin:0,padding:0}}>
              { l.title != "Cancel" ?
              <View>
-            <ColorPicker colors = {["#AC2929","#C8B32B","#654A8A","#2B7644","#A46F31","#B43A6D","#443AB4","#179089"]} selectedColor={selectedColor} onSelect={setColor} />
+            <ColorPicker colors = {["#ffffff","#121212","#654A8A","#2B7644","#A46F31","#B43A6D","#443AB4","#179089"]} selectedColor={selectedColor} onSelect={setColor} />
 
-             <ShareCardQuestion color={selectedColor} question={post.item.question_text}/>
+             <ShareCardQuestion textcolor = {selectedColor}  color={selectedColor} question={post.item.question_text}/>
             </View>
              :
              <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>}

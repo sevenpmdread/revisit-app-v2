@@ -1,19 +1,39 @@
 import { StyleSheet, Text, View,FlatList } from 'react-native'
-import React from 'react'
-import { ventquestions } from '../dummydata'
+import React,{useEffect,useState} from 'react'
+//import { ventquestions } from '../dummydata'
 import RenderVentQuestions from '../comps/RenderVentQuestions'
-const VentQuestion = () => {
+import { getvent } from '../context/restapi'
+const VentQuestion = ({questions,setquestiontext,onaddnew,setreaload,setquestionid}) => {
+  //let ventquestions = []
+  // const [ventquestions,setventquestions] = useState([])
+  // useEffect(() => {
+  //   let fetchData = async()=> {
+  //     let ventquestions = await getvent()
+  //     setventquestions(ventquestions)
+  //   }
+  //   fetchData()
+  // }, [])
+
   return (
-    <View>
-      <FlatList
-      data={ventquestions}
+         <FlatList
+        // contentContainerStyle={{flex:1,backgroundColor:'#0C0C0C'}}
+     // style={{flex:1,backgroundColor:'#0C0C0C'}}
+      data={questions}
+      inverted={true}
       renderItem={(item)=>
         {
-         return <RenderVentQuestions question={item.item.questiontext}/>}
+         console.log("ITEM",item)
+         return <RenderVentQuestions
+         setquestionid={setquestionid}
+         setreaload={setreaload}
+         setquestiontext={setquestiontext}
+         onaddnew={onaddnew}
+         answer = {item.item.answer}
+         questionid = {item.item.id}
+         question={item.item.question_text}/>}
         }
-      keyExtractor={item => item.questionid}
+      keyExtractor={item => item.id}
       />
-    </View>
   )
 }
 

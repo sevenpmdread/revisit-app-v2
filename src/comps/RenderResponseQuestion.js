@@ -5,6 +5,7 @@ import RenderResponseCards from './RenderResponseCards'
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import { youranswers } from '../dummydata';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
 const RenderResponseQuestion = ({question,questionid,answers,navigation}) => {
   const [selectedIds, setSelectedId] = useState([]);
   const renderItem = ({ item,index }) => {
@@ -61,6 +62,7 @@ var count = 0
       <View style={{marginHorizontal:20,marginBottom:340,marginTop:0,paddingTop:0,marginTop:-20}}>
       <FlatList
     data={answers}
+    inverted={true}
     renderItem={renderItem}
     keyExtractor={(item) => {
      return  item.answerid

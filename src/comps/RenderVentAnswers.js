@@ -6,8 +6,8 @@ import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useFonts, Inter_500Medium,Inter_400Regular} from '@expo-google-fonts/inter';
 import { Dimensions } from 'react-native';
-
-const RenderVentAnswers = ({answertext}) => {
+import TimeAgo from 'react-native-timeago';
+const RenderVentAnswers = ({answertext,timestamp,answerid}) => {
   const windowWidth = Dimensions.get('window').width;
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
@@ -15,11 +15,11 @@ const RenderVentAnswers = ({answertext}) => {
    });
    return  (
     <View >
-            <Card containerStyle={{marginVertical:0,marginBottom:16,marginHorizontal:0,marginRight:12,elevation:5,backgroundColor:'#202020',width:370,height:440,borderWidth:3,borderColor:'#303030',minHeight:265,borderRadius:16,paddingBottom:5,dispplay:'flex',flex:2,flexDirection:'column'}} style={{padding:0}}>
-            <View style={{paddingLeft:0}}>
+            <Card containerStyle={{marginVertical:0,marginBottom:16,marginHorizontal:0,marginRight:12,elevation:5,backgroundColor:'#202020',width:370,minHeight:340,borderWidth:3,borderColor:'#303030',minHeight:265,borderRadius:16,paddingBottom:5,flexDirection:'column',justifyContent:'space-between'}} style={{padding:0}}>
+            <View style={{paddingLeft:0,flexDirection:'column',justifyContent:'space-between',minHeight:200}}>
             <Text style={styles.questionText}>{answertext}</Text>
             <View style={styles.questionrow}>
-                <Text style={styles.cardfooter}>23 days ago</Text>
+            <TimeAgo  style = {{color:'white',opacity:0.6,fontFamily:'InterRegular',fontSize:12}} time={timestamp} />
             </View>
             </View>
             </Card>
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
   // alignItems:'baseline',
     //textAlignVertical:'bottom',
     //flexDirection:'column',
-    marginTop:350,
+    //marginTop:350,
     //paddingTop:30,
-    paddingBottom:5,
-   marginBottom:5,
+    //paddingBottom:5,
+   //marginBottom:5,
     flexDirection:'row',
   },
 });

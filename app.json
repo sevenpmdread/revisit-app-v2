@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Revisit",
+    "userInterfaceStyle": "automatic",
     "slug": "revisit",
     "notification": {
       "icon": "./assets/notification-icon.png"

@@ -12,6 +12,13 @@ import 'expo-dev-client';
 //registerTranslation('en-GB', enGB)
 
 import { registerRootComponent } from 'expo';
+import PushNotification from "react-native-push-notification";
+PushNotification.configure({
+  onNotification: function (notification) {
+    console.log("NOTIFICATION:", notification);
+  },
+  requestPermissions: Platform.OS === 'ios'
+})
 
 import App from './App';
 

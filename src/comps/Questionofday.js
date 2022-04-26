@@ -7,7 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   Image,
-  ImageBackground,Button
+  ImageBackground,Button,PermissionsAndroid
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import {Entypo} from '@expo/vector-icons'
@@ -18,22 +18,76 @@ import { fonts } from 'react-native-elements/dist/config';
 import DatePicker from 'react-native-modern-datepicker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Modal from "react-native-modal";
+import { getToday, getFormatedDate } from 'react-native-modern-datepicker';
 
 
 const Questionofday = () => {
+  var getTime = () => {
+    let date = new Date();
+    var tz = date.toString().split("GMT")[1].split(" (")[0];
+    tz = tz.substring(1,5);
+    let hOffset = parseInt(tz[0]+tz[1]);
+    let mOffset = parseInt(tz[2]+tz[3]);
+    let offset = date.getTimezoneOffset() * 60 * 1000;
+    let localTime = date.getTime();
+    let utcTime = localTime + offset;
+    let austratia_brisbane = utcTime + (3600000 * hOffset) + (60000 * mOffset);
+    let customDate = new Date(austratia_brisbane);
+
+    let data = {
+        day: customDate.getDate(),
+        month: customDate.getMonth() + 1,
+        year: customDate.getFullYear(),
+        hour: customDate.getHours(),
+        min: customDate.getMinutes(),
+        second: customDate.getSeconds(),
+        raw: customDate,
+        stringDate: customDate.toString()
+    }
+
+    return data;
+  }
+  const options = { weekday: 'short', year: '2-digit', month: 'short', day: 'numeric',hour:"numeric",minute:"numeric"};
   const [selectedDate, setSelectedDate] = useState('');
   const [showmodal,setshowmodal] = useState(false)
   var todayDate = new Date().toISOString().slice(0, 10).replace(/-/g,"/")
 
   const {height} = Dimensions.get("screen");
 const height_logo = height * 0.28;
+
+const requestCameraPermission = async () => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR,
+      {
+        title: "Cool Photo App Camera Permission",
+        message:
+          "Cool Photo App needs access to your camera " +
+          "so you can take awesome pictures.",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK"
+      }
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log("You can use the camera");
+    } else {
+      console.log("Camera permission denied");
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
   return (
     <View>
 
     <Modal isVisible={showmodal}>
         <View style={{ flex: 1,marginVertical:220 }}>
         <View style={{backgroundColor:'#0C0C0C',padding:12,flexDirection:'row'}}>
-
+        <TouchableOpacity onPress={requestCameraPermission} style={{color:'white',fontSize:12,paddingHorizontal:6,paddingTop:2}}>
+          <Text>Request Permission</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={()=>setshowmodal(false)}>
         <Entypo name="cross" size={24} color="#F4722B" style={{alignSelf:'flex-end'}}/>
         </TouchableOpacity>
@@ -41,7 +95,9 @@ const height_logo = height * 0.28;
         <DatePicker
            //   selected={todayDate}
            minimumDate={todayDate}
-              mode="datepicker"
+           mode="datepicker"
+           minuteInterval={1}
+             // mode="datepicker"
      options={{
       backgroundColor: '#0C0C0C',
       textHeaderColor: '#F4722B',
@@ -51,12 +107,23 @@ const height_logo = height * 0.28;
       textSecondaryColor: '#D6C7A1',
       borderColor: 'rgba(122, 146, 165, 0.1)',
     }}
-      onSelectedChange={date =>
+    onSelectedChange={date =>
        {
-         console.log(date)
-          setSelectedDate(date)
-          if(date.substring(11) != '00:00')
-          setshowmodal(false)
+
+          var d = getTime()
+          //var n = new Date(date)
+          //n = new Date(n.getTime() - n.getTimezoneOffset() * 60000)
+          console.log(new Date(date) - d.raw)
+          // console.log("LOCAL TIME",new Date())
+         // setSelectedDate(date)
+        //   console.log("date",date)
+        //   var d = new Date(date)
+        //   console.log(d,new Date())
+        //   d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+        //  console.log(d - new Date())
+        //   //console.log("converted to",new Date(date).toLocaleString(undefined, options).slice(10,16))
+        //   if(date.substring(11) != '00:00')
+        //   setshowmodal(false)
         }
       }
     />
@@ -81,11 +148,11 @@ const height_logo = height * 0.28;
                 </TouchableOpacity>
                 {
                   selectedDate ?
-                  <View style={{flexDirection:'row',backgroundColor:"transparent",borderRadius:12,padding:8,opacity:0.8,elevation:5,borderColor:'white',borderWidth:1.5}}>
+                  <View style={{flexDirection:'row',backgroundColor:"transparent",borderRadius:12,padding:6,opacity:0.8,elevation:5,borderColor:'white',borderWidth:1}}>
                   <MaterialCommunityIcons name="clock-check" size={24} color="white" style={{opacity:0.8}} />
-                  <Text style={{color:'white',fontSize:12,paddingHorizontal:6,paddingTop:2}}>{new Date(selectedDate).toUTCString().slice(0,-18)}{new Date(selectedDate).toUTCString().substring(16,22)}</Text>
+                  <Text style={{color:'white',fontSize:12,paddingHorizontal:6,paddingTop:2}}>{new Date(selectedDate).toLocaleString(undefined, options).slice(0,11)}{new Date(selectedDate).toLocaleString(undefined, options).slice(15)}</Text>
                    <TouchableOpacity onPress={()=>setSelectedDate('')}>
-                   <Entypo name="cross" size={20} color="white" style={{alignSelf:'flex-end',paddingVertical:2,paddingLeft:8}}/>
+                   <Entypo name="cross" size={20} color="white" style={{alignSelf:'flex-end',paddingVertical:2,paddingLeft:4}}/>
                    </TouchableOpacity>
                    </View>
 
