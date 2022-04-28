@@ -10,10 +10,10 @@ import posts from '../dummydata';
 import RenderCategoryAnswers from './RenderCategoryAnswers';
 import RenderCategoryDrillAnswers from './RenderCategoryDrillAnswer';
 import { getAnswersforid } from '../context/restapi';
-const CategoryDrillScreen = ({navigation}) => {
+const CategoryDrillScreen = ({route,navigation}) => {
  // console.log("fjhsdfjsd = ", navigation.getParam('post'))
- const  post = navigation.getParam('post')
- const answerstemp = navigation.getParam('answers')
+ const  post = route.params?.post
+ const answerstemp = route.params?.answers
  console.log("sdhfvsdfhvsdfsdfsd sdfjhfsd post answer", post,answerstemp)
  const [answers,setanswers] = useState(answerstemp)
  const [isLoading,setLoading] = useState(true)

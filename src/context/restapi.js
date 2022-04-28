@@ -344,6 +344,26 @@ const getAllreminders = async() => {
 }
 
 
+const getQod = async() => {
+  try{
+    console.log("REACHED")
+    const token = await AsyncStorage.getItem('token')
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    }
+    const question = await tracker.get(`api/v1/questions/qod`,config)
+    console.log(question.data)
+    return question.data
+
+  }
+  catch(error)
+  {
+    console.log(error)
+  }
+}
+
 const fetchHomedata = async() => {
   try{
     const token = await AsyncStorage.getItem('token')
@@ -691,4 +711,4 @@ const createContrast = async(contrastId,answerId) => {
 
   }
 }
-export {addventstore,removeventquestion,getvent,getventall,storeventnew,ventcreate,upvotequestion,createVentQuestion,ventexplore,postAnswer,getRandomQuestion,getAllQuestions,getAllreminders,getReminders,setReminders,fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}
+export {getQod,addventstore,removeventquestion,getvent,getventall,storeventnew,ventcreate,upvotequestion,createVentQuestion,ventexplore,postAnswer,getRandomQuestion,getAllQuestions,getAllreminders,getReminders,setReminders,fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}

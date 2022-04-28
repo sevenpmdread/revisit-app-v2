@@ -30,57 +30,74 @@ const Contrastcomp = ({contrastAnswers,selectedids,answers,setnew}) => {
   const prevdate = contrastAnswers[0].data_a.toDateString().substr(4,12)
   const newdate = contrastAnswers[1].data_a.toDateString().substr(4,12)
 const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  return (<View >
+  return (
+  <View >
     <Card containerStyle={{marginTop:20,marginVertical:0,marginBottom:16,marginHorizontal:12,backgroundColor:'transparent',borderWidth:1,borderColor:'green',minHeight:285,borderRadius:16,padding:0,display:'flex',flexGrow:2,flexDirection:'column',   justifyContent:"space-between",
 elevation:0}}>
     <View style={{flexDirection:'column',   justifyContent:"space-between",minHeight:205}}>
-    <Text style={styles.contrasttexttop}>{contrastAnswers[0].a}</Text>
-    <TouchableOpacity style={{flexDirection:'row',justifyContent:'space-between', backgroundColor : "transparent",borderColor:'green',borderWidth:2,borderLeftWidth:0,borderRightWidth:0,textAlign:'center',opacity:0.8}}>
-    <View style={{flexDirection:'row'}}>
-    <Feather name="chevron-up" size={20} color="grey" style={{    paddingLeft:8,paddingTop:8}} />
     <Text style={{
-    color : "grey",
-  //  alignSelf : "center",
-    paddingVertical :8,
-    paddingLeft:2,
-    fontFamily:'InterRegular',
-    fontSize:12,
-    marginVertical : 0
+  paddingLeft:20,
+  color:'white',
+  opacity:0.4,
+  fontFamily:'InterRegular',
+  fontSize:10,
+  paddingTop:20
     }}>{prevdate}</Text>
-    </View>
+    <Text style={styles.contrasttexttop}>{contrastAnswers[0].a}</Text>
+    <TouchableOpacity style={{ backgroundColor : "transparent",borderWidth:0,borderLeftWidth:0,borderRightWidth:0,textAlign:'center',opacity:0.8}}>
+    <View
+  style={{
+    borderBottomColor: '#02853E',
+    borderBottomWidth: 1.5,
+    borderRadius:12,
+    width:140,
+    position:'absolute',
+    marginTop:20
+  }}
+/>
     <Text style={{
     color : "white",
     alignSelf : "center",
     paddingVertical :8,
-    marginVertical : 0
-    }}>{diffDays} days apart</Text>
-    <View style={{flexDirection:'row'}}>
-    <Text style={{
-    color : "grey",
-    alignSelf : "center",
-    paddingVertical :8,
     marginVertical : 0,
-    fontFamily:'InterRegular',
-    fontSize:12,
-    paddingRight:4
-    }}>{newdate}</Text>
-        <Feather name="chevron-down" size={20} color="grey" style={{    paddingRight:8,paddingTop:8}} />
-    </View>
+    fontFamily:'Intermedium',
+    fontSize:14
+    }}> {diffDays>0 ? `${diffDays}  Days` : `Same day`}</Text>
+   <View
+  style={{
+    borderBottomColor: '#02853E',
+    borderBottomWidth: 1.5,
+    borderRadius:12,
+    width:140,
+    position:'absolute',
+    marginTop:20,
+    marginLeft:245,
+    textAlign:'right'
+  }}
+/>
     </TouchableOpacity>
+    <Text style={{
+     paddingLeft:20,
+     color:'white',
+     opacity:0.4,
+     fontFamily:'InterRegular',
+     fontSize:10,
+     paddingTop:20
+    }}>{newdate}</Text>
         <Text style={styles.contrasttextbottom}>{contrastAnswers[1].a}</Text>
     <View style={styles.questionrow}>
         <Text style={styles.cardfootercontrast}>by {state.username}</Text>
     </View>
     </View>
     <View style={{flexDirection:'row'}}>
-    <TouchableOpacity onPress={()=>contrastcreate()} style={{backgroundColor:'transparent',borderColor:'white',borderWidth:1,borderRadius:12,padding:6,paddingHorizontal:12,marginHorizontal:12,marginTop:6}}>
-    <Text style={{color:'white',fontFamily:'InterRegular',fontSize:14}}>Publish Contrast</Text>
+    <TouchableOpacity onPress={()=>contrastcreate()} style={{backgroundColor:'white',borderColor:'white',borderWidth:1,borderRadius:6,padding:6,paddingHorizontal:12,marginHorizontal:12,marginVertical:12}}>
+    <Text style={{color:'black',fontFamily:'InterRegular',fontSize:14}}>Publish Contrast</Text>
     </TouchableOpacity>
     </View>
     </Card>
 </View>)
 }
-const RenderResponses = ({navigation}) => {
+const RenderResponses = ({route,navigation}) => {
   const [createContrast,setcreateContrast] = useState(false)
 
 
@@ -117,8 +134,8 @@ const RenderResponses = ({navigation}) => {
   const [contrastAnswers,setContrastanswers] = useState([]);
   const [selectedIds, setSelectedId] = useState([]);
   console.log("in here")
-  const  question = navigation.getParam('question')
- const answers = navigation.getParam('answers')
+  const  question = route.params?.question
+ const answers = route.params?.answers
  const [allanswers,setallanswers] = useState(answers)
  useEffect(()=>{},[showcontrast])
  const renderItem = ({ item,index }) => {
@@ -226,7 +243,8 @@ const RenderResponses = ({navigation}) => {
                 </View>
             </View>
             </Card>
-           {showcontrast ?<Contrastcomp
+           {showcontrast ?
+           <Contrastcomp
            contrastAnswers ={contrastAnswers}
            setnew={
              (newanswer) =>
@@ -294,7 +312,7 @@ const styles = StyleSheet.create({
    // height:120,
    // paddingVertical:4,
     overflow:'scroll',
-    fontSize:13,
+    fontSize:14,
     opacity:0.8,
     marginBottom:8,
     paddingTop:20,

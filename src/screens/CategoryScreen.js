@@ -12,13 +12,14 @@ import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@ex
 
 import CardSpacer from '../comps/CardSpacer';
 import Categoryfeed from '../comps/CategoryPagefeed';
-
+import * as navigation from '../navigationRef'
 const CategoryScreen = ({route,navigation}) => {
   let quesdescs = []
   let obj = {}
-  obj.type = navigation.getParam('type')
-  obj.desc = navigation.getParam('desc')
-  obj.questions = navigation.getParam('questions')
+  console.log("NAB NAV",route.params?.type)
+  obj.type = route.params?.type
+  obj.desc =route.params?.desc
+  obj.questions = route.params?.questions
   quesdescs.push(obj)
   // const quesdescs = [
   //   {

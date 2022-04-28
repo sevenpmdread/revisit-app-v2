@@ -18,7 +18,7 @@ const wait = (timeout) => {
 const ExploreScreen = ({navigation,route}) => {
   const expanded = true;
   const scrollY = useRef(new Animated.Value(expanded ? 1 : 0)).current
-  const  vent = navigation.getParam('vent')
+  const  vent = route.params?.vent
  // const [ventload,setVent] = useState(false)
   //setVent(reload ? true : false)
   //if(vent)
@@ -48,6 +48,11 @@ const ExploreScreen = ({navigation,route}) => {
   useEffect(() => {
     //  console.log("I AM CALLED ID USEEFFECT")
       // declare the data fetching function
+      if(route.params?.refresh)
+      navigation.addListener('focus', () => {
+        console.log("NAVIGATION",route,navigation)
+        onRefresh()
+      });
       const fetchData = async () => {
 
       //  console.log("FOUND FOUND")
@@ -61,7 +66,7 @@ const ExploreScreen = ({navigation,route}) => {
       if(vent)
       {
         data =  await ventexplore(skip)
-        console.log("VENT",data.posts)
+        //console.log("VENT",data.posts)
       }
       else
          data =  await explore(skip)

@@ -20,6 +20,8 @@ import { useTheme } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Context as AuthContext} from '../context/authContext'
 import { NavigationEvents } from 'react-navigation'
+//import * as navigation from '../navigationRef';
+
 const NewSignUpScreen = ({navigation}) => {
   const {state,signUp,clearError} = useContext(AuthContext)
   const [username,setusername] = useState('')
@@ -35,7 +37,7 @@ const NewSignUpScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-                    <NavigationEvents onWillFocus={clearError} />
+                    {/* <NavigationEvents onWillFocus={clearError} /> */}
         <View style={styles.header}>
         <Image source={require('../../assets/smalloneasset.png')}/>
           </View>
@@ -86,16 +88,11 @@ const NewSignUpScreen = ({navigation}) => {
     }}
     buttonStyle={{backgroundColor:'#1400FF'}}/>
        {/* <Text >Have an account? Sign in</Text> */}
-       <NavLink  style={{paddingTop:0,marginTop:0}}text='Already a member? Sign in' routeName="SignIn"/>
+       {/* <NavLink  style={{paddingTop:0,marginTop:0}}text='Already a member? Sign in' routeName="SignIn"/> */}
         </View>
       </View>
 
     );
-};
-NewSignUpScreen.navigationOptions = () => {
-  return {
-    headerShown: false,
-  };
 };
 
 export default NewSignUpScreen;

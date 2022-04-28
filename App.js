@@ -11,8 +11,8 @@ import React from 'react'
 //import {createSwitchNavigator} from '@react-navigation/compat'
 //import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator, HeaderTitle } from 'react-navigation-stack';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AccountScreen from "./src/screens/AccountScreen";
 import { Provider as AuthProvider } from './src/context/authContext';
 import { setNavigator } from './src/navigationRef';
@@ -42,6 +42,10 @@ import ChooseBackgroundImage from './src/comps/ChooseBackground';
 import RenderResponses from './src/comps/RenderResponses';
 import Questionofday from './src/comps/Questionofday';
 import { LogBox } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingScreen from './src/screens/loadingScreen';
+import { navigationRef } from './src/navigationRef';
+import { Ionicons } from '@expo/vector-icons'
 
 LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
 
@@ -71,227 +75,309 @@ LogBox.ignoreAllLogs()
 //   </>
 //   )
 // }
-//const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const switchNavigator = createSwitchNavigator({
- // Main:VentScreen,
- // Share:ShareCardQuestion,
- // Category:CategoryScreen,
-   // Share:ShareableImage,
-   //BackgroundImage:ChooseBackgroundImage,
-   ResolveAuth:loadingScreen,
-   createFlow: createStackNavigator({
-    MainCreate:{
-      screen:MainCreateScreen,
-      navigationOptions:{
-        headerTransparent:"true",
-        headerTintColor:'transparent',
-        color:'transparent',
-       //headerStyle:{backgroundColor:"grey"},
-       HeaderTitle:"Home"
-      }
+// const switchNavigator = createSwitchNavigator({
+//  // Main:VentScreen,
+//  // Share:ShareCardQuestion,
+//  // Category:CategoryScreen,
+//    // Share:ShareableImage,
+//    //BackgroundImage:ChooseBackgroundImage,
+//    ResolveAuth:loadingScreen,
+//    createFlow: createStackNavigator({
+//     MainCreate:{
+//       screen:MainCreateScreen,
+//       navigationOptions:{
+//         headerTransparent:"true",
+//         headerTintColor:'transparent',
+//         color:'transparent',
+//        //headerStyle:{backgroundColor:"grey"},
+//        HeaderTitle:"Home"
+//       }
 
-    },
-    Create:{
-      screen:CreateScreen,
-      navigationOptions:{
-        headerTransparent:"true",
-        headerTintColor:'transparent',
-        color:'transparent',
-       //headerStyle:{backgroundColor:"grey"},
-       HeaderTitle:"Home"
-      }
-    },
-    SignIn:NewSignInScreen,
-},navigationOptions = {
-    headerShown: false,
-  }),
-    loginFlow: createStackNavigator({
-        Splash:SplashScreen,
-        SignUp:NewSignUpScreen,
-        SignIn:NewSignInScreen,
-    },navigationOptions = {
-        headerShown: false,
-      }),
-      mainFlow: createBottomTabNavigator({
+//     },
+//     Create:{
+//       screen:CreateScreen,
+//       navigationOptions:{
+//         headerTransparent:"true",
+//         headerTintColor:'transparent',
+//         color:'transparent',
+//        //headerStyle:{backgroundColor:"grey"},
+//        HeaderTitle:"Home"
+//       }
+//     },
+//     SignIn:NewSignInScreen,
+// },navigationOptions = {
+//     headerShown: false,
+//   }),
+//     loginFlow: createStackNavigator({
+//         Splash:SplashScreen,
+//         SignUp:NewSignUpScreen,
+//         SignIn:NewSignInScreen,
+//     },navigationOptions = {
+//         headerShown: false,
+//       }),
+//       mainFlow: createBottomTabNavigator({
 
-        TrackList:{
-          screen: NewHomeScreen,
-          navigationOptions:{
-            headerShown:false,
-          tabBarLabel:"Categories",
-          tabBarOptions: {
-            showLabel: false,
-            style: {
-             // borderTopLeftRadius:12,
-         //     marginHorizontal:5,
-              borderTopWidth:0,
-              elevation:-5,
-              borderWidth:0,
-              height:60,
-              paddingBottom:2,
-              color:'white',
-              backgroundColor: '#030303',
-          },
-          },
-          tabBarIcon:()=>      <Image source={require('./assets/homeicon.png')} resizeMode='center'/>
+//         TrackList:{
+//           screen: NewHomeScreen,
+//           navigationOptions:{
+//             headerShown:false,
+//           tabBarLabel:"Categories",
+//           tabBarOptions: {
+//             showLabel: false,
+//             style: {
+//              // borderTopLeftRadius:12,
+//          //     marginHorizontal:5,
+//               borderTopWidth:0,
+//               elevation:-5,
+//               borderWidth:0,
+//               height:60,
+//               paddingBottom:2,
+//               color:'white',
+//               backgroundColor: '#030303',
+//           },
+//           },
+//           tabBarIcon:()=>      <Image source={require('./assets/homeicon.png')} resizeMode='center'/>
 
-        }},
-        Explore:{
-          screen: ExploreScreen,
-          navigationOptions:{
-          tabBarLabel:"Explore",
+//         }},
+//         Explore:{
+//           screen: ExploreScreen,
+//           navigationOptions:{
+//           tabBarLabel:"Explore",
 
-          tabBarOptions: {
-            showLabel: false,
-            style: {
-              borderTopWidth:0,
-              elevation:-5,
-              borderWidth:0,
-              height:70,
-              paddingBottom:2,
-              color:'white',
-              backgroundColor: 'black',
-          },
-          },
-          tabBarIcon: () => (
-            <Image source={require('./assets/exploreicon.png')} resizeMode='center'/>
-            ),
-        }},
-        MainCreate:{
-          screen: MainCreateScreen,
-          navigationOptions:{
-          tabBarLabel:"Answer",
+//           tabBarOptions: {
+//             showLabel: false,
+//             style: {
+//               borderTopWidth:0,
+//               elevation:-5,
+//               borderWidth:0,
+//               height:70,
+//               paddingBottom:2,
+//               color:'white',
+//               backgroundColor: 'black',
+//           },
+//           },
+//           tabBarIcon: () => (
+//             <Image source={require('./assets/exploreicon.png')} resizeMode='center'/>
+//             ),
+//         }},
+//         MainCreate:{
+//           screen: MainCreateScreen,
+//           navigationOptions:{
+//           tabBarLabel:"Answer",
 
-          tabBarOptions: {
-            showLabel: false,
-            style: {
-              borderTopWidth:0,
-              elevation:-5,
-              borderWidth:0,
-              height:70,
-              paddingBottom:2,
-              color:'white',
-              backgroundColor: 'black',
-          },
-          },
-          tabBarIcon:()=>
-         (
-          <Image source={require('./assets/createicon.png')} resizeMode='center'/>
+//           tabBarOptions: {
+//             showLabel: false,
+//             style: {
+//               borderTopWidth:0,
+//               elevation:-5,
+//               borderWidth:0,
+//               height:70,
+//               paddingBottom:2,
+//               color:'white',
+//               backgroundColor: 'black',
+//           },
+//           },
+//           tabBarIcon:()=>
+//          (
+//           <Image source={require('./assets/createicon.png')} resizeMode='center'/>
 
-         )
-        }},
-        Vent:{
-          screen: VentScreen,
-          navigationOptions:{
-          tabBarLabel:"Vent",
+//          )
+//         }},
+//         Vent:{
+//           screen: VentScreen,
+//           navigationOptions:{
+//           tabBarLabel:"Vent",
 
-          tabBarOptions: {
-            showLabel: false,
-            style: {
-              borderTopWidth:0,
-              elevation:-5,
-              borderWidth:0,
-              height:70,
-              paddingBottom:2,
-              color:'white',
-              backgroundColor: 'black',
-          },
-          },
-          tabBarIcon: () => (
+//           tabBarOptions: {
+//             showLabel: false,
+//             style: {
+//               borderTopWidth:0,
+//               elevation:-5,
+//               borderWidth:0,
+//               height:70,
+//               paddingBottom:2,
+//               color:'white',
+//               backgroundColor: 'black',
+//           },
+//           },
+//           tabBarIcon: () => (
 
-    <Image source={require('./assets/mindicon.png')} resizeMode='center'/>
-    ),
-        }},
-        Account:{
-          screen: AccountScreen,
-          navigationOptions:{
-          tabBarLabel:"Account",
-          tabBarOptions: {
-            showLabel: false,
-            style: {
-              borderTopWidth:0,
-              elevation:-5,
-              borderWidth:0,
-              height:70,
-              paddingBottom:2,
-              color:'white',
-              backgroundColor: '#030303',
-          },
-          },
-          tabBarIcon:()=>
-          (
-            <Image source={require('./assets/accounticon.png')} resizeMode='center'/>
+//     <Image source={require('./assets/mindicon.png')} resizeMode='center'/>
+//     ),
+//         }},
+//         Account:{
+//           screen: AccountScreen,
+//           navigationOptions:{
+//           tabBarLabel:"Account",
+//           tabBarOptions: {
+//             showLabel: false,
+//             style: {
+//               borderTopWidth:0,
+//               elevation:-5,
+//               borderWidth:0,
+//               height:70,
+//               paddingBottom:2,
+//               color:'white',
+//               backgroundColor: '#030303',
+//           },
+//           },
+//           tabBarIcon:()=>
+//           (
+//             <Image source={require('./assets/accounticon.png')} resizeMode='center'/>
 
-          )
-        }},
-       }),
-      mainFlow2: createStackNavigator({
-        HomeScreen:{
-          screen: NewHomeScreen,
-          navigationOptions:{
-            headerShown:false,
+//           )
+//         }},
+//        }),
+//       mainFlow2: createStackNavigator({
+//         HomeScreen:{
+//           screen: NewHomeScreen,
+//           navigationOptions:{
+//             headerShown:false,
 
-          tabBarLabel:"Home",
-          tabBarOptions: {
-            showLabel: false,
-            style: {
-             // borderTopLeftRadius:12,
-         //     marginHorizontal:5,
-              borderTopWidth:0,
-              elevation:-5,
-              borderWidth:0,
-              height:60,
-              paddingBottom:2,
-              color:'white',
-              backgroundColor: '#030303',
-          },
-          },
-          tabBarIcon:()=>      <Image source={require('./assets/homeicon.png')} resizeMode='center'/>
+//           tabBarLabel:"Home",
+//           tabBarOptions: {
+//             showLabel: false,
+//             style: {
+//              // borderTopLeftRadius:12,
+//          //     marginHorizontal:5,
+//               borderTopWidth:0,
+//               elevation:-5,
+//               borderWidth:0,
+//               height:60,
+//               paddingBottom:2,
+//               color:'white',
+//               backgroundColor: '#030303',
+//           },
+//           },
+//           tabBarIcon:()=>      <Image source={require('./assets/homeicon.png')} resizeMode='center'/>
 
-        }},
-        Category:{
-         screen: CategoryScreen,
-         navigationOptions:{
-           headerTransparent:"true",
-           headerTintColor:'white',
-           color:'white',
-          //headerStyle:{backgroundColor:"grey"},
-          HeaderTitle:"Home"
-         }
-        },
-        RenderResponses:{
-          screen:RenderResponses,
-          navigationOptions:{
-           // headerTransparent:"false",
-            headerTintColor:'white',
-            color:'white',
-           headerStyle:{backgroundColor:"#121212",color:'white'},
-           HeaderTitle:"Home"
+//         }},
+//         Category:{
+//          screen: CategoryScreen,
+//          navigationOptions:{
+//            headerTransparent:"true",
+//            headerTintColor:'white',
+//            color:'white',
+//           //headerStyle:{backgroundColor:"grey"},
+//           HeaderTitle:"Home"
+//          }
+//         },
+//         RenderResponses:{
+//           screen:RenderResponses,
+//           navigationOptions:{
+//            // headerTransparent:"false",
+//             headerTintColor:'white',
+//             color:'white',
+//            headerStyle:{backgroundColor:"#121212",color:'white'},
+//            HeaderTitle:"Home"
+//           }
+//         },
+//         CategoryDrill:{
+//           screen: CategoryDrillScreen,
+//           navigationOptions:{
+//             headerTransparent:"true",
+//             headerTintColor:'white',
+//             color:'white',
+//            //headerStyle:{backgroundColor:"grey"},
+//            HeaderTitle:"Home"
+//           }
+//          }
+//        },navigationOptions = {
+//         headerShown: false,
+//       }),
+// })
+
+// const App  =  createAppContainer(switchNavigator)
+
+// export default() => {
+//   return(
+//     <AuthProvider>
+//       <NavigationContainer>
+//       <App ref = {(navigator) => {setNavigator(navigator)}}/>
+//       </NavigationContainer>
+//     </AuthProvider>
+//   )
+// }
+function HomeTabs() {
+  return (
+    <Tab.Navigator
+    screenOptions={({ route }) => ({
+      headerShown:false,
+      tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+              iconName = focused? 'apps': 'apps-outline';
+          } else if (route.name === 'Explore') {
+              iconName = focused ? 'search' : 'search-outline';
           }
-        },
-        CategoryDrill:{
-          screen: CategoryDrillScreen,
-          navigationOptions:{
-            headerTransparent:"true",
-            headerTintColor:'white',
-            color:'white',
-           //headerStyle:{backgroundColor:"grey"},
-           HeaderTitle:"Home"
-          }
-         }
-       },navigationOptions = {
-        headerShown: false,
-      }),
-})
+          else if (route.name === 'Create') {
+            iconName = focused ? 'add-circle' : 'add-circle-outline';
+        }
+        else if (route.name === 'Vent') {
+          iconName = focused ? 'create' : 'create-outline';
+      }
+      else if (route.name === 'Account') {
+        iconName = focused ? 'radio-button-on' : 'radio-button-off-outline';
+    }
 
-const App  =  createAppContainer(switchNavigator)
 
-export default() => {
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: 'white',
+      tabBarInactiveTintColor: 'grey',
+      //Tab bar styles can be added here
+      tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:0,borderTopRightRadius:0,backgroundColor:'black',position:'absolute',height:60,borderTopColor:'black'},
+      tabBarLabelStyle:{paddingBottom:3},
+  })}
+    >
+      <Tab.Screen name="Home" component={NewHomeScreen} />
+      <Tab.Screen name="Explore" component={ExploreScreen} />
+      <Tab.Screen name="Create" component={MainCreateScreen} />
+      <Tab.Screen name="Vent" component={VentScreen} />
+      <Tab.Screen name="Account" component={AccountScreen} />
+    </Tab.Navigator>
+  );
+}
+function SignFlow() {
+  return (
+    <Stack.Navigator
+       screenOptions={{
+        headerShown: false
+      }}>
+    <Stack.Screen name="Splash" component={SplashScreen} />
+    <Stack.Screen name="SignUp" component={NewSignUpScreen} />
+    <Stack.Screen name="SignIn" component={NewSignInScreen} />
+    </Stack.Navigator>
+  );
+}
+
+
+
+
+export default () => {
+
   return(
     <AuthProvider>
-      <NavigationContainer>
-      <App ref = {(navigator) => {setNavigator(navigator)}}/>
+      <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator
+       screenOptions={{
+        headerShown: false
+      }}>
+
+      <Stack.Screen name="ResolveAuth" component={LoadingScreen}
+      />
+      <Stack.Screen name="Sign" component={SignFlow} />
+      <Stack.Screen name="HomeTabs" component={HomeTabs} />
+      <Stack.Screen name="Category" component={CategoryScreen} />
+      <Stack.Screen name="CategoryDrill" component={CategoryDrillScreen} />
+      <Stack.Screen name="RenderResponses" component={RenderResponses} />
+      <Stack.Screen name="CreateAnswer" component={CreateScreen} />
+     </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
   )

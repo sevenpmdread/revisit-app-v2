@@ -16,8 +16,12 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+//import * as navigation from '../navigationRef';
 
 const SplashScreen = ({navigation}) => {
+  // navigation =  navigation.getParam('navigation')
+   console.log("NAVIGATION",navigation)
     const { colors } = useTheme();
    // console.log( Dimensions.get("screen"))
 
@@ -43,7 +47,7 @@ const SplashScreen = ({navigation}) => {
                   borderRadius:100
                 }} buttonStyle={{backgroundColor:'#1400FF'}}/>
        {/* <Text >Have an account? Sign in</Text> */}
-       <NavLink  style={{paddingTop:0,marginTop:0}}text='Already a member? Sign in' routeName="SignIn"/>
+       {/* <NavLink  style={{paddingTop:0,marginTop:0}}text='Already a member? Sign in' routeName="SignIn"/> */}
         </View>
       </View>
     );
@@ -68,10 +72,10 @@ const styles = StyleSheet.create({
     alignItems:'flex-end',
     alignSelf:'flex-end',
     display:'flex',
-    width: 180,
-    height: 180,
+    width: 170,
+    height: 170,
     zIndex: 1000,
-    marginTop:475,
+    marginTop:455,
     position:'absolute',
   //  elevation:5,
    // marginRight: 10,

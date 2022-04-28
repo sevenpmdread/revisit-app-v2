@@ -35,7 +35,7 @@ const ShareableImageCard = ({textcolor,color,text,question,username,date}) => {
   };
 
   Sharing.isAvailableAsync().then((accepted)=>{console.log(accepted)})
-   text = text ? text : "I am waiting to disappear. I am tryingto devour my mind one project at atime. I understand too much, and feeltoo little, I am trying to rebuild my perspectives.I am trying to rebuild my perspectives. I am trying to build a sculpture out of time"
+
  // const [uri,setUri] = useState('')
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
@@ -112,7 +112,7 @@ const ShareableImageCard = ({textcolor,color,text,question,username,date}) => {
      //   paddingHorizontal:30
       }}>
      {image ?
-     <ImageBackground source={{ uri: image }} imageStyle={{opacity:0.8}} style={{ margin:15,padding:0,marginBottom:0,height:200}} >
+     <ImageBackground source={{ uri: image }} imageStyle={{opacity:0.5}} style={{ margin:15,padding:0,marginBottom:0,height:200}} >
        <View style={{height:200,justifyContent:"space-between",flexDirection:'column'}}>
       <Text style={{ color:textcolor,
     fontFamily:'Intermedium',

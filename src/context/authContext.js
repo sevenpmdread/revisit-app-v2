@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import createDataContext from './createDataContext'
 import tracker from '../api/tracker'
-import { navigate } from '../navigationRef';
+///import { navigate } from '../navigationRef';
+import * as navigation from '../navigationRef';
 
 const Reducer = (state,action) => {
   switch(action.type){
@@ -91,7 +92,7 @@ const fetchHomedata = dispatch => async () => {
         Authorization: 'Bearer ' + token,
       }
     }
-    const response = await tracker.get('/api/v1/questions/fetchbulk',config)
+    const response = await tracker.get('/api/v1/questions/',config)
     dispatch({type:'fetchhome',payload:response.data})
 
   }
@@ -117,7 +118,7 @@ const signUp = dispatch => async ({username,email,password}) => {
      // console.log(response)
       dispatch({type:'signin',payload:{token:response.data.token,username:username}})
    //   fetchHomedata()
-      navigate('TrackList')
+      navigation.navigate('HomeTabs')
     }
     catch(error)
     {
@@ -128,6 +129,7 @@ const signUp = dispatch => async ({username,email,password}) => {
 
 const tryLocalSignin = dispatch => async ()=> {
 
+
   //("inlocalsignin")
   const token = await AsyncStorage.getItem('token')
   const username = await AsyncStorage.getItem('username')
@@ -135,11 +137,11 @@ const tryLocalSignin = dispatch => async ()=> {
   {
     dispatch({type:'signin',payload:{token:token,username:username}})
    // fetchHomedata()
-    navigate('TrackList')
+   navigation.navigate('HomeTabs')
 
   }
   else{
-    navigate('Splash')
+    navigation.navigate('Sign')
   }
 }
 

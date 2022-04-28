@@ -15,7 +15,7 @@ import { getCount,upvotequestion } from '../context/restapi';
 import { useEffect,useState } from 'react';
 //import upvotequestion
 const RenderExploreFeed = ({post,navigation}) => {
-  console.log(post)
+ // console.log(post)
   const [upVotecount,setupVotecount] = useState()
   //console.log("sejfsjdfsdfhsjdhfbsdjhfbsdjfhsbdfhfbsd",post)
   //const [ventload,setventload] = useState(vent)
@@ -168,7 +168,7 @@ const RenderExploreFeed = ({post,navigation}) => {
 
               {
 
-                navigation.navigate("Create",{post:post})
+                navigation.navigate("CreateAnswer",{post:post})
               }
             }
 

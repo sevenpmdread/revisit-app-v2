@@ -31,6 +31,7 @@ const YourResponses = ({navigation}) => {
     <View>
     <FlatList
     data={questions}
+    inverted={true}
     renderItem={(item)=>
     {
       //console.log('ITEM IN YOUR RESPONSE',item)

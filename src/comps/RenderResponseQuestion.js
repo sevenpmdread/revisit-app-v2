@@ -51,12 +51,6 @@ var count = 0
               answers
       })}
         }>{question}</Text>
-      <Button
-       title='Contrast'
-       titleStyle={{fontFamily:'Intermedium',fontSize:12,color:'white'}}
-       buttonStyle={{backgroundColor:'#02853E',borderRadius:6,paddingHorizontal:0,fontFamily:'InterRegular',opacity:0.7}}
-       containerStyle={{width:90,fontFamily:'InterRegular',fontSize:8,marginRight:12,marginTop:12}}
-       />
       </Card>
 
       <View style={{marginHorizontal:20,marginBottom:340,marginTop:0,paddingTop:0,marginTop:-20}}>

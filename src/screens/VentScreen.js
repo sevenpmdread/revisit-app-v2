@@ -167,7 +167,6 @@ ASK A QUESTION
         visible={ventmodalVisible}
         backgroundColor="black"
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           setventModalVisible(!ventmodalVisible);
         }}
       >
@@ -271,7 +270,7 @@ ASK A QUESTION
         setLoading(true)
        // console.log("RANDOM POST id",post,post._id)
         let postnew = await ventcreate(questionValue,value,false)
-        var response = await storevent({id:Math.floor(Math.random() * 10),question_text:questionValue,answer_text:value,publised:true,isAnonymous:false})
+        var response = await storeventnew({id:Math.floor(Math.random() * 10),question_text:questionValue,answer_text:value,publised:true,isAnonymous:false})
                  // console.log("ASYNC RESPONSE",response)
                   //ToastAndroid.show('Saved', ToastAndroid.SHORT)
 
@@ -295,15 +294,16 @@ ASK A QUESTION
               <Text style={{color:'white',paddingVertical:8,alignSelf:'center'}}>or</Text>
             </Pressable>
 
-            <TouchableOpacity
+            <Pressable
               style={[styles.button]}
               onPress={async () =>
                 {
+                  console.log("ORESSED")
                   setpostModalVisible(true)
                   setLoading(true)
                  // console.log("RANDOM POST id",post,post._id)
                   let postnew = await ventcreate(questionValue,value,true)
-                  var response = await storevent({id:Math.floor(Math.random() * 10),question_text:questionValue,answer_text:value,publised:true,isAnonymous:true})
+                  var response = await storeventnew({id:Math.floor(Math.random() * 10),question_text:questionValue,answer_text:value,publised:true,isAnonymous:true})
 
 
                   if(postnew!='error')
@@ -322,7 +322,7 @@ ASK A QUESTION
               }
             >
               <Text style={{color:'white',paddingTop:0,opacity:0.7,textDecorationLine:'underline'}}>Post anonymously</Text>
-            </TouchableOpacity>
+            </Pressable>
 
 
 
@@ -446,7 +446,6 @@ ASK A QUESTION
         visible={modalVisible}
         backgroundColor="black"
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >

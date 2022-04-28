@@ -33,7 +33,7 @@ const AccountScreen = ({navigation}) => {
       <View style={{flexDirection:'row',justifyContent:'space-between',paddingBottom:24}}>
       <Text style={styles.username}>{state.username}</Text>
       </View>
-      <View style={{flexDirection:'row',paddingBottom:8}}>
+      {/* <View style={{flexDirection:'row',paddingBottom:8}}>
       <Button
       title='Existential - 16'
       titleStyle={{fontFamily:'Intermedium',fontSize:11,color:'white'}}
@@ -52,7 +52,7 @@ const AccountScreen = ({navigation}) => {
     buttonStyle={{backgroundColor:'#02853E',borderRadius:20,paddingHorizontal:0,fontFamily:'InterRegular',fontSize:8,opacity:0.8}}
     containerStyle={{width:110,fontFamily:'InterRegular',fontSize:8,marginBottom:12}}
     />
-   </View>
+   </View> */}
     </View>
 <NavSwap navigation={navigation} />
 

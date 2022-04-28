@@ -140,7 +140,7 @@ const MainCreateScreen = ({navigation}) => {
         console.log("I AM PRESSED")
         let postrandom = await getRandomQuestion()
         console.log("RANDOM POST",postrandom)
-        navigation.navigate("Create",{post:postrandom})
+        navigation.navigate("CreateAnswer",{post:postrandom})
         }}
       />
       <Button

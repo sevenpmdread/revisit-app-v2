@@ -23,6 +23,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { fonts } from 'react-native-elements/dist/config';
 import { categoryquestions } from '../dummydata';
 import RenderCategoryQuestions from './RenderCategoryQuestions';
+import * as navigation from '../navigationRef'
 //import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 const DATA = [
   {
@@ -38,7 +39,7 @@ const DATA = [
     title: 'Third Item',
   },
 ];
-const CategoryQuestion = ({type,desc,questions,navigation,horizontal}) => {
+const CategoryQuestion = ({type,desc,questions,horizontal}) => {
   const expanded = true;
   //console.log("received questions",questions)
   // let [fontsLoaded] = useFonts({

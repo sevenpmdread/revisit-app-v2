@@ -207,7 +207,7 @@ const RenderCategoryAnswers = ({contrast,onPress,backgroundColor,textColor,width
              { l.title != "Cancel" ?
              <View>
             <ColorPicker colors = {["#ffffff","#121212","#654A8A","#2B7644","#A46F31","#B43A6D","#443AB4","#179089"]} selectedColor={selectedColor} onSelect={setColor} />
-             <ShareableImageCard  textcolor = {selectedColor} color = {selectedColor} text={post.answer_text} question={question} username={username} date={datestring} />
+             <ShareableImageCard  textcolor = {selectedColor} color = {selectedColor} text={!post.item ? post.answer_text : post.item.answer_text} question={question} username={username} date={datestring} />
 
             </View>
              :

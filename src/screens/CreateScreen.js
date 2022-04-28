@@ -12,7 +12,7 @@ import Modal from "react-native-modal";
 import LoadingScreennew from './Loadingnew';
 import { AntDesign } from '@expo/vector-icons';
 
-const CreateScreen = ({navigation}) => {
+const CreateScreen = ({route,navigation}) => {
 
 
 
@@ -20,7 +20,7 @@ const CreateScreen = ({navigation}) => {
   const [isAnonymous, setSelection] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading,setLoading] = useState(false)
-  const  post = navigation.getParam('post')
+  const  post = route.params?.post
   //console.log(post)
   post.question_text = post.text  ? post.text : post.question_text
   post._id = post.id ? post.id : post._id
@@ -51,7 +51,7 @@ const CreateScreen = ({navigation}) => {
   >
     <View style={styles.container} >
       <View style={styles.header}>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={()=>navigation.pop()}>
       <EvilIcons name="close" size={36} color="white" style={{padding:8,paddingTop:12}}/>
       </TouchableOpacity>
       <Modal
@@ -120,7 +120,7 @@ const CreateScreen = ({navigation}) => {
         console.log("RANDOM POST",postnew)
         setLoading(false)
       //  setModalVisible(false)
-      setTimeout(()=>{ navigation.navigate("Explore") }, 2000)
+      setTimeout(()=>{ navigation.navigate("Explore",{refresh:true}) }, 2000)
 
         }}
 
@@ -191,9 +191,6 @@ const CreateScreen = ({navigation}) => {
       <Feather style={{alignSelf:'center'}}name="mic" size={32} color="white" />
       </TouchableOpacity> */}
       </View>
-      <TouchableOpacity onPress={()=>setrecordModalvisible(true)}>
-      <Feather style={{opacity:0.6,margin:2,marginTop:18,marginRight:20}}name="mic" size={20} color="white" />
-      </TouchableOpacity>
       </View>
 
 
