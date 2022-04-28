@@ -5,8 +5,10 @@ import RenderResponseCards from './RenderResponseCards'
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import { youranswers } from '../dummydata';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import TimeAgo from 'react-native-timeago';
+import { AntDesign } from '@expo/vector-icons';
 const RenderResponseQuestion = ({question,questionid,answers,navigation}) => {
+  console.log("ANSWERS", answers)
   const [selectedIds, setSelectedId] = useState([]);
   const renderItem = ({ item,index }) => {
     const backgroundColor = selectedIds.indexOf(item.id)!=-1 ? "black" : "grey";
@@ -42,7 +44,7 @@ var count = 0
   return (
     <View>
       <View style={styles.questioncard}>
-      <Card  containerStyle={{backgroundColor:'black',borderRadius:12,paddingHorizontal:16,paddingTop:12,borderWidth:1,paddingBottom:20,borderColor:'#434343',marginBottom:marginbottom}}>
+      <Card  containerStyle={{backgroundColor:'black',borderRadius:6,paddingHorizontal:16,paddingTop:12,borderWidth:0,borderBottomWidth:0,paddingBottom:20,borderColor:'white',marginBottom:20,elevation:0}}>
       <Text style={styles.question} onPress={()=>
       {
         console.log("NAVIGATION ON PRESS",navigation)
@@ -52,8 +54,17 @@ var count = 0
       })}
         }>{question}</Text>
       </Card>
-
-      <View style={{marginHorizontal:20,marginBottom:340,marginTop:0,paddingTop:0,marginTop:-20}}>
+        <View style={{flexDirection:'row',justifyContent:'space-between',backgroundColor:"#DADADA",padding:12,marginHorizontal:20,borderRadius:6,marginVertical:8}}>
+        <View style={{flexDirection:'column',justifyContent:'space-between',opacity:1}}>
+        <Text style={{fontFamily:'InterRegular',fontSize:16,color:'black'}}>{answers[0].answer_text}</Text>
+        <View style={{flexDirection:'row'}}>
+        <Text style = {{color:'black',opacity:0.6,fontFamily:'InterRegular',fontSize:9}}>Last answered </Text>
+        <TimeAgo  style = {{color:'black',opacity:0.6,fontFamily:'InterRegular',fontSize:9}} time={answers[0].updatedAt} />
+        </View>
+        </View>
+        <AntDesign name="rightcircleo" size={24} color="black" style={{paddingVertical:12}}/>
+        </View>
+      {/* <View style={{marginLeft:20,marginBottom:340,marginTop:0,paddingTop:0}}>
       <FlatList
     data={answers}
     inverted={true}
@@ -64,7 +75,7 @@ var count = 0
     extraData={selectedIds}
 
     />
-    </View>
+    </View> */}
       </View>
     </View>
   )
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
   question:{
       fontFamily:'InterRegular',
       color:'white',
-      fontSize:22,
+      fontSize:26,
       opacity:0.8
   },
   questionCard:{

@@ -3,6 +3,7 @@ import React,{useState,useEffect} from 'react'
 import RenderResponseQuestion from '../comps/RenderResponseQuestion'
 import { yourresponses } from '../dummydata'
 import { getResponsesbythisuser } from '../context/restapi'
+import { ScrollView } from 'react-native-gesture-handler'
 const YourResponses = ({navigation}) => {
   console.log("NAVIAGATION",navigation)
   const [questions,setQuestions] = useState([])
@@ -28,9 +29,10 @@ const YourResponses = ({navigation}) => {
 
 }, [])
   return (
-    <View>
+    <ScrollView style={{backgroundColor:"#0C0C0C"}}>
     <FlatList
     data={questions}
+   // contentContainerStyle={{flex:2}}
     inverted={true}
     renderItem={(item)=>
     {
@@ -39,7 +41,7 @@ const YourResponses = ({navigation}) => {
     }
     keyExtractor={item => item.questionid}
     />
-    </View>
+    </ScrollView>
   )
 }
 

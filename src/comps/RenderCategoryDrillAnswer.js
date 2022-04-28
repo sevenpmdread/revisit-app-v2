@@ -9,10 +9,7 @@ import ShareableImageCard from './ShareableImageCard';
 import { ColorPicker } from "react-native-btr";
 import { useFonts, Inter_500Medium,Inter_400Regular} from '@expo-google-fonts/inter';
 import posts from '../dummydata';
-import ShareableImage from './ShareableImage';
-import ShareableImageMag from './ShareableImageMag';
 import ShareCardContrast from './ShareCardContrast';
-import ShareableImageContrast from './ShareableImageContrast';
 const RenderCategoryDrillAnswers = ({post,nav}) => {
   const [selectedColor, setSelectedColor] = useState("#AC2929");
   function setColor(color) {
@@ -55,7 +52,6 @@ const RenderCategoryDrillAnswers = ({post,nav}) => {
             </Card>
 
             <BottomSheet  modalProps={{}} isVisible={isVisible}>
-            {/* <ShareableImage text={post.item.answer_text}/> */}
 
           {list.map((l, i) => {
          //   console.log("sfjksdfk",l,i)
@@ -153,7 +149,6 @@ const RenderCategoryDrillAnswers = ({post,nav}) => {
     </Card>
 
     <BottomSheet  modalProps={{}} isVisible={isVisible}>
-    {/* <ShareableImage text={post.item.answer_text}/> */}
 
   {list.map((l, i) => {
  //   console.log("sfjksdfk",l,i)

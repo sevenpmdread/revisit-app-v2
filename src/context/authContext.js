@@ -123,7 +123,7 @@ const signUp = dispatch => async ({username,email,password}) => {
     catch(error)
     {
       console.log(error)
-      dispatch({type:'add_error',payload:'Something went wrong with SignUp'})
+      dispatch({type:'add_error',payload:error})
     }
   }
 

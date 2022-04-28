@@ -12,7 +12,6 @@ import * as ImagePicker from 'expo-image-picker';
 //import { useFonts, Inter_500Medium,Inter_400Regular} from '@expo-google-fonts/inter';
 import posts from '../dummydata';
 import ShareCardQuestion from './ShareCardQuestion';
-import ShareableImageQuestion from './ShareableImageQuestion';
 //import DatePicker from 'react-native-modern-datepicker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Modal from "react-native-modal";
@@ -249,7 +248,6 @@ const RenderCategoryQuestions = ({post,nav,width,onpress}) => {
             }
             </Card>
              <BottomSheet  modalProps={{}} isVisible={isVisible}>
-            {/* <ShareableImage text={post.item.answer_text}/> */}
 
           {list.map((l, i) => {
           //  console.log("sfjksdfk",l,i)

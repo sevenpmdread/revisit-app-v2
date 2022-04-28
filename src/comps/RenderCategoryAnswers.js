@@ -150,7 +150,7 @@ const RenderCategoryAnswers = ({contrast,onPress,backgroundColor,textColor,width
                 <TimeAgo  style = {{color:'white',opacity:0.6,fontFamily:'InterRegular',fontSize:8}} time={post.createdAt} />
                 </View>
 
-            { width.showfull ?
+
             <View style={{flexDirection:'row',padding:0,marginTop:12,opacity:0.8}}>
                   <View style={{flexDirection:'row',padding:8,borderRadius:12}}>
                   <TouchableOpacity  onPress= {() => {
@@ -186,14 +186,13 @@ const RenderCategoryAnswers = ({contrast,onPress,backgroundColor,textColor,width
                   </View>
 
             </View>
-             : <></>}
+
                </View>
             </View>
 
             </Card>
             </TouchableOpacity>
             <BottomSheet  modalProps={{}} isVisible={isVisible}>
-            {/* <ShareableImage text={post.answer_text}/> */}
 
           {list.map((l, i) => {
          //   console.log("sfjksdfk",l,i)
@@ -306,7 +305,6 @@ elevation:0}}>
 
     </Card>
     <BottomSheet  modalProps={{}} isVisible={isVisible}>
-            {/* <ShareableImage text={post.answer_text}/> */}
 
           {list.map((l, i) => {
          //   console.log("sfjksdfk",l,i)
@@ -412,7 +410,6 @@ elevation:0}}>
 
     </Card>
     <BottomSheet  modalProps={{}} isVisible={isVisible}>
-            {/* <ShareableImage text={post.answer_text}/> */}
 
           {list.map((l, i) => {
          //   console.log("sfjksdfk",l,i)

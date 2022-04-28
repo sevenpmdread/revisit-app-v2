@@ -26,13 +26,8 @@ import  ExploreScreen from './src/screens/ExploreScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import VentScreen from './src/screens/VentScreen';
 import CategoryScreen from './src/screens/CategoryScreen';
-import ShareImage from './src/screens/ShareImage';
 import CategoryDrillScreen from './src/comps/CategoryDrillScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import ShareableImage from './src/comps/ShareableImage';
-import ShareableImageMag from './src/comps/ShareableImageMag';
-import ShareableImageQuestion from './src/comps/ShareableImageQuestion';
-import ShareableImageContrast from './src/comps/ShareableImageContrast';
 import MainCreateScreen from './src/screens/MainCreateScreen';
 import CreateList from './src/comps/CreateList';
 import ShareableImageCard from './src/comps/ShareableImageCard';
@@ -82,7 +77,6 @@ const Tab = createBottomTabNavigator();
 //  // Main:VentScreen,
 //  // Share:ShareCardQuestion,
 //  // Category:CategoryScreen,
-//    // Share:ShareableImage,
 //    //BackgroundImage:ChooseBackgroundImage,
 //    ResolveAuth:loadingScreen,
 //    createFlow: createStackNavigator({

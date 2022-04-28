@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor:'#101010',
+    backgroundColor:'#0C0C0C',
     color:'white',
   // paddingTop: Constants.statusBarHeight,
   },

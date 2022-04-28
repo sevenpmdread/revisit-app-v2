@@ -221,7 +221,6 @@ reply_button_text: "Answer" ,
 
     </ImageBackground>
     <BottomSheet  modalProps={{}} isVisible={isVisible}>
-            {/* <ShareableImage text={post.item.answer_text}/> */}
 
           {list.map((l, i) => {
           //  console.log("sfjksdfk",l,i)

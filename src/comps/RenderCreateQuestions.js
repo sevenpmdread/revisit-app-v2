@@ -10,7 +10,6 @@ import { ColorPicker } from "react-native-btr";
 //import { useFonts, Inter_500Medium,Inter_400Regular} from '@expo-google-fonts/inter';
 import posts from '../dummydata';
 import ShareCardQuestion from './ShareCardQuestion';
-import ShareableImageQuestion from './ShareableImageQuestion';
 const RenderCreateQuestions = ({post,nav}) => {
   const [selectedColor, setSelectedColor] = useState("#AC2929");
   function setColor(color) {
@@ -55,7 +54,6 @@ const RenderCreateQuestions = ({post,nav}) => {
             </View>
             </Card>
             <BottomSheet  modalProps={{}} isVisible={isVisible}>
-            {/* <ShareableImage text={post.item.answer_text}/> */}
 
           {list.map((l, i) => {
           //  console.log("sfjksdfk",l,i)
