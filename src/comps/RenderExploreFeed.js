@@ -53,70 +53,10 @@ const RenderExploreFeed = ({post,navigation}) => {
 
     }, [upVotecount])
     const vote = async() => {
-      console.log("in share")
+      //console.log("in share")
       const data = await upvotequestion(post._id)
       setupVotecount(upVotecount+1)
     }
-//    if(post.answers.length ==0 )
-//    {
-//      return(
-//        <View style={{marginBottom:20}}>
-//       <View style={{flexDirection:"row"}}>
-//       <Button
-// title={category}
-// titleStyle={{fontFamily:'Interlight',fontSize:11,color:'white',opacity:0.7,fontStyle:"italic"}}
-// buttonStyle={{backgroundColor:'#1A1A1A',borderRadius:20,paddingHorizontal:0,fontFamily:'InterRegular',fontSize:8,opacity:0.8}}
-// containerStyle={{width:105,fontFamily:'InterRegular',fontSize:8,marginBottom:6,marginRight:6,marginTop:24}}
-// />
-// <Button
-// title={'asked by ' + username}
-// titleStyle={{fontFamily:'Interlight',fontSize:11,color:'white',opacity:0.7,fontStyle:"italic"}}
-// buttonStyle={{backgroundColor:'#1A1A1A',borderRadius:20,paddingHorizontal:0,fontFamily:'InterRegular',fontSize:8,opacity:0.8}}
-// containerStyle={{width:105,fontFamily:'InterRegular',fontSize:8,marginBottom:6,marginRight:6,marginTop:24}}
-// />
-// <View style={{backgroundColor:'#1A1A1A',borderRadius:20,paddingHorizontal:0,width:140,height:35,marginBottom:6,marginRight:6,marginTop:24,flexDirection:'row'}}>
-//       <Text style={{color:'white',fontFamily:'InterRegular',fontSize:11,opacity:0.7,fontStyle:'italic',paddingTop:8,paddingLeft:10}}>Asked </Text>
-//       <TimeAgo  style = {{paddingTop:8,color:'white',alignContent:'center',alignItems:'center',textAlign:'center',fontFamily:'InterRegular',fontSize:11,opacity:0.7,fontStyle:'italic'}} time={asked} />
-//       </View>
-//       </View>
-//       <Card containerStyle={{marginVertical:8,marginTop:1,marginBottom:2,marginHorizontal:0,backgroundColor:'#171717',elevation:5,borderRadius:12,borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingVertical:18,paddingLeft:22,dispplay:'flex',flexGrow:2,flexDirection:'column'}}>
-//       <View>
-//       <TouchableOpacity onPress={()=>navigation.navigate("CategoryDrill",{
-//         post:post
-//       })}>
-//       <Text style={styles.questionText}>{post.question_text}</Text>
-//       </TouchableOpacity>
-//       </View>
-//       <View style={styles.questionrow}>
-//       <TouchableOpacity
-//       activeOpacity={.7}
-//       tvParallaxProperties={{enabled:false}}
-//       style={styles.ventbutton}
-//       onPress={()=>
-
-//         {
-
-//           navigation.navigate("Create",{post:post})
-//         }
-//       }
-
-// >
-//   <Text>Be the first to Answer</Text>
-// </TouchableOpacity>
-
-
-// <TouchableOpacity >
-// <Feather name="more-vertical" size={26} color="white" style={{marginTop:12,textAlign:'left',opacity:0.7}}/>
-// </TouchableOpacity >
-// </View>
-//       </Card>
-//       {/* <View style={{paddingHorizontal:20,marginVertical:20,backgroundColor:'#121212',padding:12,borderRadius:12}}>
-//         <Text style={{color:'white',opacity:0.6}}>BE THE FIRST ONE TO ANSWER THIS QUESTION</Text>
-//       </View> */}
-//       </View>
-
-//      )
-//    }
 
    var responsecount =post.answers.length > 0 && post.metadata.length > 0 ? post.metadata[0].responsecount + ' responses' : 0
    var upvote = post.metadata.length > 0 ? post.metadata[0].upvotes : 0
@@ -154,7 +94,8 @@ const RenderExploreFeed = ({post,navigation}) => {
             <Card containerStyle={{marginVertical:8,marginTop:1,marginBottom:2,marginHorizontal:0,backgroundColor:'#171717',elevation:5,borderRadius:12,borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingVertical:18,paddingLeft:22,flexDirection:'column'}}>
             <View>
             <TouchableOpacity onPress={()=>navigation.navigate("CategoryDrill",{
-              post:post
+              post:post,
+              answers:post.answers
             })}>
             <Text style={styles.questionText}>{post.question_text}</Text>
             </TouchableOpacity>
@@ -197,9 +138,6 @@ const RenderExploreFeed = ({post,navigation}) => {
                   }
                   </TouchableOpacity >
 
-<TouchableOpacity >
-<Feather name="more-vertical" size={26} color="white" style={{marginTop:6,textAlign:'left',opacity:0.7}}/>
-</TouchableOpacity >
 </View>
 </View>
             </Card>

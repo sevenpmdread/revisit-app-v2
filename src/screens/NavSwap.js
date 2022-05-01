@@ -4,12 +4,20 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import YourPins from './YourPins';
 import YourResponses from './YourResponses';
+import { ScrollView } from 'react-native-gesture-handler';
+import YourReminders from './YourReminders';
 const FirstRoute = (navigation) => (
-
-  <YourResponses navigation={navigation}/>
+  <ScrollView style={{marginBottom:60,backgroundColor:'#0C0C0C'}} nestedScrollEnabled={true}>
+  <YourResponses  navigation={navigation}/>
+  </ScrollView>
 );
-const SecondRoute = () => (
-  <YourPins/>
+const SecondRoute = (navigation) => (
+<ScrollView style={{marginBottom:60,backgroundColor:'#0C0C0C'}} nestedScrollEnabled={true}>
+  <YourPins  navigation={navigation}/>
+  </ScrollView>
+);
+const ThirdRoute = (navigation) => (
+  <YourReminders navigation={navigation}/>
 );
 
 
@@ -19,8 +27,9 @@ export default class NavSwap extends React.Component {
   state = {
     index: 0,
     routes: [
-      { key: 'responses', title: 'Your responses' },
-      { key: 'pins', title: 'Your pins' },
+      { key: 'responses', title: 'Responses' },
+      { key: 'pins', title: 'Pins' },
+      { key: 'reminders', title: 'Reminders' },
     ],
   };
 
@@ -29,8 +38,13 @@ export default class NavSwap extends React.Component {
 
 
   _renderTabBar = (props) => {
+    let [fontsLoaded] = useFonts({
+      "Intermedium": Inter_500Medium,
+      "InterRegular":Inter_400Regular,
+      "InterSemi":Inter_600SemiBold
+     });
     const inputRange = props.navigationState.routes.map((x, i) => i);
-    console.log("fhsgdfjhsdgfhsdgfsdf",props.navigation)
+   // console.log("fhsgdfjhsdgfhsdgfsdf",props.navigation)
     return (
       <View style={styles.tabBar}>
         {props.navigationState.routes.map((route, i) => {
@@ -48,13 +62,13 @@ export default class NavSwap extends React.Component {
                 alignItems: 'center',
                 padding: 16,
                 borderBottomColor: this.state.index === i ? 'white' : 'transparent',
-                marginHorizontal:24,
+                marginHorizontal:12,
                 borderBottomLeftRadius:2,
                 borderBottomRightRadius:2,
 
               borderBottomWidth:4}}
               onPress={() => this.setState({ index: i })}>
-              <Animated.Text style={{ opacity,color:'white' }}>{route.title}</Animated.Text>
+              <Animated.Text style={{ opacity,color:'white',fontFamily:'InterRegular',fontSize:12 }}>{route.title}</Animated.Text>
             </TouchableOpacity>
           );
         })}
@@ -64,10 +78,15 @@ export default class NavSwap extends React.Component {
 
   _renderScene = SceneMap({
     responses: ()=>{
-      console.log("this.props",this.props)
       return FirstRoute(this.props.navigation)
     },
-    pins: SecondRoute,
+    pins: ()=>{
+      return SecondRoute(this.props.navigation)
+    },
+    reminders: ()=>{
+    //  console.log("this.props",this.props)
+      return ThirdRoute(this.props.navigation)
+    },
   });
 
   render() {

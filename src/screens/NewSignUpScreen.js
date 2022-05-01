@@ -1,4 +1,4 @@
-import React,{useState,useContext} from 'react';
+import React,{useState,useContext,useEffect} from 'react';
 import {
     View,
     Text,
@@ -23,10 +23,21 @@ import { NavigationEvents } from 'react-navigation'
 //import * as navigation from '../navigationRef';
 
 const NewSignUpScreen = ({navigation}) => {
+
   const {state,signUp,clearError} = useContext(AuthContext)
+  navigation.addListener('focus', () => {
+    clearError()
+  });
+  useEffect(() => {
+    //  console.log("I AM CALLED ID USEEFFECT")
+      // declare the data fetching function
+
+
+    }, [])
   const [username,setusername] = useState('')
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
+  const [loading,setloading] = useState(false)
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
@@ -44,7 +55,7 @@ const NewSignUpScreen = ({navigation}) => {
         {/* <Image style={styles.image} resizeMode="cover" source={require('../../assets/logo.png')}/> */}
         <View style={styles.footer}>
        <Text style={styles.footerHeading}>Revisit</Text>
-        <Text style={styles.bytss}>by the surreal service</Text>
+        <Text style={styles.bytss}>BY THESURREALSERVICE.COM</Text>
 
         <View style={styles.footerinput}></View>
 
@@ -67,6 +78,7 @@ const NewSignUpScreen = ({navigation}) => {
           placeholderTextColor={'grey'}
         />
          <TextInput
+         secureTextEntry={true}
           value={password}
           autoCapitalize="none"
           autoCorrect={false}
@@ -76,8 +88,16 @@ const NewSignUpScreen = ({navigation}) => {
           placeholderTextColor={'grey'}
         />
 {state.errorMessage ? (<Text style={{color:'red',opacity:0.8}}>{state.errorMessage}</Text>) : null}
-    <Button title="SignUp"
-    onPress={()=>signUp({username,email,password})}
+    <Button title={loading ? `Signing Up..` : `Sign up`}
+    onPress={
+      async()=>
+      {
+      setloading(true)
+      signUp({username,email,password})
+      setloading(false)
+      }
+
+    }
     containerStyle={{
     alignSelf:'center',
     width:200,
@@ -89,6 +109,9 @@ const NewSignUpScreen = ({navigation}) => {
     buttonStyle={{backgroundColor:'#1400FF'}}/>
        {/* <Text >Have an account? Sign in</Text> */}
        {/* <NavLink  style={{paddingTop:0,marginTop:0}}text='Already a member? Sign in' routeName="SignIn"/> */}
+       <TouchableOpacity onPress={()=>navigation.navigate("SignIn")}>
+         <Text style={{paddingTop:20,marginTop:0,color:'white',fontSize:12,opacity:0.6,alignSelf:"center"}}>Already a member? Sign in</Text>
+       </TouchableOpacity>
         </View>
       </View>
 
@@ -163,7 +186,7 @@ const styles = StyleSheet.create({
     display:'flex',
     color:'white',
     opacity:0.85,
-    fontSize:32,
+    fontSize:24,
     padding:0,
     paddingBottom:0,
     marginVertical:0,
@@ -171,22 +194,22 @@ const styles = StyleSheet.create({
   },
   bytss: {
     color:'white',
-    opacity:0.75,
-    fontSize:18,
+    opacity:0.65,
+    fontSize:12,
     fontFamily:'InterRegular',
     paddingVertical:0,
     //marginVertical:0
   },
   footer: {
-      flex: 16,
-      backgroundColor: '#222222',
+      flex:56,
+      backgroundColor: '#0C0C0C',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       borderColor:"#3A3A3A",
       borderWidth:2,
       paddingTop:16,
-      paddingBottom:125,
-    //  paddingVertical: 80,
+      paddingBottom:225,
+      paddingVertical: 80,
       paddingHorizontal: 30
   },
   logo: {

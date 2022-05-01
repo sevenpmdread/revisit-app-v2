@@ -31,7 +31,7 @@ const ShareCardContrast = ({textcolor,color,prevanswer,newanswer,question,userna
       console.log("IMAGE -> ",image);
     }
   };
-  Sharing.isAvailableAsync().then((accepted)=>{console.log(accepted)})
+  Sharing.isAvailableAsync().then((accepted)=>{})
    //text = text ? text : "I am waiting to disappear. I am tryingto devour my mind one project at atime. I understand too much, and feeltoo little, I am trying to rebuild my perspectives.I am trying to rebuild my perspectives. I am trying to build a sculpture out of time"
  // const [uri,setUri] = useState('')
  console.log(color)

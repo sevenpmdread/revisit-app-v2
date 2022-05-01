@@ -65,7 +65,7 @@ const Questionofday = () => {
     //  else
     setLoading(true)
     let response = await getQod()
-    console.log(response)
+    //console.log(response)
     setQuestion(response.question[0])
     if(response.metadata.length == 0)
     setmetadata(0)

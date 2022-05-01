@@ -7,16 +7,17 @@ import { youranswers } from '../dummydata';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TimeAgo from 'react-native-timeago';
 import { AntDesign } from '@expo/vector-icons';
-const RenderResponseQuestion = ({question,questionid,answers,navigation}) => {
-  console.log("ANSWERS", answers)
+const RenderResponseQuestion = ({question,questionid,answers,navigation,reminders}) => {
+ // console.log("ANSWERS", answers)
   const [selectedIds, setSelectedId] = useState([]);
   const renderItem = ({ item,index }) => {
     const backgroundColor = selectedIds.indexOf(item.id)!=-1 ? "black" : "grey";
     const color = selectedIds.indexOf(item.id)!=-1 ? 'white' : 'black';
-    console.log("itemitemitemiemm",item)
+    //console.log("itemitemitemiemm",item)
     var length = answers.length
 
     return (
+      <ScrollView>
       <RenderResponseCards
        // item={item}
         onPress={() => setSelectedId( selectedIds => [...selectedIds,item._id])}
@@ -30,6 +31,7 @@ const RenderResponseQuestion = ({question,questionid,answers,navigation}) => {
         bottom={50*index}
 
       />
+      </ScrollView>
     );
   };
  //console.log("NAVIGATION",navigation)
@@ -42,12 +44,12 @@ const RenderResponseQuestion = ({question,questionid,answers,navigation}) => {
   //console.log(length)
 var count = 0
   return (
-    <View>
+    <ScrollView >
       <View style={styles.questioncard}>
       <Card  containerStyle={{backgroundColor:'black',borderRadius:6,paddingHorizontal:16,paddingTop:12,borderWidth:0,borderBottomWidth:0,paddingBottom:20,borderColor:'white',marginBottom:20,elevation:0}}>
       <Text style={styles.question} onPress={()=>
       {
-        console.log("NAVIGATION ON PRESS",navigation)
+       // console.log("NAVIGATION ON PRESS",navigation)
         return navigation.navigate("RenderResponses",{
               question,questionid,
               answers
@@ -55,6 +57,7 @@ var count = 0
         }>{question}</Text>
       </Card>
         <View style={{flexDirection:'row',justifyContent:'space-between',backgroundColor:"#DADADA",padding:12,marginHorizontal:20,borderRadius:6,marginVertical:8}}>
+
         <View style={{flexDirection:'column',justifyContent:'space-between',opacity:1}}>
         <Text style={{fontFamily:'InterRegular',fontSize:16,color:'black'}}>{answers[0].answer_text}</Text>
         <View style={{flexDirection:'row'}}>
@@ -77,7 +80,7 @@ var count = 0
     />
     </View> */}
       </View>
-    </View>
+    </ScrollView>
   )
 }
 

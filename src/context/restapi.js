@@ -41,7 +41,6 @@ const postAnswer = async(question_id,answer_text,isAnonymous) => {
       "isAnonymous":isAnonymous
     }
     const response = await tracker.post(`/api/v1/answers/`,data, {headers:{ Authorization: 'Bearer ' + token}})
-    ("RESPONSE DATA",response.data)
   }
   catch(error)
   {
@@ -579,7 +578,7 @@ const getAnswersforid = async (id,limit,skip) => {
    // config.params = {i}
     // const getcount = await tracker.get(`api/v1/meta/${id}`,config)
 
-  // ("IN GET ANSWERS FOR ID REST API",response.data)
+   //console.log("IN GET ANSWERS FOR ID REST API",response.data)
     return response.data.answers
   }
   catch(error) {

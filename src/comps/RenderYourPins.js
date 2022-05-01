@@ -19,10 +19,10 @@ var count = 0
     <View>
       <View style={styles.questioncard}>
       <Card  containerStyle={{backgroundColor:'black',borderRadius:12,paddingHorizontal:16,paddingTop:12,borderWidth:1,paddingBottom:20,borderColor:'#434343',marginBottom:marginbottom}}>
-      <Text style={styles.question} onPress={()=> console.log("hello")}>{question}</Text>
+      <Text style={styles.question} >{question}</Text>
       </Card>
 
-      <View style={{marginHorizontal:20,marginBottom:340,marginTop:0,paddingTop:0,marginTop:-20}} onPress={()=> console.log("hello")}>
+      <View style={{marginHorizontal:20,marginBottom:340,marginTop:0,paddingTop:0,marginTop:-20}}>
       <FlatList
     //  onPress={()=> console.log("hello")}
       //  onStartShouldSetResponderCapture={() => {return true}}

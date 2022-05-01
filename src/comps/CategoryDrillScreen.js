@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import { View, ScrollView, StyleSheet, Image,TouchableOpacity,FlatList } from 'react-native';
+import React,{useState,useEffect,useCallback} from 'react'
+import { View, ScrollView, StyleSheet, Image,TouchableOpacity,FlatList,RefreshControl } from 'react-native';
 import { Text, Card, Button, Icon } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -10,23 +10,32 @@ import posts from '../dummydata';
 import RenderCategoryAnswers from './RenderCategoryAnswers';
 import RenderCategoryDrillAnswers from './RenderCategoryDrillAnswer';
 import { getAnswersforid } from '../context/restapi';
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 const CategoryDrillScreen = ({route,navigation}) => {
  // console.log("fjhsdfjsd = ", navigation.getParam('post'))
+ //console.log("route params",route.params)
  const  post = route.params?.post
  const answerstemp = route.params?.answers
- console.log("sdhfvsdfhvsdfsdfsd sdfjhfsd post answer", post,answerstemp)
+ console.log("POST AND ANSWERS FROM home page  CLICK",answerstemp)
+ //console.log("sdhfvsdfhvsdfsdfsd sdfjhfsd post answer",post)
  const [answers,setanswers] = useState(answerstemp)
  const [isLoading,setLoading] = useState(true)
  const [fetch,setFetch] = useState(0)
+ let arr = []
+
  useEffect(()=>{
    const fetchData = async (fetch) => {
-   const data  =   await getAnswersforid(post._id,10 + fetch*10,0)
-   console.log(data)
-   setanswers(data)
+   const data  =   await getAnswersforid(post._id ? post._id : post.item.id,answerstemp ? answerstemp.length : 10 + fetch*10,answerstemp ? answerstemp.length : 10)
+   //console.log("answersf or id",data)
+  arr = [...answers,...data]
+   setanswers(arr)
    setLoading(false)
-  console.log("answers",answers)
+  //console.log("answers",answers)
  }
- fetchData(fetch)
+
+fetchData(fetch)
 
 }, [fetch])
   //const post = item
@@ -39,26 +48,28 @@ const CategoryDrillScreen = ({route,navigation}) => {
 
    return (
 
-    <ScrollView  style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView  style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }} >
     <View style={styles.container}>
     <View style={styles.header}>
     </View>
             <Card containerStyle={{marginVertical:8,marginTop:1,marginBottom:2,marginHorizontal:12,backgroundColor:'#171717',elevation:5,borderRadius:12,borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',paddingVertical:18,paddingLeft:22,flexDirection:'column'}}>
             <View>
-            <Text style={styles.questionText}>{post.question_text}</Text>
+            <Text style={styles.questionText}>{post.question_text? post.question_text : post.item.text}</Text>
             </View>
 
-            <View style={styles.questionrow}>
             <TouchableOpacity
             style={styles.button}
+            onPress={()=>
+
+{
+  navigation.navigate('CreateAnswer',{post : {_id:post.item.id,question_text:post.item.text}})
+}            }
+
 
       >
         <Text> Answer</Text>
       </TouchableOpacity>
-                <TouchableOpacity >
-                <Feather name="more-vertical" size={26} color="white" style={{marginTop:12,textAlign:'left',opacity:0.7}}/>
-                </TouchableOpacity >
-            </View>
+
             </Card>
             <FlatList
      contentContainerStyle={{marginLeft:8}}
@@ -73,10 +84,12 @@ const CategoryDrillScreen = ({route,navigation}) => {
           // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
           // {useNativeDriver:true})}
       renderItem={(item)=>
-       {//console.log(item)
+       {
+         //console.log("iteitietietetnet",item)
       return <RenderCategoryAnswers post={item} question={post.question_text}  width={{showfull:true}}/>}
       }
       keyExtractor={item => item._id}
+      extraData={answers}
       showsVerticalScrollIndicator={false}
       />
     <View>

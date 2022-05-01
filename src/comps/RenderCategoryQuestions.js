@@ -28,6 +28,13 @@ const RenderCategoryQuestions = ({post,nav,width,onpress}) => {
   const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
   const [reminder,setreminder] = useState(false)
+  var minutesOffset = () => {
+    let date = new Date();
+    var tz = date.toString().split("GMT")[1].split(" (")[0];
+    tz = tz.substring(1,5);
+
+    return parseInt(tz[2]+tz[3]);
+  }
   var getTime = () => {
     let date = new Date();
     var tz = date.toString().split("GMT")[1].split(" (")[0];
@@ -69,15 +76,12 @@ const RenderCategoryQuestions = ({post,nav,width,onpress}) => {
     PushNotification.localNotificationSchedule({
 
       channelId:'test1',
-     // id:item.id,
+      id:item.id,
       title:item.question,
      // title:"Write a response",
       vibrate: true, // (optional) default: true
   vibration: 300,
       date:new Date(Date.now()+date),
-      actions: ["ReplyInput"],
-  reply_placeholder_text: "Write your response...", // (required)
-  reply_button_text: "Answer" ,
       message:"Reminder for revisiting this thought",
     }
     )
@@ -125,7 +129,7 @@ const RenderCategoryQuestions = ({post,nav,width,onpress}) => {
         //console.log(response)
       if(response[i].id == post.item.id)
       {
-        console.log("truth",response[i].date > new Date())
+     //   console.log("truth",response[i].date > new Date())
         if(response[i].date > new Date())
         {
         setreminder(true)
@@ -169,10 +173,12 @@ const RenderCategoryQuestions = ({post,nav,width,onpress}) => {
       <DatePicker
         modal
         open={open}
+        mode={"datetime"}
         date={date}
         onConfirm={async (date) => {
           var d = getTime()
-          console.log(new Date(date) - d.raw)
+        //  console.log(d,date.toLocaleTimeString(options))
+         // console.log(new Date(date) - d.raw)
           setOpen(false)
          // var response = await setReminders({postid:post.item.id,date:date})
          setDate(date)
@@ -199,6 +205,7 @@ const RenderCategoryQuestions = ({post,nav,width,onpress}) => {
                   <TouchableOpacity onPress={()=>
                     {
                       setreminder(false)
+                      setDate(new Date())
 
                     }
                     }>
@@ -243,7 +250,7 @@ const RenderCategoryQuestions = ({post,nav,width,onpress}) => {
         borderColor:'grey'
 
       }}
-      onPress={()=>nav.navigate("Create",{post:post.item})}
+      onPress={()=>nav.navigate("CreateAnswer",{post:post.item})}
               /> : <></>
             }
             </Card>

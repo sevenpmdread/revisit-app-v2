@@ -10,6 +10,7 @@ import {
   Image,
   ImageBackground,Button,
   SafeAreaView, ScrollView,
+  ToastAndroid
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
@@ -168,15 +169,14 @@ async function registerForPushNotificationsAsync() {
   const height_logo = height * 0.28;
   return   (
 
-    <ScrollView  style={{ flexGrow: 1 }} contentContainerStyle={{ flexGrow: 1 }} nestedScrollEnabled={true}>
+    <ScrollView style={{flex:1,backgroundColor:'#0C0C0C',marginBottom:32}} nestedScrollEnabled={true}>
     <View style={styles.container}>
     <View style={styles.header}>
-    <TouchableOpacity  onPress={async () => {
-          await schedulePushNotification();
-        }}>
+    <TouchableOpacity>
     <Text style= {styles.headerTitle}>Hi, {state.username}!</Text>
     </TouchableOpacity>
-    <Feather name="bell" size={24} color="white" style={{marginTop:10}} onPress={()=>newnotificationhandler('hI')}/>
+    <Feather name="bell" size={24} color="white" style={{marginTop:10}} onPress={()=>              ToastAndroid.show('Notification feature is currently in development!', ToastAndroid.SHORT)
+}/>
     </View>
     <Questionofday/>
     <CardSpacer/>

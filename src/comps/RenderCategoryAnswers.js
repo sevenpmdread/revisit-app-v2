@@ -17,7 +17,7 @@ import TimeAgo from 'react-native-timeago';
 import Toast from 'react-native-toast-message';
 import ShareCardContrast from './ShareCardContrast';
 const RenderCategoryAnswers = ({contrast,onPress,backgroundColor,textColor,width,post,question,nav,meta}) => {
-  //console.log("postpostpost",post)
+ // console.log("postpostpost",post)
   let newwidth = width.showfull ? 'auto' : 320
   // TimeAgo.addDefaultLocale(en)
 
@@ -48,9 +48,9 @@ const RenderCategoryAnswers = ({contrast,onPress,backgroundColor,textColor,width
       let prevstring = date.toDateString().substring(4)
       setprevdate(prevstring)
       setdatenew(newdate.toDateString().substring(4))
-      console.log(prevdate,newdate,diffDays)
+      //console.log(prevdate,newdate,diffDays)
       setcontrastAnswer(resp.contrastAnswer.answer_text)
-      console.log("CONTRAST NEW NEW NEW",resp,contrastAnswer)
+     // console.log("CONTRAST NEW NEW NEW",resp,contrastAnswer)
 
     }
     getAnswer()
@@ -96,9 +96,9 @@ const RenderCategoryAnswers = ({contrast,onPress,backgroundColor,textColor,width
     ToastAndroid.show(msg, ToastAndroid.SHORT)
   }
   const pinPost = async() =>  {
-    console.log("in here")
+    //console.log("in here")
     const data =  await pinpost(post._id)
-    console.log("I AM CALLED PINPOST",data)
+    //console.log("I AM CALLED PINPOST",data)
     if(data === "error")
     {
       seterrormessage('Already pinned')
@@ -110,9 +110,9 @@ const RenderCategoryAnswers = ({contrast,onPress,backgroundColor,textColor,width
     showToast('Pinned to your profile')}
   }
   const unpin = async() =>  {
-    console.log("in unpin here")
+    //console.log("in unpin here")
     const data =  await unpinPost(post._id)
-    console.log("I AM CALLED unPINPOST",data)
+    //console.log("I AM CALLED unPINPOST",data)
     if(data === "error")
     {
       seterrormessage('error')

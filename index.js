@@ -17,6 +17,15 @@ PushNotification.configure({
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
   },
+  onAction: function (notification) {
+    console.log("ACTION:", notification.action);
+    console.log("NOTIFICATION:", notification);
+    console.log("texto", notification.reply_text)// this will contain the inline reply text.
+
+
+    // process the action
+  },
+
   requestPermissions: Platform.OS === 'ios'
 })
 

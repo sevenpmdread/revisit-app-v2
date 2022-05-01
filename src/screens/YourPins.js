@@ -1,12 +1,26 @@
 import { StyleSheet, Text, View,ScrollView,FlatList } from 'react-native'
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useCallback} from 'react'
 import { yourpins } from '../dummydata'
 import RenderYourPins from '../comps/RenderYourPins'
 import { getPinsbythisuser } from '../context/restapi'
-
-const YourPins = () => {
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+const YourPins = ({navigation}) => {
   const [questions,setQuestions] = useState([])
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(300).then(() =>
+    {
+      setRefreshing(false)
+    }
+    );
+  }, []);
   useEffect(()=>{
+    navigation.addListener('didfocus', () => {
+      onRefresh()
+    });
     const fetchData = async () => {
     const data  =   await getPinsbythisuser()
     // console.log("data",data)

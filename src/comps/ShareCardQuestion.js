@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react'
+import React,{useRef,useState,useContext} from 'react'
 import { StyleSheet, Text, View,Image, ViewPropTypes,TouchableOpacity,Button,ImageBackground } from 'react-native'
 import { Card } from 'react-native-elements'
 import {captureRef} from 'react-native-view-shot'
@@ -14,10 +14,13 @@ import {
   NotoSerifJP_900Black
 } from '@expo-google-fonts/noto-serif-jp'
 import * as Sharing from 'expo-sharing';
-
+import Avatar from 'react-native-boring-avatars';
+import { Context as AuthContext } from '../context/authContext';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const ShareCardQuestion = ({textcolor,color,text,question,count}) => {
+  const {state,signout} = useContext(AuthContext)
+
   const [image, setImage] = useState(null);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -156,10 +159,19 @@ const ShareCardQuestion = ({textcolor,color,text,question,count}) => {
     fontSize:7}}>ANSWERED {count} TIMES</Text>
       </View>
       </Card>}
-      <Card containerStyle={{backgroundColor:"#DDDBDC",borderColor:"black",height:150,marginBottom:0}}>
+      <Card containerStyle={{backgroundColor:"black",borderColor:"white",height:150,marginBottom:0}}>
       <View style={{flexDirection:"row",paddingTop:6}}>
-      <View style={{padding:0,paddingTop:25,paddingLeft:24}}>
-      <Image source={require("../../assets/cardlogo.png")} resizeMode="contain" imageStyle={{height:100,paddingTop:200,marginTop:200}} containerStyle={{height:100,textAlign:"left",paddingTop:200,marginTop:200}}/>
+      <View style={{padding:0,paddingTop:15,paddingLeft:24}}>
+      <View style={{borderWidth:1,borderColor:'white',borderRadius:200}}>
+      <Text><Avatar
+  size={80}
+
+  name={state.username}
+  variant="bauhaus"
+  colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
+/></Text>
+      </View>
+      {/* <Image source={require("../../assets/cardlogo.png")} resizeMode="contain" imageStyle={{height:100,paddingTop:200,marginTop:200}} containerStyle={{height:100,textAlign:"left",paddingTop:200,marginTop:200}}/> */}
       </View>
       <View style={{flexDirection:"column",paddingLeft:80,marginLeft:0,width:230,paddingTop:0}}>
       <Text style={styles.whatis}>What is Revisit?</Text>
@@ -236,7 +248,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:12
   },
   whatis:{
-    color:'black',
+    color:'white',
     fontFamily:'InterSemi',
    // textDecorationLine:'underline',
     fontSize:12,
@@ -261,7 +273,7 @@ const styles = StyleSheet.create({
   //  textAlign:'right'
   },
   answerText:{
-    color:'black',
+    color:'white',
     fontFamily:'Intermedium',
     fontSize:10,
     //includeFontPadding:true,

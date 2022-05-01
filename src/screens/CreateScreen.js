@@ -24,7 +24,7 @@ const CreateScreen = ({route,navigation}) => {
   //console.log(post)
   post.question_text = post.text  ? post.text : post.question_text
   post._id = post.id ? post.id : post._id
-  console.log("RANDOM POST",post._id)
+  //console.log("RANDOM POST",post._id)
 
   const list = [
     { title: 'Share this question', titleStyle:{color:'white'}, containerStyle: {backgroundColor:'black',borderTopRadius:20,marginHorizontal:2} },
@@ -115,12 +115,12 @@ const CreateScreen = ({route,navigation}) => {
       onPress={async()=>{
         setModalVisible(true)
         setLoading(true)
-        console.log("RANDOM POST id",post,post._id)
-        let postnew = await postAnswer(post._id,value,isAnonymous)
-        console.log("RANDOM POST",postnew)
+       // console.log("RANDOM POST id",post,post._id)
+       await postAnswer(post._id,value,isAnonymous)
+        //console.log("RANDOM POST",postnew)
         setLoading(false)
       //  setModalVisible(false)
-      setTimeout(()=>{ navigation.navigate("Explore",{refresh:true}) }, 2000)
+      setTimeout(()=>{ navigation.navigate("Explore",{refresh:true}) }, 1000)
 
         }}
 
@@ -130,9 +130,6 @@ const CreateScreen = ({route,navigation}) => {
 
       <View style={{flexDirection:'row', paddingHorizontal:26,paddingRight:30,paddingTop:18,justifyContent:"space-between"}}>
         <Text style={styles.questionText}>{post.question_text}</Text>
-        <TouchableOpacity onPress={() => setIsVisible(true)}>
-        <Feather name="more-vertical" size={26} color="white" style={{marginTop:12,textAlign:'left',opacity:0.9}}/>
-        </TouchableOpacity>
       </View>
         <CheckBox
         leftTextStyle={{color:'white',fontFamily:'InterRegular'}}

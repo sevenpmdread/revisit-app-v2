@@ -1,13 +1,13 @@
 import React, {useContext,useEffect} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity,Image,ScrollView } from 'react-native'
 import {Button} from 'react-native-elements'
 import { Feather } from '@expo/vector-icons';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import NavSwap from './NavSwap';
 import { Context as AuthContext } from '../context/authContext'
 //import { getPinsbythisuser } from '../context/restapi';
-//import Avatar from 'react-native-boring-avatars';
+import Avatar from 'react-native-boring-avatars';
 const AccountScreen = ({navigation}) => {
 
  // const [state,signout] = useContext(AuthContext)
@@ -28,9 +28,17 @@ const AccountScreen = ({navigation}) => {
         <Text style={{color:'white',paddingLeft:12,fontFamily:'InterRegular',fontSize:18}}>Sign out</Text>
         </TouchableOpacity>
       </View>
-      <View>
+
+      <View style={{flexDirection:'row',paddingBottom:24}}>
+      <View style={{borderWidth:1,borderColor:'white',borderRadius:200}}>
+      <Text><Avatar
+  size={120}
+
+  name={state.username}
+  variant="bauhaus"
+  colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
+/></Text>
       </View>
-      <View style={{flexDirection:'row',justifyContent:'space-between',paddingBottom:24}}>
       <Text style={styles.username}>{state.username}</Text>
       </View>
       {/* <View style={{flexDirection:'row',paddingBottom:8}}>
@@ -83,8 +91,9 @@ const styles = StyleSheet.create({
     fontFamily:'Intermedium',
     fontSize:22,
    textDecorationLine: 'underline',
-    paddingTop:42,
-    paddingRight:16
+    paddingTop:32,
+    paddingRight:0,
+    paddingLeft:16
   },
   header:{
 //    marginTop:32,

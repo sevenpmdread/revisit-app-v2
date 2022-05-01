@@ -33,28 +33,7 @@ const RenderVentQuestions = ({questionid,answer,question,onaddnew,setquestiontex
         <View style={styles.postcenteredView}>
           <View style={styles.postmodalView}>
             {
-            //   !error ?
-            //   isLoading ?
-            //   <>
-            //   <LoadingScreennew/>
-            // <Text style={styles.postmodalText}>Publishing your answer</Text>
-            // </>
-            // :
-            // <>
-            // <AntDesign name="checkcircle" size={40} color="green" />
-            // <Text style={styles.postmodalText}>Success! Your question will be visible on the feed</Text>
-            // </>
-            // :
-            // <>
-            // <AntDesign name="exclamation" size={40} color="red" />
-            // <Text style={styles.postmodalText}>Looks like you have already asked this question</Text>
-            // <Pressable
-            //   style={[styles.button, styles.buttonClose]}
-            //   onPress={() => setpostModalVisible(!postmodalVisible)}
-            // >
-            //   <Text style={{color:'red',paddingTop:20}}>Close</Text>
-            // </Pressable>
-            // </>
+
             !isLoading ?
             <>
               <Text style={{color:'white',fontFamily:'InterRegualar',fontSize:20,alignSelf:'center',textAlign:'center',paddingBottom:20}}>Are you sure you want to delete this question</Text>
@@ -93,7 +72,7 @@ const RenderVentQuestions = ({questionid,answer,question,onaddnew,setquestiontex
       <Button
       onPress={()=>{
         setquestionid(questionid)
-        console.log(question)
+     //   console.log(question)
         setquestiontext(question)
         onaddnew()
       }}
@@ -128,7 +107,8 @@ const RenderVentQuestions = ({questionid,answer,question,onaddnew,setquestiontex
           // Animated.event([{nativeEvent: {contentOffset:{x:scrollX}}}],
           // {useNativeDriver:true})}
       renderItem={(item)=>
-       {console.log("answer_item",item)
+       {
+         //console.log("answer_item",item)
       return <RenderVentAnswers answertext={item.item.answer_text} answerid={item.item.answerId} timestamp={item.item.timestamp}/>}
       }
       keyExtractor={item => item.answerid}

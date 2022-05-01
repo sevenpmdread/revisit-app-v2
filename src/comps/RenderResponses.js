@@ -26,7 +26,7 @@ const Contrastcomp = ({contrastAnswers,selectedids,answers,setnew}) => {
   const {state} = useContext(Context)
 
   const diffTime = Math.abs(contrastAnswers[0].data_a - contrastAnswers[1].data_a);
-  console.log(diffTime)
+  //console.log(diffTime)
   const prevdate = contrastAnswers[0].data_a.toDateString().substr(4,12)
   const newdate = contrastAnswers[1].data_a.toDateString().substr(4,12)
 const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -141,7 +141,7 @@ const RenderResponses = ({route,navigation}) => {
  const renderItem = ({ item,index }) => {
   const backgroundColor = selectedIds.indexOf(item._id)!=-1 ? "grey" : "transparent";
   const color = selectedIds.indexOf(item._id)!=-1 ? '#121212' : 'white';
-  console.log("itemitemitemiemm",item)
+ // console.log("itemitemitemiemm",item)
   var length = answers.length
 
   return (
@@ -160,13 +160,13 @@ const RenderResponses = ({route,navigation}) => {
         contrastAnswers.push(obj)
        // setContrastanswers([...contrastAnswers,obj])
 
-        console.log("NO MATCH FOUND",contrastAnswers)
+        //console.log("NO MATCH FOUND",contrastAnswers)
         selected.push(item._id)
         setSelectedId(selected)
       }
       else
      {
-      console.log("NO lese FOUND",selectedIds)
+      //console.log("NO lese FOUND",selectedIds)
        selected = selected.filter(_id => _id !== item._id)
        setSelectedId(selected)
       // setrefresh(!refresh)
@@ -176,7 +176,7 @@ const RenderResponses = ({route,navigation}) => {
       {
         setSelectedId(selected)
         setcontrast(true)
-        console.log("ARRys",selectedIds,selected)
+        //console.log("ARRys",selectedIds,selected)
       }
       }
     }
@@ -237,9 +237,6 @@ const RenderResponses = ({route,navigation}) => {
         </Text>
       </TouchableOpacity>
                 <View style={{flexDirection:'row'}}>
-                <TouchableOpacity >
-                <Feather name="more-vertical" size={26} color="white" style={{marginTop:0,textAlign:'left',opacity:0.7}}/>
-                </TouchableOpacity >
                 </View>
             </View>
             </Card>

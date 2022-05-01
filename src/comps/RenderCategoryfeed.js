@@ -15,10 +15,10 @@ const RenderCategoryfeed = ({post,navigation}) => {
   useEffect(()=>{
     const fetchData = async () => {
     const data  =   await getAnswersforid(post.item.id,10,0)
-    console.log(data)
+    //console.log(data)
     setanswers(data)
     setLoading(false)
-   console.log("answers",answers)
+   //console.log("answers",answers)
   }
   fetchData()
 
@@ -42,7 +42,7 @@ const RenderCategoryfeed = ({post,navigation}) => {
              }
              catch(err)
              {
-               console.log(err)
+             //  console.log(err)
              }
             }
             }>
@@ -51,14 +51,12 @@ const RenderCategoryfeed = ({post,navigation}) => {
             </View>
             <View style={styles.questionrow}>
             <TouchableOpacity
+            onPress={()=>navigation.navigate('CreateAnswer',{post : {_id:post.item.id,question_text:post.item.text}})}
             style={styles.button}
 
       >
-        <Text> Answer</Text>
+        <Text> {answers.length > 0  ? `Answer` :  `Be the first to answer`}</Text>
       </TouchableOpacity>
-                <TouchableOpacity >
-                <Feather name="more-vertical" size={26} color="white" style={{marginTop:12,textAlign:'left',opacity:0.7}}/>
-                </TouchableOpacity >
             </View>
             </Card>
 { answers.length ?
@@ -76,7 +74,10 @@ const RenderCategoryfeed = ({post,navigation}) => {
                keyExtractor={item => item._id}
                />
                :
+               isLoading?
     <LoadingScreenew/>
+    :<View style={{paddingVertical:10}}/>
+
               }
 
 
@@ -92,13 +93,14 @@ const styles = StyleSheet.create({
     marginTop:0,
     //opacity:0.6,
     height:32,
-    width:100,
+   // width:100,
     padding:4,
     color:"black",
     elevation:5,
    // width:100,
    // height:20,
     borderRadius:5,
+    paddingHorizontal:8,
     alignContent:'center',
     alignItems:'center',
    // marginBottom:32

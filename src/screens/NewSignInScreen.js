@@ -38,7 +38,7 @@ const NewSignInScreen = ({navigation}) => {
     return (
 
       <View style={styles.container}>
-            <NavigationEvents onWillFocus={clearError} />
+            {/* <NavigationEvents onWillFocus={clearError} /> */}
         <View style={styles.header}>
         <Image source={require('../../assets/smalloneasset.png')}/>
           </View>
@@ -46,7 +46,11 @@ const NewSignInScreen = ({navigation}) => {
         <View style={styles.footer}>
        <Text style={styles.footerHeading}>Revisit</Text>
         <Text style={styles.bytss}>by the surreal service</Text>
-
+        <KeyboardAwareScrollView
+    style={{ backgroundColor: '#101010'}}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+    scrollEnabled={true}
+  >
         <View style={styles.footerinput}></View>
         <TextInput
           value={email}
@@ -66,6 +70,7 @@ const NewSignInScreen = ({navigation}) => {
           placeholder="Enter password"
           placeholderTextColor={'grey'}
         />
+        </KeyboardAwareScrollView>
 
 {state.errorMessage ? (<Text style={{color:'red'}}>{state.errorMessage}</Text>) : null}
 
@@ -81,7 +86,6 @@ const NewSignInScreen = ({navigation}) => {
     }}
     buttonStyle={{backgroundColor:'#1400FF'}}/>
        {/* <Text >Have an account? Sign in</Text> */}
-       <NavLink  style={{paddingTop:0,marginTop:0}}text='New to the app? Register here' routeName="SignUp"/>
         </View>
       </View>
 

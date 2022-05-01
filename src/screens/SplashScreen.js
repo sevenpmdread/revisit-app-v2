@@ -33,7 +33,7 @@ const SplashScreen = ({navigation}) => {
         <Image style={styles.image} resizeMode="cover" source={require('../../assets/logo.png')}/>
         <View style={styles.footer}>
        <Text style={styles.footerHeading}>Revisit</Text>
-        <Text style={styles.bytss}>by the surreal service</Text>
+        <Text style={styles.bytss}>by thesurrealservice.com</Text>
         <Text style={styles.subText}>Build to confront, discover yourself by revisiting your ideas,beliefs and more</Text>
         <Button title="Get started for free"
         onPress={()=> navigation.navigate('SignUp')}
@@ -48,6 +48,9 @@ const SplashScreen = ({navigation}) => {
                 }} buttonStyle={{backgroundColor:'#1400FF'}}/>
        {/* <Text >Have an account? Sign in</Text> */}
        {/* <NavLink  style={{paddingTop:0,marginTop:0}}text='Already a member? Sign in' routeName="SignIn"/> */}
+       <TouchableOpacity onPress={()=>navigation.navigate("SignIn")}>
+         <Text style={{paddingTop:16,marginTop:0,color:'white',fontSize:12,opacity:0.6,textDecorationLine:"underline",alignSelf:'center'}}>Already a member? Sign in</Text>
+       </TouchableOpacity>
         </View>
       </View>
     );
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
   footerHeading: {
     display:'flex',
     color:'white',
-    opacity:0.85,
+    opacity:0.95,
     fontSize:48,
     padding:0,
     paddingBottom:0,
@@ -112,8 +115,8 @@ const styles = StyleSheet.create({
   },
   bytss: {
     color:'white',
-    opacity:0.75,
-    fontSize:24,
+    opacity:0.65,
+    fontSize:14,
     //paddingVertical:0,
     //marginVertical:0
   },

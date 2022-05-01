@@ -41,6 +41,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from './src/screens/loadingScreen';
 import { navigationRef } from './src/navigationRef';
 import { Ionicons } from '@expo/vector-icons'
+import OnboardingTut from './src/comps/OnboardingTut'
 
 LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
 
@@ -342,7 +343,8 @@ function SignFlow() {
     <Stack.Navigator
        screenOptions={{
         headerShown: false
-      }}>
+      }}
+     >
     <Stack.Screen name="Splash" component={SplashScreen} />
     <Stack.Screen name="SignUp" component={NewSignUpScreen} />
     <Stack.Screen name="SignIn" component={NewSignInScreen} />
@@ -366,6 +368,7 @@ export default () => {
       <Stack.Screen name="ResolveAuth" component={LoadingScreen}
       />
       <Stack.Screen name="Sign" component={SignFlow} />
+      <Stack.Screen name="Onboarding" component={OnboardingTut} />
       <Stack.Screen name="HomeTabs" component={HomeTabs} />
       <Stack.Screen name="Category" component={CategoryScreen} />
       <Stack.Screen name="CategoryDrill" component={CategoryDrillScreen} />

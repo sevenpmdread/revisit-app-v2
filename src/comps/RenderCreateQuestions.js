@@ -36,7 +36,8 @@ const RenderCreateQuestions = ({post,nav}) => {
             <View>
               <TouchableOpacity>
             <Text style={styles.questionText} onPress={()=>
-      { console.log("Pressed")
+      {
+        //console.log("Pressed")
         return nav.navigate("Create",{
         post:post
       })}

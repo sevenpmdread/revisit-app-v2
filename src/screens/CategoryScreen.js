@@ -16,7 +16,6 @@ import * as navigation from '../navigationRef'
 const CategoryScreen = ({route,navigation}) => {
   let quesdescs = []
   let obj = {}
-  console.log("NAB NAV",route.params?.type)
   obj.type = route.params?.type
   obj.desc =route.params?.desc
   obj.questions = route.params?.questions
@@ -40,15 +39,6 @@ const CategoryScreen = ({route,navigation}) => {
     </View>
     <CardSpacer/>
     <Categoryfeed navigation={navigation} type={obj.type} desc={obj.desc} questions={obj.questions} />
-    {/* <FlatList
-    data={quesdescs}
-    renderItem={(item)=>
-      {
-
-     return <Categoryfeed navigation={navigation} type={item.item.type} desc={item.item.desc} questions={item.item.questions}/>}
-     }
-    keyExtractor={item => item.type}
-    /> */}
     </View>
     </ScrollView>
   );

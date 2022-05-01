@@ -35,7 +35,7 @@ const ExploreScreen = ({navigation,route}) => {
   const [exploreques,setexploreques] = useState([])
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    wait(1000).then(() =>
+    wait(2000).then(() =>
     {
       setRefreshing(false)
       setexploreques([])
@@ -49,10 +49,12 @@ const ExploreScreen = ({navigation,route}) => {
     //  console.log("I AM CALLED ID USEEFFECT")
       // declare the data fetching function
       if(route.params?.refresh)
-      navigation.addListener('focus', () => {
+     { navigation.addListener('focus', () => {
         console.log("NAVIGATION",route,navigation)
         onRefresh()
       });
+      navigation.setParams({refresh: false})
+    }
       const fetchData = async () => {
 
       //  console.log("FOUND FOUND")
@@ -97,6 +99,7 @@ const ExploreScreen = ({navigation,route}) => {
 
       <ScrollView
     contentContainerStyle={styles.container}
+    nestedScrollEnabled={true}
 
     // refreshControl={
     //   <RefreshControl
@@ -105,41 +108,41 @@ const ExploreScreen = ({navigation,route}) => {
     //   />
     // }
     >
+      {
+        isLoading?
+        <LoadingScreennew/>
+        :
+        <FlatList
+        contentContainerStyle={{marginLeft:2}}
+       //  horizontal={true}
+        // style={{flex:1}}
+          data = {exploreques}
 
-      <FlatList
-     contentContainerStyle={{marginLeft:2}}
-    //  horizontal={true}
-     // style={{flex:1}}
-       data = {exploreques}
-      scrollEventThrottle={32}
-      //snapToInterval={400}
-      snapToAlignment ="start"
-          decelerationRate={0}
-          bounces={true}
-          onScrollBeginDrag={()=>
-          Animated.event([{nativeEvent: {contentOffset:{y:scrollY}}}],
-          {useNativeDriver:true})}
-      renderItem={(item,index)=>
-       {
-      return <RenderExploreFeed navigation={navigation} post={item.item} vent={vent}/>}
+         renderItem={(item,index)=>
+          {
+      //  /   console.log("RENDER EXPLORE FEED",item)
+         return <RenderExploreFeed navigation={navigation} post={item.item} vent={vent}/>}
+         }
+         keyExtractor={item => item._id}
+         showsVerticalScrollIndicator={true}
+         extraData={exploreques}
+         onEndReached={() => {
+         setskip(skip+1)
+         }}
+         refreshControl={
+           <RefreshControl
+             refreshing={refreshing}
+             onRefresh={onRefresh}
+           />
+         }
+
+
+
+
+         />
       }
-      keyExtractor={item => item._id}
-      showsVerticalScrollIndicator={true}
-      extraData={exploreques}
-      onEndReached={() => {
-      setskip(skip+1)
-      }}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }
 
 
-
-
-      />
  {/* {
         !isLoading ?
       <TouchableOpacity style={{paddingTop:6}} onPress={()=>setskip(skip+1)}>

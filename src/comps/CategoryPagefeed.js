@@ -19,12 +19,9 @@ import CardSpacer from './CardSpacer';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import RenderCategoryfeed from './RenderCategoryfeed';
 const Categoryfeed = ({type,desc,questions,navigation}) => {
-  //console.log("in rendercategroy feed",questions)
 
-  const expanded = true;
  var image = type === 'Existential'? require('../../assets/categoryexistential.png') :  type === 'Confrontational' ?  require('../../assets/categoryconfrontational.png') : type === 'Growth' ?   require('../../assets/categorygrowth.png') :  type === 'Vent' ?   require('../../assets/categoryvent.png') : require('../../assets/categorypersonal.png')
-//  console.log( type.toLowerCase())
-  const name = type.toLowerCase()
+
 
   return (
     <View>
@@ -60,7 +57,6 @@ const Categoryfeed = ({type,desc,questions,navigation}) => {
           bounces={true}
       renderItem={(item)=>
        {
-       //  console.log("in rendercategroy feed",item)
       return <RenderCategoryfeed navigation={navigation} post={item}/>}
       }
       keyExtractor={item => item.id}

@@ -12,13 +12,13 @@ const Reducer = (state,action) => {
       return {...state,meta:action.payload.meta}
     }
     case 'fetchhome':{
-      //console.log("fetchhome acroin payload",action.payload)
+      ////console.log("fetchhome acroin payload",action.payload)
       return {...state,homescreendata:action.payload}
     }
     case 'add_error':
       return {...state,errorMessage:action.payload}
     case 'signin':
-     // console.log(action.payload)
+     // //console.log(action.payload)
       return {...state,errorMessage:'',token:action.payload.token,username:action.payload.username}
     case 'clear_error':
       return {...state, errorMessage:''}
@@ -110,20 +110,37 @@ const signUp = dispatch => async ({username,email,password}) => {
 
 
       console.log(username,email,password)
-      const response = await tracker.post('/api/v1/auth/signup',{username,email,password})
-    // console.log(response)
+      const response = await tracker.post('/api/v1/auth/signup',{username,email,password}).catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          //console.log(error);
+          //console.log(error.response.data.err);
+          dispatch({
+            type:'add_error',
+            payload:error.response.data.err
+          })
+        }
+        else
+        {
+          //console.log(error);
+        }
+        return
+        //throw error
+      });
+     //console.log(response)
       await AsyncStorage.setItem('token',response.data.token)
       await AsyncStorage.setItem('username',username)
 
-     // console.log(response)
+     // //console.log(response)
       dispatch({type:'signin',payload:{token:response.data.token,username:username}})
    //   fetchHomedata()
-      navigation.navigate('HomeTabs')
+      navigation.navigate('Onboarding')
     }
     catch(error)
     {
-      console.log(error)
-      dispatch({type:'add_error',payload:error})
+
+      //dispatch({type:'add_error',payload:error.err})
     }
   }
 
@@ -148,25 +165,40 @@ const tryLocalSignin = dispatch => async ()=> {
 const signout = dispatch => async ()=> {
   await AsyncStorage.removeItem('token')
   dispatch({type:'signout'})
-  navigate('loginFlow')
+  navigation.navigate('Sign')
 }
 
 const signin = dispatch => async ({email,password}) => {
   try{
-    console.log(email,password)
-    const response = await tracker.post('/api/v1/auth/signin',{email,password})
+    //console.log(email,password)
+    const response = await tracker.post('/api/v1/auth/signin',{email,password}).catch(function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        //console.log(error);
+        //console.log(error.response.data.err);
+        dispatch({
+          type:'add_error',
+          payload:error.response.data.err
+        })
+      }
+      else
+      {
+        //console.log(error);
+      }
+      return
+      //throw error
+    });
+    //console.log(response)
     await AsyncStorage.setItem('token',response.data.token)
     await AsyncStorage.setItem('username',response.data.username)
-   // console.log(response.data.username)
+   // //console.log(response.data.username)
     dispatch({type:'signin',payload:{token:response.data.token,username:response.data.username}})
-    navigate('TrackList')
+    navigation.navigate('HomeTabs')
   }
   catch(error)
   {
-    dispatch({
-      type:'add_error',
-      payload:error
-    })
+
 
   }
 }

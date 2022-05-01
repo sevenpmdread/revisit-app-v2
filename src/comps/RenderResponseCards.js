@@ -6,7 +6,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
 const RenderResponseCards = ({onPress,backgroundColor,textColor,answertext,answer,zindex,scale,opacity,bottom}) => {
-  console.log("RECIEVED ITEMS AT RENDERREPONSE CARDS",zindex)
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
