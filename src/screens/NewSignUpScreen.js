@@ -27,6 +27,9 @@ const NewSignUpScreen = ({navigation}) => {
   const {state,signUp,clearError} = useContext(AuthContext)
   navigation.addListener('focus', () => {
     clearError()
+    setusername('')
+    setEmail('')
+    setPassword('')
   });
   useEffect(() => {
     //  console.log("I AM CALLED ID USEEFFECT")
@@ -47,12 +50,7 @@ const NewSignUpScreen = ({navigation}) => {
    // console.log( Dimensions.get("screen"))
 
     return (
-      <View style={styles.container}>
-                    {/* <NavigationEvents onWillFocus={clearError} /> */}
-        <View style={styles.header}>
-        <Image source={require('../../assets/smalloneasset.png')}/>
-          </View>
-        {/* <Image style={styles.image} resizeMode="cover" source={require('../../assets/logo.png')}/> */}
+
         <View style={styles.footer}>
        <Text style={styles.footerHeading}>Revisit</Text>
         <Text style={styles.bytss}>BY THESURREALSERVICE.COM</Text>
@@ -89,21 +87,21 @@ const NewSignUpScreen = ({navigation}) => {
         />
 {state.errorMessage ? (<Text style={{color:'red',opacity:0.8}}>{state.errorMessage}</Text>) : null}
     <Button title={loading ? `Signing Up..` : `Sign up`}
-    onPress={
-      async()=>
-      {
+    onPress={async() => {
       setloading(true)
-      signUp({username,email,password})
-      setloading(false)
-      }
+
+        await signUp({username,email,password})
+        setloading(false)
+    }
 
     }
+    disabled={loading}
     containerStyle={{
     alignSelf:'center',
     width:200,
     paddingBottom:0,
     marginBottom:16,
-    marginTop:120,
+    marginTop:20,
     borderRadius:100
     }}
     buttonStyle={{backgroundColor:'#1400FF'}}/>
@@ -113,7 +111,6 @@ const NewSignUpScreen = ({navigation}) => {
          <Text style={{paddingTop:20,marginTop:0,color:'white',fontSize:12,opacity:0.6,alignSelf:"center"}}>Already a member? Sign in</Text>
        </TouchableOpacity>
         </View>
-      </View>
 
     );
 };
@@ -161,12 +158,6 @@ const styles = StyleSheet.create({
   //  elevation:5,
    // marginRight: 10,
   },
-  header: {
-      flex: 1,
-      marginTop:200,
-      justifyContent: 'center',
-      alignItems: 'center'
-  },
   bottomSignIn: {
     color:'white',
     opacity:0.60,
@@ -201,13 +192,13 @@ const styles = StyleSheet.create({
     //marginVertical:0
   },
   footer: {
-      flex:56,
+      flex:1,
       backgroundColor: '#0C0C0C',
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 30,
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
       borderColor:"#3A3A3A",
       borderWidth:2,
-      paddingTop:16,
+      paddingTop:64,
       paddingBottom:225,
       paddingVertical: 80,
       paddingHorizontal: 30

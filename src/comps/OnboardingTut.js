@@ -6,28 +6,6 @@ import Onboarding from 'react-native-onboarding-swiper';
 import { SvgUri,SvgCssUri } from 'react-native-svg';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
-const test0 = require('../../assets/explore0.svg');
-const test = require('../../assets/explore.svg');
-const test2 = require('../../assets/explore2.svg');
-const test3 = require('../../assets/explore3.svg')
-const testvent = require('../../assets/vent.svg')
-const ventwords = require('../../assets/ventfont.svg')
-const contrastquestion = require('../../assets/contrastquestion.svg')
-const testcontrast = require('../../assets/contrast.svg')
-const contrastword = require('../../assets/contrastword.svg')
-const share = require('../../assets/share.svg')
-const sharetitle = require('../../assets/sharetitle.svg')
-const sharesvg = resolveAssetSource(share)
-const sharetit = resolveAssetSource(sharetitle)
-const ventword = resolveAssetSource(ventwords)
-const contrasttitle = resolveAssetSource(contrastword)
-const contrasttop = resolveAssetSource(contrastquestion)
-const ventsvg = resolveAssetSource(testvent)
-const contrastsvg = resolveAssetSource(testcontrast)
-const svg0 = resolveAssetSource(test0);
-const svg = resolveAssetSource(test);
-const svg2 = resolveAssetSource(test2)
-const svg3= resolveAssetSource(test3)
 
 const Done = ({navigation}) => (
 
@@ -73,10 +51,8 @@ const OnboardingTut = ({navigation}) => {
         backgroundColor: 'white',
         titleStyles:{height:0},
         image:  <>
-        <SvgCssUri uri={svg0.uri}  />
-        <SvgCssUri uri={svg.uri} style={{marginVertical:20}}/>
-        <SvgCssUri uri={svg2.uri} />
-        <SvgCssUri uri={svg3.uri} />
+        <Image source={require('../../assets/explore0.png')} />
+
         </>,
         title: '',
         subtitle: 'Find questions that help you understand yourself better',
@@ -87,8 +63,8 @@ const OnboardingTut = ({navigation}) => {
         title: '',
         titleStyles:{height:0},
         image:  <>
-                <SvgCssUri uri={ventword.uri} style={{marginBottom:24}} />
-        <SvgCssUri uri={ventsvg.uri}  />
+                <Image source={require('../../assets/vent0.png')} />
+
         </>,
         subtitle: 'Vent privately, build a timeline of your thoughts, and publish anonymously!',
         subTitleStyles: { fontFamily:'Intermedium',fontSize:16 }
@@ -97,9 +73,8 @@ const OnboardingTut = ({navigation}) => {
         backgroundColor: 'white',
         titleStyles:{height:0},
         image: <>
-                        <SvgCssUri uri={contrasttitle.uri}style={{marginBottom:32}}  />
-                <SvgCssUri uri={contrasttop.uri}style={{marginBottom:20}}  />
-        <SvgCssUri uri={contrastsvg.uri} />
+                        <Image source={require('../../assets/contrast0.png')} />
+
 </>,
         title: '',
         subtitle: "Create contrasts of your answers,and thoughts as they evolve over time",
@@ -108,8 +83,8 @@ const OnboardingTut = ({navigation}) => {
       {
         backgroundColor: 'white',
         image:  <>
-                <SvgCssUri uri={sharetit.uri}style={{marginBottom:42}}  />
-        <SvgCssUri uri={sharesvg.uri}/>
+                                <Image source={require('../../assets/share0.png')} />
+
 </>,
         title: '',
         titleStyles:{height:0},
