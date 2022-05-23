@@ -56,6 +56,14 @@ var count = 0
       })}
         }>{question}</Text>
       </Card>
+      <TouchableOpacity onPress={()=>
+      {
+       // console.log("NAVIGATION ON PRESS",navigation)
+        return navigation.navigate("RenderResponses",{
+              question,questionid,
+              answers
+      })}
+        }>
         <View style={{flexDirection:'row',justifyContent:'space-between',backgroundColor:"#DADADA",padding:12,marginHorizontal:20,borderRadius:6,marginVertical:8}}>
 
         <View style={{flexDirection:'column',justifyContent:'space-between',opacity:1}}>
@@ -67,6 +75,7 @@ var count = 0
         </View>
         <AntDesign name="rightcircleo" size={24} color="black" style={{paddingVertical:12}}/>
         </View>
+        </TouchableOpacity>
       {/* <View style={{marginLeft:20,marginBottom:340,marginTop:0,paddingTop:0}}>
       <FlatList
     data={answers}

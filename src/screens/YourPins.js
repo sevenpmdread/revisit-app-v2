@@ -16,7 +16,7 @@ const YourPins = ({navigation}) => {
       setRefreshing(false)
     }
     );
-  }, []);
+  });
   useEffect(()=>{
     navigation.addListener('didfocus', () => {
       onRefresh()
@@ -40,7 +40,7 @@ const YourPins = ({navigation}) => {
   }
   fetchData()
 
-}, [])
+},)
   return (
     <View>
     <FlatList

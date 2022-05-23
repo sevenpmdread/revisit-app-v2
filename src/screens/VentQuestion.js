@@ -4,15 +4,6 @@ import React,{useEffect,useState} from 'react'
 import RenderVentQuestions from '../comps/RenderVentQuestions'
 import { getvent } from '../context/restapi'
 const VentQuestion = ({questions,setquestiontext,onaddnew,setreaload,setquestionid}) => {
-  //let ventquestions = []
-  // const [ventquestions,setventquestions] = useState([])
-  // useEffect(() => {
-  //   let fetchData = async()=> {
-  //     let ventquestions = await getvent()
-  //     setventquestions(ventquestions)
-  //   }
-  //   fetchData()
-  // }, [])
 
   return (
          <FlatList
@@ -22,7 +13,7 @@ const VentQuestion = ({questions,setquestiontext,onaddnew,setreaload,setquestion
       inverted={true}
       renderItem={(item)=>
         {
-         console.log("ITEM",item)
+       //  console.log("ITEM",item)
          return <RenderVentQuestions
          setquestionid={setquestionid}
          setreaload={setreaload}

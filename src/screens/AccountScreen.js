@@ -1,14 +1,17 @@
-import React, {useContext,useEffect} from 'react'
+import React, {useContext,useEffect,useState} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View,TouchableOpacity,Image,ScrollView } from 'react-native'
 import {Button} from 'react-native-elements'
-import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import NavSwap from './NavSwap';
 import { Context as AuthContext } from '../context/authContext'
 //import { getPinsbythisuser } from '../context/restapi';
 import Avatar from 'react-native-boring-avatars';
+import Popover from 'react-native-popover-view';
+import { Linking } from 'react-native';
 const AccountScreen = ({navigation}) => {
+  const [showPopover, setShowPopover] = useState(false);
 
  // const [state,signout] = useContext(AuthContext)
     const avatarcolors = ['#4B3E4D','#1E8C93','#DBD8A2','#C4AC30','#D74F33']
@@ -24,13 +27,19 @@ const AccountScreen = ({navigation}) => {
     <View style={styles.container}>
     <View  style={styles.header}>
       <View style={styles.settings}>
+
         <TouchableOpacity onPress={signout}>
         <Text style={{color:'white',paddingLeft:12,fontFamily:'InterRegular',fontSize:18}}>Sign out</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={{flexDirection:'row',paddingBottom:24}}>
+      <Popover
+         isVisible={showPopover}
+         onRequestClose={() => setShowPopover(false)}
+      from={(
+        <TouchableOpacity onPress={() => setShowPopover(true)}>
+  <View style={{flexDirection:'row',paddingBottom:24}}>
       <View style={{borderWidth:1,borderColor:'white',borderRadius:200}}>
+
       <Text><Avatar
   size={120}
 
@@ -40,7 +49,13 @@ const AccountScreen = ({navigation}) => {
 /></Text>
       </View>
       <Text style={styles.username}>{state.username}</Text>
+      <AntDesign name="question" size={18} color="white" style={{textAlignVertical:'center',paddingBottom:18,paddingLeft:6,opacity:0.8}}/>
       </View>
+        </TouchableOpacity>
+      )}>
+      <Text style={{fontFamily:'Intermedium',padding:12}}>Your avatar is unique and designed dyanamically on signup on the basis of your username</Text>
+    </Popover>
+
       {/* <View style={{flexDirection:'row',paddingBottom:8}}>
       <Button
       title='Existential - 16'

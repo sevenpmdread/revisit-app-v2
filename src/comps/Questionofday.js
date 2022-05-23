@@ -28,7 +28,7 @@ import DatePicker from 'react-native-date-picker'
 import PushNotification from 'react-native-push-notification';
 import ShareCardQuestion from './ShareCardQuestion';
 
-const Questionofday = () => {
+const Questionofday = ({refresh}) => {
   const [selectedColor, setSelectedColor] = useState("#AC2929");
   function setColor(color) {
     setSelectedColor(color);
@@ -72,6 +72,8 @@ const Questionofday = () => {
     else
     setmetadata(response.metadata[0])
     setLoading(false)
+    setreminder(false)
+
     // console.log("RESPONSE RESPONSE",response)
     //  var categorycount = response.nbHits
     // //",response)
@@ -94,7 +96,7 @@ const Questionofday = () => {
     //console.log("state.homescreendata.questions",state)
     fetchHome()
 
-   },[])
+   },[refresh])
   var getTime = () => {
     let date = new Date();
     var tz = date.toString().split("GMT")[1].split(" (")[0];
@@ -132,14 +134,11 @@ const newnotificationhandler = (item,date) => {
 
     channelId:'test1',
    // id:item.id,
-    bigText:item.question,
-    title:"Revisit this thought",
+    title:item.question,
+   // title:"Revisit this thought",
     vibrate: true, // (optional) default: true
 vibration: 300,
     date:new Date(Date.now()+date),
-    actions: ["ReplyInput"],
-reply_placeholder_text: "Write your response...", // (required)
-reply_button_text: "Answer" ,
     message:"Reminder for revisiting this thought",
   }
   )
@@ -167,15 +166,17 @@ reply_button_text: "Answer" ,
       />
 
 
-      <ImageBackground imageStyle={{backgroundColor:'#0c0c0c',borderRadius:26,width:'auto',borderWidth:2,borderColor:'rgba(255, 255, 255, 0.4)', opacity:isLoading ? 0 : 0.7}} resizeMode= 'cover' source={require('../../assets/qod.png')} style={{marginVertical:0,marginHorizontal:0, paddingHorizontal:16,paddingBottom:16,paddingTop:12}}>
-           {
-             isLoading  ?
-             <LoadingScreennew/>
-             :
-             <>
+      <ImageBackground imageStyle={{minHeight:250,marginBottom:6,backgroundColor:'#0c0c0c',borderRadius:26,width:'auto', opacity:isLoading ? 0.1 : 0.8}} resizeMode= 'cover'  source={{uri: 'https://revisitapp.s3.amazonaws.com/assets/qod.png'}} style={{marginVertical:12,marginHorizontal:0, paddingHorizontal:16,paddingBottom:16,paddingTop:12,borderWidth:0,borderColor:'rgba(255, 255, 255, 0.4)',borderRadius:26}}>
+      <TouchableOpacity onPress={()=>navigation.navigate('CreateAnswer',{post:question})}>
+
+             <View style={{flexDirection:'column',justifyContent:'space-between',minHeight:200}}>
+               <View>
              <Text style={styles.qod}>Trending</Text>
-             <Text style={styles.questionText}>{question.question_text}</Text>
-             <TouchableOpacity
+
+             <Text style={styles.questionText}>{isLoading ? `Loading...` :  question.question_text}</Text>
+             </View>
+
+             {/* <TouchableOpacity
              activeOpacity={.7}
              tvParallaxProperties={{enabled:false}}
              style={styles.button}
@@ -183,7 +184,7 @@ reply_button_text: "Answer" ,
 
        >
          <Text> Answer</Text>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
              <View style={styles.questionrow}>
                  <View style={{flexDirection:'row'}}>
                  <TouchableOpacity onPress= {() => setIsVisible(true)} >
@@ -211,13 +212,13 @@ reply_button_text: "Answer" ,
                  </View>
                   }
                  </View>
-                 <TouchableOpacity >
-                 <Text style={{fontSize:12,opacity:0.8,color:'white',paddingTop:12,paddingRight:6}}>{metadata==0 ? `No responses yet` :  metadata.responsecount + ` responses`} </Text>
+                 <TouchableOpacity onPress={()=> metadata.responsecount ? navigation.navigate('CategoryDrill',{post:question}) : null}>
+                 <Text style={{fontSize:12,opacity:0.8,color:'white',paddingTop:12,paddingRight:6}}>{ isLoading ? `` : metadata==0 ? `No responses yet` :  metadata.responsecount + ` responses`} </Text>
                  </TouchableOpacity>
              </View>
-             </>
+             </View>
+             </TouchableOpacity>
 
-             }
 
     </ImageBackground>
     <BottomSheet  modalProps={{}} isVisible={isVisible}>

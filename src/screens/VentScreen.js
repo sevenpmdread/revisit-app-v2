@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Image, TextInput, FlatList, ScrollView,Pressable,Modal,ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View,Image, TextInput, FlatList, ScrollView,Pressable,Modal,ToastAndroid,Dimensions  } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import { Button, Card,FAB  } from 'react-native-elements';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
@@ -11,10 +11,20 @@ import CheckBox from 'react-native-check-box'
 import { createVentQuestion } from '../context/restapi';
 import LoadingScreennew from './Loadingnew';
 //import Modal from "react-native-modal";
+import { useFocusEffect } from '@react-navigation/native';
+
 import { Ionicons } from '@expo/vector-icons';
 import { storeventnew,getventall,getvent } from '../context/restapi';
 import { ventcreate,addventstore } from '../context/restapi';
-const VentScreen = ({navigation}) => {
+const VentScreen = ({route,navigation}) => {
+  const windowHeight = Dimensions.get('window').height;
+
+  var clearParams = () => {
+    navigation.setParams({openask: null, fromhome: null})
+    console.log("SDHFGSDHSDF SDHJS DFJSDFH ",route)
+    route.params.fromhome = false
+    console.log("SDHFGSDHSDF SDHJS DFJSDFH ",route)
+  }
  // console.log(navigation)
  //console.log("hello")
  const [disablequestion,setdisable] = useState(false)
@@ -26,10 +36,35 @@ const VentScreen = ({navigation}) => {
   const [ventquestions,setventquestions] = useState([])
  //[] const [ventanswers, setventanswers] = useState([])
   const [reload,setreaload] = useState(false)
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("IN FOCUS")
+      const fromhome = route.params?.fromhome
+      const openask = route.params?.openask
+      console.log("truturturturturt ",fromhome,openask)
+      if(openask)
+      {
+        onChageQuestion('')
+        setModalVisible(true)
+        clearParams()
+
+      }
+      else if(fromhome)
+       {
+
+        setventModalVisible(true)
+        clearParams()
+      //  navigation.setParams({fromhome:null})
+
+       }
+
+    })
+  );
   useEffect(() => {
     let fetchData = async()=> {
       let ventquestions = await getventall()
       setventquestions(ventquestions)
+
     //  setventanswers(ventquestions)
     }
     fetchData()
@@ -54,7 +89,7 @@ const VentScreen = ({navigation}) => {
    var opacityvent = qcharcount>0 && charCount > 0 ? 1 : 0.4
 
   return (
-    <View style={{backgroundColor:'#0C0C0C',flex:1}}>
+    <View style={{backgroundColor:'#0C0C0C',flex:1,marginBottom:56}}>
     <ScrollView>
 
     <View style={styles.container}>
@@ -79,7 +114,7 @@ const VentScreen = ({navigation}) => {
       }
       }
       style={{
-         backgroundColor:'white',
+         backgroundColor:'black',
          borderRadius:12,
         // paddingHorizontal:12,
         // paddingVertical:12,
@@ -90,56 +125,15 @@ const VentScreen = ({navigation}) => {
          textAlign:"left",
       }}>
         <View style={{flexDirection:'row',justifyContent:"space-between"}}>
-        <Text style={{color:'black',fontFamily:"Intermedium",
+        <Text style={{color:'white',fontFamily:"Intermedium",
         fontSize:12}}>
 ASK A QUESTION
         </Text>
-        <AntDesign name="plus" size={16} color="black" />
+        <AntDesign name="plus" size={16} color="white" />
         </View>
       </TouchableOpacity>
 
-       {/* <KeyboardAwareScrollView
-    style={{ backgroundColor: '#101010'}}
-    resetScrollToCoords={{ x: 0, y: 0 }}
-    scrollEnabled={true}
-  >
-         <View style={styles.questionadd}>
-        <TextInput
-        autoCorrect={false}
-        autoCapitalize="none"
-        maxLength={400}
-        //scrollEnabled={true}
-        style={styles.secondinput}
-        onChangeText={(text)=>{
-        setqcharcount(text.length)
-        return onChageQuestion(text)
-      }}
-        value={questionValue}
-        multiline={true}
-        placeholder="Enter your question here"
-        placeholderTextColor={'white'}
-        //tvParallaxShiftDistanceX={200}
-      />
-      </View>
-      <View style={styles.answeradd}>
-       <TextInput
-        autoCorrect={false}
-        autoCapitalize="none"
-        maxLength={400}
-        //scrollEnabled={true}
-        style={styles.answerinput}
-        onChangeText={(text)=>{
-        setCharCount(text.length)
-        return onChangeText(text)
-      }}
-        value={value}
-        multiline={true}
-        placeholder="Enter your answer here"
-        placeholderTextColor={'white'}
-        //tvParallaxShiftDistanceX={200}
-      />
-        </View>
-        </KeyboardAwareScrollView> */}
+
         <VentQuestion
         setquestionid={setquestionid}
         setreaload={()=>setreaload(!reload)}
@@ -167,7 +161,26 @@ ASK A QUESTION
         visible={ventmodalVisible}
         backgroundColor="black"
         onRequestClose={() => {
-          setventModalVisible(!ventmodalVisible);
+
+           var writedata = async() =>{
+            if(value!="" && questionValue !="" && !addnew)
+           {
+             var response = await storeventnew({question_text:questionValue,answer_text:value,publised:false})
+             console.log("ASYNC RESPONSE",response)
+             ToastAndroid.show('Saved', ToastAndroid.SHORT)
+             setreaload(!reload)
+          }
+          else if(value!="" && questionValue !="" && addnew)
+          {
+           var response = await addventstore({question_text:questionValue,answer_text:value,publised:false,id:questionid})
+           console.log("ASYNC RESPONSE",response)
+           ToastAndroid.show('Saved', ToastAndroid.SHORT)
+           setreaload(!reload)
+          }
+           setventModalVisible(!ventmodalVisible)
+           navigation.setParams({ fromhome: null })
+         }
+         writedata()
         }}
       >
         <View style={styles.headernew}>
@@ -194,8 +207,10 @@ ASK A QUESTION
               }
               }
             >
-
+                <View style={{flexDirection:'row'}}>
                 <Ionicons name="arrow-back" size={28} color="white" />
+                <Text style={{fontFamily:'InterRegular',color:'white',fontSize:14,paddingTop:4,paddingLeft:6,opacity:0.6}}>Save</Text>
+                </View>
             </Pressable>
             <TouchableOpacity>
             <Button
@@ -255,6 +270,7 @@ ASK A QUESTION
         onRequestClose={() => {
 
           setanonModalVisible(!anonmodalVisible);
+
         }}
       >
         <View style={{alignContent:"center",alignSelf:"center"}}>
@@ -284,6 +300,7 @@ ASK A QUESTION
 
         setLoading(false)
         setanonModalVisible(false)
+        setModalVisible(false)
 
                 }
               }
@@ -446,6 +463,7 @@ ASK A QUESTION
         visible={modalVisible}
         backgroundColor="black"
         onRequestClose={() => {
+          navigation.setParams({fromhome:null})
           setModalVisible(!modalVisible);
         }}
       >
@@ -588,7 +606,7 @@ ASK A QUESTION
     </View>
     </ScrollView>
     <FAB
-    title="VENT"
+    title="+ VENT"
     onPress={()=>
 
     {
@@ -598,33 +616,29 @@ ASK A QUESTION
       setdisable(false)
     }
     }
-    overlayColor="white"
+  //  overlayColor="white"
     //placement="right"
     color="white"
-    titleStyle={{color:'black',paddingHorizontal:0}}
+    titleStyle={{color:'black',fontSize:20,padding:0,textAlign:'left'}}
     size="large"
    // visible={true}
    // overlayColor="black"
-    containerStyle={{      paddingHorizontal:0,
-      //borderRadius:100,
-      color:'black',
-
+    containerStyle={{
+      padding:1,
+     // height:60,
+      //width:200,
+      borderRadius:30,
+      borderWidth:0,
+      borderColor:'white',
+      backgroundColor:'white',
 
     }}
     style={{
-      color:'black',
-      borderWidth:0,
-      borderColor:'white',
-      padding:0,
-      elevation:5,
-      //height:80,
-      paddingHorizontal:0,
-    //  borderRadius:100,
       position:'absolute',
-    marginTop:660,
-   // alignSelf:"stretch",
-   //alignContent:"center",
-    marginLeft:285,
+    marginTop:windowHeight-120,
+    marginLeft:250,
+    borderWidth:1,
+    borderColor:'#453AB8',
 
   }}
     />

@@ -39,19 +39,16 @@ const NewSignInScreen = ({navigation}) => {
 
       <View style={styles.container}>
             {/* <NavigationEvents onWillFocus={clearError} /> */}
-        <View style={styles.header}>
-        <Image source={require('../../assets/smalloneasset.png')}/>
-          </View>
+
         {/* <Image style={styles.image} resizeMode="cover" source={require('../../assets/logo.png')}/> */}
         <View style={styles.footer}>
        <Text style={styles.footerHeading}>Revisit</Text>
         <Text style={styles.bytss}>by the surreal service</Text>
         <KeyboardAwareScrollView
-    style={{ backgroundColor: '#101010'}}
+    style={{ backgroundColor: 'transparent'}}
     resetScrollToCoords={{ x: 0, y: 0 }}
-    scrollEnabled={true}
+    scrollEnabled={false}
   >
-        <View style={styles.footerinput}></View>
         <TextInput
           value={email}
           autoCapitalize="none"
@@ -180,12 +177,13 @@ const styles = StyleSheet.create({
     //marginVertical:0
   },
   footer: {
-      flex: 16,
-      backgroundColor: '#222222',
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 30,
+     // flex: 16,
+      backgroundColor: '#0C0C0C',
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      borderWidth:0,
       borderColor:"#3A3A3A",
-      borderWidth:2,
+      borderWidth:0,
       paddingTop:16,
       paddingBottom:125,
     //  paddingVertical: 80,

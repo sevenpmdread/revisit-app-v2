@@ -20,7 +20,7 @@ const YourResponses = ({navigation}) => {
     );
   }, []);
   useEffect(()=>{
-    navigation.addListener('focus', () => {
+    navigation.addListener('willFocus', () => {
       onRefresh()
     });
     const fetchData = async () => {
@@ -42,7 +42,7 @@ const YourResponses = ({navigation}) => {
   }
   fetchData()
 
-}, [refreshing])
+},[refreshing])
   return (
     <ScrollView style={{backgroundColor:"#0C0C0C",flex:1}}
     refreshControl={
@@ -54,7 +54,7 @@ const YourResponses = ({navigation}) => {
     <FlatList
     data={questions}
    // contentContainerStyle={{flex:2}}
-    //inverted={true}
+    inverted={true}
     renderItem={(item)=>
     {
       //console.log('ITEM IN YOUR RESPONSE',item)

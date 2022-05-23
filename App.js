@@ -42,7 +42,7 @@ import LoadingScreen from './src/screens/loadingScreen';
 import { navigationRef } from './src/navigationRef';
 import { Ionicons } from '@expo/vector-icons'
 import OnboardingTut from './src/comps/OnboardingTut'
-
+import NotificationScreen from './src/screens/NotificationScreen'
 LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
 
 LogBox.ignoreAllLogs()
@@ -333,7 +333,7 @@ function HomeTabs() {
       <Tab.Screen name="Home" component={NewHomeScreen} />
       <Tab.Screen name="Explore" component={ExploreScreen} />
       <Tab.Screen name="Create" component={MainCreateScreen} />
-      <Tab.Screen name="Vent" component={VentScreen} />
+      <Tab.Screen name="Vent" component={VentScreen}  />
       <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );
@@ -369,6 +369,7 @@ export default () => {
       />
       <Stack.Screen name="Sign" component={SignFlow} />
       <Stack.Screen name="Onboarding" component={OnboardingTut} />
+      <Stack.Screen name="Notification" component={NotificationScreen}/>
       <Stack.Screen name="HomeTabs" component={HomeTabs} />
       <Stack.Screen name="Category" component={CategoryScreen} />
       <Stack.Screen name="CategoryDrill" component={CategoryDrillScreen} />

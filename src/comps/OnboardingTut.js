@@ -10,15 +10,15 @@ import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource'
 const Done = ({navigation}) => (
 
   <Button
-    title={'Done'}
-    titleStyle={{color:'black',fontFamiy:'InterRegular'}}
+    title={'Start!'}
+    titleStyle={{color:'white',fontFamiy:'InterRegular'}}
     buttonStyle={{
-      backgroundColor: 'transparent',
+      backgroundColor: 'black',
       borderWidth:0,
       borderColor:'#5D51D1',
-      marginHorizontal:0,
+      marginHorizontal:12,
       borderRadius:12,
-      width: 100,
+      width: 80,
       marginBottom:0,
     }}
     containerViewStyle={{
@@ -50,10 +50,12 @@ const OnboardingTut = ({navigation}) => {
       {
         backgroundColor: 'white',
         titleStyles:{height:0},
-        image:  <>
-        <Image source={require('../../assets/explore0.png')} />
+        image:
+        <Image
+        style={{width: 200, height: 450}}
+        source={{uri: 'https://revisitapp.s3.amazonaws.com/assets/explore0.png'}}  />
 
-        </>,
+        ,
         title: '',
         subtitle: 'Find questions that help you understand yourself better',
         subTitleStyles: { fontFamily:'Intermedium',fontSize:16,marginTop:0 }
@@ -63,7 +65,9 @@ const OnboardingTut = ({navigation}) => {
         title: '',
         titleStyles:{height:0},
         image:  <>
-                <Image source={require('../../assets/vent0.png')} />
+                <Image
+                        style={{width: 240, height: 440}}
+                source={{uri: 'https://revisitapp.s3.amazonaws.com/assets/vent0.png'}}  />
 
         </>,
         subtitle: 'Vent privately, build a timeline of your thoughts, and publish anonymously!',
@@ -73,7 +77,9 @@ const OnboardingTut = ({navigation}) => {
         backgroundColor: 'white',
         titleStyles:{height:0},
         image: <>
-                        <Image source={require('../../assets/contrast0.png')} />
+                        <Image
+                                                style={{width: 200, height: 420}}
+                        source={{uri: 'https://revisitapp.s3.amazonaws.com/assets/contrast0.png'}}  />
 
 </>,
         title: '',
@@ -83,7 +89,10 @@ const OnboardingTut = ({navigation}) => {
       {
         backgroundColor: 'white',
         image:  <>
-                                <Image source={require('../../assets/share0.png')} />
+                                <Image
+                                                                                style={{width: 260, height: 440}}
+
+                                source={{uri: 'https://revisitapp.s3.amazonaws.com/assets/share0.png'}}  />
 
 </>,
         title: '',

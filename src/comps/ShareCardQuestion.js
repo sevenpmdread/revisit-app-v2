@@ -159,7 +159,7 @@ const ShareCardQuestion = ({textcolor,color,text,question,count}) => {
     fontSize:7}}>ANSWERED {count} TIMES</Text>
       </View>
       </Card>}
-      <Card containerStyle={{backgroundColor:"black",borderColor:"white",height:150,marginBottom:0}}>
+      <Card containerStyle={{backgroundColor:"#f3f3f3",borderColor:"white",borderWidth:0,height:150,marginBottom:0}}>
       <View style={{flexDirection:"row",paddingTop:6}}>
       <View style={{padding:0,paddingTop:15,paddingLeft:24}}>
       <View style={{borderWidth:1,borderColor:'white',borderRadius:200}}>
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:12
   },
   whatis:{
-    color:'white',
+    color:'black',
     fontFamily:'InterSemi',
    // textDecorationLine:'underline',
     fontSize:12,
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   //  textAlign:'right'
   },
   answerText:{
-    color:'white',
+    color:'black',
     fontFamily:'Intermedium',
     fontSize:10,
     //includeFontPadding:true,

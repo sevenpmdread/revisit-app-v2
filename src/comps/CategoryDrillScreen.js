@@ -18,21 +18,22 @@ const CategoryDrillScreen = ({route,navigation}) => {
  //console.log("route params",route.params)
  const  post = route.params?.post
  const answerstemp = route.params?.answers
- console.log("POST AND ANSWERS FROM home page  CLICK",answerstemp)
+ console.log("POST AND ANSWERS FROM home page  CLICK",post)
  //console.log("sdhfvsdfhvsdfsdfsd sdfjhfsd post answer",post)
- const [answers,setanswers] = useState(answerstemp)
+ const [answers,setanswers] = useState(answerstemp || [])
  const [isLoading,setLoading] = useState(true)
  const [fetch,setFetch] = useState(0)
  let arr = []
 
  useEffect(()=>{
    const fetchData = async (fetch) => {
-   const data  =   await getAnswersforid(post._id ? post._id : post.item.id,answerstemp ? answerstemp.length : 10 + fetch*10,answerstemp ? answerstemp.length : 10)
-   //console.log("answersf or id",data)
+   const data  =   await getAnswersforid(post._id ? post._id : post.item.id,10 + fetch*10,0)
+   console.log("answersf or id",data)
+
   arr = [...answers,...data]
    setanswers(arr)
    setLoading(false)
-  //console.log("answers",answers)
+  console.log("answers",answers)
  }
 
 fetchData(fetch)
@@ -62,7 +63,7 @@ fetchData(fetch)
             onPress={()=>
 
 {
-  navigation.navigate('CreateAnswer',{post : {_id:post.item.id,question_text:post.item.text}})
+  navigation.navigate('CreateAnswer',{post : {_id:post.item ? post.item.id : post._id,question_text:post.item ? post.item.text : post.question_text}})
 }            }
 
 
@@ -86,7 +87,8 @@ fetchData(fetch)
       renderItem={(item)=>
        {
          //console.log("iteitietietetnet",item)
-      return <RenderCategoryAnswers post={item} question={post.question_text}  width={{showfull:true}}/>}
+      return isLoading ? <Text style={{fontFamily:'Intermedium',fontSize:12,color:'white'}}>Loading...</Text> :
+       <RenderCategoryAnswers post={item} question={post.question_text}  width={{showfull:true}}/>}
       }
       keyExtractor={item => item._id}
       extraData={answers}

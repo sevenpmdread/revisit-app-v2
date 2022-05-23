@@ -7,7 +7,7 @@ import {
     StyleSheet,
     StatusBar,
     Image,
-    TextInput,
+    TextInput,Linking
 
 } from 'react-native';
 import NavLink from '../comps/NavLink'
@@ -20,6 +20,7 @@ import { useTheme } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Context as AuthContext} from '../context/authContext'
 import { NavigationEvents } from 'react-navigation'
+import CheckBox from 'react-native-check-box'
 //import * as navigation from '../navigationRef';
 
 const NewSignUpScreen = ({navigation}) => {
@@ -31,6 +32,8 @@ const NewSignUpScreen = ({navigation}) => {
     setEmail('')
     setPassword('')
   });
+  const [isread, setSelection] = useState(false);
+
   useEffect(() => {
     //  console.log("I AM CALLED ID USEEFFECT")
       // declare the data fetching function
@@ -86,7 +89,22 @@ const NewSignUpScreen = ({navigation}) => {
           placeholderTextColor={'grey'}
         />
 {state.errorMessage ? (<Text style={{color:'red',opacity:0.8}}>{state.errorMessage}</Text>) : null}
+<View style={{flexDirection:'row',alignSelf:'center',padding:24}}>
+<Text style={{marginTop:0,color:'white',fontSize:10,opacity:1,alignSelf:"center",textDecorationLine:'underline'}}   onPress={() => Linking.openURL('https://thesurrealservice.com/t-c')}>By checking this you agree to the Terms and Conditions</Text>
+<CheckBox
+        leftTextStyle={{color:'white',fontFamily:'InterRegular'}}
+        checkBoxColor="white"
+    style={{flex: 1, padding: 10,backgroundColor:isread ? "black" : "#0c0c0c",marginHorizontal:20,marginLeft:6,marginVertical:6,borderRadius:0,opacity:isread ? 1: 0.6}}
+    onClick={()=>{
+      setSelection(!isread)
+    }}
+    isChecked={isread}
+    leftText={''}
+/>
+</View>
+
     <Button title={loading ? `Signing Up..` : `Sign up`}
+    disabled={!isread && !loading}
     onPress={async() => {
       setloading(true)
 
@@ -95,7 +113,7 @@ const NewSignUpScreen = ({navigation}) => {
     }
 
     }
-    disabled={loading}
+   // disabled={loading}
     containerStyle={{
     alignSelf:'center',
     width:200,
@@ -197,7 +215,7 @@ const styles = StyleSheet.create({
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
       borderColor:"#3A3A3A",
-      borderWidth:2,
+      borderWidth:0,
       paddingTop:64,
       paddingBottom:225,
       paddingVertical: 80,

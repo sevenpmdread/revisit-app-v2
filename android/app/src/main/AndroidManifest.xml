@@ -49,6 +49,10 @@
         <data android:scheme="exp+revisit"/>
         <data android:scheme="exp+revisit"/>
         <data android:scheme="exp+revisit"/>
+        <data android:scheme="exp+revisit"/>
+        <data android:scheme="exp+revisit"/>
+        <data android:scheme="exp+revisit"/>
+        <data android:scheme="exp+revisit"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>

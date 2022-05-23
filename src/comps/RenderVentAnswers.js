@@ -14,8 +14,8 @@ const RenderVentAnswers = ({answertext,timestamp,answerid}) => {
     "InterRegular":Inter_400Regular
    });
    return  (
-    <View >
-            <Card containerStyle={{marginVertical:0,marginBottom:16,marginHorizontal:0,marginRight:12,elevation:5,backgroundColor:'#202020',width:370,minHeight:340,borderWidth:3,borderColor:'#303030',minHeight:265,borderRadius:16,paddingBottom:5,flexDirection:'column',justifyContent:'space-between'}} style={{padding:0}}>
+    <View style={{marginBottom:12}}>
+            <Card containerStyle={{marginVertical:0,marginBottom:16,marginHorizontal:0,marginRight:12,marginLeft:12,elevation:5,backgroundColor:'black',width:340,minHeight:340,borderWidth:1,borderColor:'#303030',minHeight:265,borderRadius:16,paddingBottom:5,flexDirection:'column',justifyContent:'space-between'}} style={{padding:0}}>
             <View style={{paddingLeft:0,flexDirection:'column',justifyContent:'space-between',minHeight:200}}>
             <Text style={styles.questionText}>{answertext}</Text>
             <View style={styles.questionrow}>

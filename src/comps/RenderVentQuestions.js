@@ -11,6 +11,15 @@ import { removeventquestion } from '../context/restapi';
 import Modal from 'react-native-modal'
 import LoadingScreennew from '../screens/Loadingnew';
 const RenderVentQuestions = ({questionid,answer,question,onaddnew,setquestiontext,setreaload,setquestionid}) => {
+
+  useEffect(() => {
+
+    //setReminders()
+   const  fetchHome = async() => {
+
+
+   }
+   },[])
   const [postmodalVisible,setpostModalVisible] = useState(false)
   const [error,seterror] = useState(null)
   const [isLoading,setLoading] = useState(false)
@@ -96,6 +105,7 @@ const RenderVentQuestions = ({questionid,answer,question,onaddnew,setquestiontex
       <FlatList
      contentContainerStyle={{marginLeft:8}}
       horizontal={true}
+      inverted={true}
       style={styles.feed}
        data = {answer}
      // scrollEventThrottle={16}

@@ -77,7 +77,7 @@ const CreateScreen = ({route,navigation}) => {
             :
             <>
             <AntDesign name="checkcircle" size={40} color="green" />
-            <Text style={styles.modalText}>Success! Taking you to explore more questions</Text>
+            <Text style={styles.modalText}>Success! Your response will be visible on the feed and in your history</Text>
             </>
 
             }
@@ -119,8 +119,13 @@ const CreateScreen = ({route,navigation}) => {
        await postAnswer(post._id,value,isAnonymous)
         //console.log("RANDOM POST",postnew)
         setLoading(false)
+        setModalVisible(true)
+
       //  setModalVisible(false)
-      setTimeout(()=>{ navigation.navigate("Explore",{refresh:true}) }, 1000)
+       setTimeout(()=>{
+         setModalVisible(false)
+         navigation.pop()
+        }, 1000)
 
         }}
 

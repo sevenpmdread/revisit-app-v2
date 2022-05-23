@@ -51,7 +51,6 @@ return error
 
 const getRandomQuestion = async() => {
   try{
-    console.log("REACHED")
     const token = await AsyncStorage.getItem('token')
     let config = {
       headers: {
@@ -64,7 +63,6 @@ const getRandomQuestion = async() => {
   }
   catch(error)
   {
-    console.log(error)
   }
 }
 
@@ -133,7 +131,6 @@ const getvent = async() => {
      let storedVent = await AsyncStorage.getItem('Ventnotes');
      if (storedVent !== null) {
        storedVent = JSON.parse(storedVent)
-       console.log(storedVent)
        return storedVent
      }
      else
@@ -345,7 +342,6 @@ const getAllreminders = async() => {
 
 const getQod = async() => {
   try{
-    console.log("REACHED")
     const token = await AsyncStorage.getItem('token')
     let config = {
       headers: {
@@ -353,7 +349,6 @@ const getQod = async() => {
       },
     }
     const question = await tracker.get(`api/v1/questions/qod`,config)
-    console.log(question.data)
     return question.data
 
   }
@@ -416,7 +411,6 @@ const createVentQuestion = async(question_text,isAnonymous) => {
       "isAnonymous":isAnonymous
     }
     const response = await tracker.post(`/api/v1/questions/ventquestion`,data, {headers:{ Authorization: 'Bearer ' + token}})
-   console.log(response)
   }
   catch(error)
   {
@@ -587,6 +581,20 @@ const getAnswersforid = async (id,limit,skip) => {
   }
 }
 
+const getrending  = async() => {
+  const token = await AsyncStorage.getItem('token')
+  let config = {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  }
+
+  const response = await tracker.get('api/v1/meta/trending',config)
+ // console.log(response.data)
+  return response.data
+ // ("in share post",response)
+}
+
 
 const upvotequestion = async(id) => {
   // ("in sharepost")
@@ -624,12 +632,10 @@ const sharepost = async(id) => {
   }
 
   const response = await tracker.post('api/v1/meta/sharecount',data,{headers:{ Authorization: 'Bearer ' + token}})
-  ("in share post",response.data)
 
 }
 const pinpost = async(id) => {
   try{
-    ("pinpost")
 
     const token = await AsyncStorage.getItem('token')
     const username = await AsyncStorage.getItem('username')
@@ -710,4 +716,4 @@ const createContrast = async(contrastId,answerId) => {
 
   }
 }
-export {getQod,addventstore,removeventquestion,getvent,getventall,storeventnew,ventcreate,upvotequestion,createVentQuestion,ventexplore,postAnswer,getRandomQuestion,getAllQuestions,getAllreminders,getReminders,setReminders,fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}
+export {getrending,getQod,addventstore,removeventquestion,getvent,getventall,storeventnew,ventcreate,upvotequestion,createVentQuestion,ventexplore,postAnswer,getRandomQuestion,getAllQuestions,getAllreminders,getReminders,setReminders,fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}

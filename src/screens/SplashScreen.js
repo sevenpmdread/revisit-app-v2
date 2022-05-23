@@ -6,7 +6,7 @@ import {
     Dimensions,
     StyleSheet,
     StatusBar,
-    Image,
+    Image,Linking
 
 } from 'react-native';
 import NavLink from '../comps/NavLink'
@@ -21,7 +21,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const SplashScreen = ({navigation}) => {
   // navigation =  navigation.getParam('navigation')
-   console.log("NAVIGATION",navigation)
+   //console.log("NAVIGATION",navigation)
     const { colors } = useTheme();
    // console.log( Dimensions.get("screen"))
 
@@ -30,10 +30,9 @@ const SplashScreen = ({navigation}) => {
         <View style={styles.header}>
         <Image resizeMode='contain' source={require('../../assets/smalloneasset.png')}/>
           </View>
-        <Image style={styles.image} resizeMode="cover" source={require('../../assets/logo.png')}/>
         <View style={styles.footer}>
        <Text style={styles.footerHeading}>Revisit</Text>
-        <Text style={styles.bytss}>by thesurrealservice.com</Text>
+        <Text style={styles.bytss} onPress={() => Linking.openURL('https://thesurrealservice.com')}>by thesurrealservice.com</Text>
         <Text style={styles.subText}>Build to confront, discover yourself by revisiting your ideas,beliefs and more</Text>
         <Button title="Get started for free"
         onPress={()=> navigation.navigate('SignUp')}
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     width: 170,
     height: 170,
     zIndex: 1000,
-    marginTop:455,
+    marginTop:400,
     position:'absolute',
   //  elevation:5,
    // marginRight: 10,
@@ -117,6 +116,7 @@ const styles = StyleSheet.create({
     color:'white',
     opacity:0.65,
     fontSize:14,
+    textDecorationLine:'underline'
     //paddingVertical:0,
     //marginVertical:0
   },
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
       borderTopRightRadius: 30,
       borderColor:"#3A3A3A",
       borderWidth:2,
+      borderBottomWidth:0,
       paddingTop:16,
       paddingBottom:125,
     //  paddingVertical: 80,

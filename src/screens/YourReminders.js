@@ -10,7 +10,6 @@ const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 const YourReminders = ({navigation}) => {
-  console.log("NAVIAGATION",navigation)
   const [questions,setQuestions] = useState()
   const [refreshing, setRefreshing] = useState(false);
   const [reminder,setreminder] = useState(false)
@@ -71,7 +70,7 @@ const YourReminders = ({navigation}) => {
     }
       fetchHome()
 
-    },[refreshing])
+    })
   return (
     <ScrollView style={{backgroundColor:"#0C0C0C",flex:1}}
     refreshControl={
@@ -96,7 +95,7 @@ const YourReminders = ({navigation}) => {
     }
     renderItem={(item)=>
     {
-      console.log('ITEM IN YOUR RESPONSE',item)
+      //console.log('ITEM IN YOUR RESPONSE',item)
      return <RenderReminderQuestions question={item.item.question_text} questionid={item.item._id}  reminddate={item.item.date} navigation={navigation} onCancel={(id)=>{
       PushNotification.cancelLocalNotification(id)
       onRefresh()

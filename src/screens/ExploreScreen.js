@@ -32,6 +32,7 @@ const ExploreScreen = ({navigation,route}) => {
   const [lastanswerd,setlastanswered] = useState()
   const [skip,setskip]  = useState(0)
   const [isLoading,setLoading] = useState(false)
+  const [isquestionLoading,setquestionLoading] = useState(false)
   const [exploreques,setexploreques] = useState([])
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -43,18 +44,25 @@ const ExploreScreen = ({navigation,route}) => {
     }
     );
   }, []);
+  const onload = useCallback(async () => {
+    const data =  await explore(skip)
+    //console.log("data post post post ",data.posts)
+   let arr = [...exploreques,...data.posts]
+   setLoading(false)
+  setexploreques(arr)
+  }, [skip]);
   let arr = []
 
   useEffect(() => {
     //  console.log("I AM CALLED ID USEEFFECT")
       // declare the data fetching function
-      if(route.params?.refresh)
-     { navigation.addListener('focus', () => {
-        console.log("NAVIGATION",route,navigation)
-        onRefresh()
-      });
-      navigation.setParams({refresh: false})
-    }
+    //   if(route.params?.refresh)
+    //  { navigation.addListener('focus', () => {
+    //   //  console.log("NAVIGATION",route,navigation)
+    //     onRefresh()
+    //   });
+    //   navigation.setParams({refresh: false})
+    // }
       const fetchData = async () => {
 
       //  console.log("FOUND FOUND")
@@ -74,7 +82,7 @@ const ExploreScreen = ({navigation,route}) => {
          data =  await explore(skip)
         //console.log("data post post post ",data.posts)
        let arr = [...exploreques,...data.posts]
-       setLoading(false)
+       setquestionLoading(false)
         setexploreques(arr)
        // console.log("explore explore",exploreques,exploreques.length)
       //  console.log("ar ar ar ar r",arr)
@@ -84,11 +92,11 @@ const ExploreScreen = ({navigation,route}) => {
       }
 
       // call the function
-      setLoading(true)
+      setquestionLoading(true)
       fetchData()
 
 
-    }, [skip,refreshing,route])
+    }, [refreshing,skip])
   let [fontsLoaded] = useFonts({
     "Intermedium": Inter_500Medium,
     "InterRegular":Inter_400Regular,
@@ -127,7 +135,18 @@ const ExploreScreen = ({navigation,route}) => {
          showsVerticalScrollIndicator={true}
          extraData={exploreques}
          onEndReached={() => {
-         setskip(skip+1)
+          setskip(skip+1)
+          //  const loaddata = async() => {
+          //   setquestionLoading(true)
+          //   let data =  await explore(skip)
+          //   //console.log("data post post post ",data.posts)
+          //  let arr = [...exploreques,...data.posts]
+          //  setLoading(false)
+          //  setexploreques(arr)
+          //  setquestionLoading(false)
+          //  }
+          //  setskip(skip+1)
+          //  loaddata()
          }}
          refreshControl={
            <RefreshControl
@@ -140,7 +159,13 @@ const ExploreScreen = ({navigation,route}) => {
 
 
          />
-      }
+
+       }
+        {isquestionLoading ?
+         <Text style={{color:'white',fontSize:12,alignSelf:'center',padding:12}}>Loading...</Text>
+          : <></>}
+                   <Text style={{color:'white',fontSize:12,alignSelf:'center',padding:32}}>Loading...</Text>
+
 
 
  {/* {
