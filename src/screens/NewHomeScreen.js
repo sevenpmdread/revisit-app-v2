@@ -292,7 +292,7 @@ keyExtractor={item => item.id}
 
 
     </View>
-    <TrendingAnswers onpress={(item) => navigation.navigate('CreateAnswer',{post:item})}/>
+    <TrendingAnswers  refresh={refreshing} onpress={(item) => navigation.navigate('CreateAnswer',{post:item})}/>
     </View>
     </LinearGradient>
     </ScrollView>

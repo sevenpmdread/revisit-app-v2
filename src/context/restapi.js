@@ -4,6 +4,7 @@ import createDataContext from './createDataContext'
 import tracker from '../api/tracker'
 import { navigate } from '../navigationRef';
 import uuid from 'react-native-uuid';
+import messaging from '@react-native-firebase/messaging';
 
 
 const storage = new Storage({
@@ -45,6 +46,25 @@ const postAnswer = async(question_id,answer_text,isAnonymous) => {
   catch(error)
   {
 return error
+  }
+}
+
+
+
+const updatetoken = async(devicetoken) => {
+  try{
+    const token = await AsyncStorage.getItem('token')
+    const username = await AsyncStorage.getItem('username')
+    var data = {
+      "username":username,
+      "devicetoken":devicetoken,
+    }
+    const upadtetoken = await tracker.post(`api/v1/auth/updatetoken`,data,{headers:{ Authorization: 'Bearer ' + token}})
+
+  }
+  catch(error)
+  {
+    console.log(error)
   }
 }
 
@@ -716,4 +736,4 @@ const createContrast = async(contrastId,answerId) => {
 
   }
 }
-export {getrending,getQod,addventstore,removeventquestion,getvent,getventall,storeventnew,ventcreate,upvotequestion,createVentQuestion,ventexplore,postAnswer,getRandomQuestion,getAllQuestions,getAllreminders,getReminders,setReminders,fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}
+export {updatetoken,getrending,getQod,addventstore,removeventquestion,getvent,getventall,storeventnew,ventcreate,upvotequestion,createVentQuestion,ventexplore,postAnswer,getRandomQuestion,getAllQuestions,getAllreminders,getReminders,setReminders,fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}

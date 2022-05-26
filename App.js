@@ -3,7 +3,8 @@ import {
   BaseButton,
   GestureHandlerRootView
 } from 'react-native-gesture-handler';
-import React from 'react'
+import React,{useEffect} from 'react'
+//import messaging from '@react-native-firebase/messaging';
 
 //import {createStackNavigator} from  '@react-navigation/stack'
 //import { NavigationContainer } from '@react-navigation/native';
@@ -43,259 +44,15 @@ import { navigationRef } from './src/navigationRef';
 import { Ionicons } from '@expo/vector-icons'
 import OnboardingTut from './src/comps/OnboardingTut'
 import NotificationScreen from './src/screens/NotificationScreen'
+import messaging from '@react-native-firebase/messaging';
+import updatetoken from './src/context/restapi'
 LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
 
 LogBox.ignoreAllLogs()
 
-//import { createStackNavigator } from '@react-navigation/stack';
-
-// const Stack = createStackNavigator();
-// const Tab = createBottomTabNavigator();
-
-
-// const switchNav = () =>{
-//   return (
-//     <>
-//   <Stack.Navigator initialRouteName="loginFlow" screenOptions={{gestureEnabled: true}}>
-//     <Stack.Screen name='SignUp' component={SignupScreen} />
-//     <Stack.Screen name='SignIn' component={SigninScreen} />
-//   </Stack.Navigator>
-//   <Tab.Navigator initialRouteName="mainFlow">
-//   <Stack.Navigator initialRouteName="trackListFlow" screenOptions={{gestureEnabled: true}}>
-//     <Stack.Screen name='TrackList' component={TrackListScreen} />
-//     <Stack.Screen name='TrackDetail' component={TrackDetailScreen} />
-//   </Stack.Navigator>
-//   <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
-//   <Tab.Screen name="Account" component={AccountScreen} />
-//   </Tab.Navigator>
-//   </>
-//   )
-// }
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// const switchNavigator = createSwitchNavigator({
-//  // Main:VentScreen,
-//  // Share:ShareCardQuestion,
-//  // Category:CategoryScreen,
-//    //BackgroundImage:ChooseBackgroundImage,
-//    ResolveAuth:loadingScreen,
-//    createFlow: createStackNavigator({
-//     MainCreate:{
-//       screen:MainCreateScreen,
-//       navigationOptions:{
-//         headerTransparent:"true",
-//         headerTintColor:'transparent',
-//         color:'transparent',
-//        //headerStyle:{backgroundColor:"grey"},
-//        HeaderTitle:"Home"
-//       }
-
-//     },
-//     Create:{
-//       screen:CreateScreen,
-//       navigationOptions:{
-//         headerTransparent:"true",
-//         headerTintColor:'transparent',
-//         color:'transparent',
-//        //headerStyle:{backgroundColor:"grey"},
-//        HeaderTitle:"Home"
-//       }
-//     },
-//     SignIn:NewSignInScreen,
-// },navigationOptions = {
-//     headerShown: false,
-//   }),
-//     loginFlow: createStackNavigator({
-//         Splash:SplashScreen,
-//         SignUp:NewSignUpScreen,
-//         SignIn:NewSignInScreen,
-//     },navigationOptions = {
-//         headerShown: false,
-//       }),
-//       mainFlow: createBottomTabNavigator({
-
-//         TrackList:{
-//           screen: NewHomeScreen,
-//           navigationOptions:{
-//             headerShown:false,
-//           tabBarLabel:"Categories",
-//           tabBarOptions: {
-//             showLabel: false,
-//             style: {
-//              // borderTopLeftRadius:12,
-//          //     marginHorizontal:5,
-//               borderTopWidth:0,
-//               elevation:-5,
-//               borderWidth:0,
-//               height:60,
-//               paddingBottom:2,
-//               color:'white',
-//               backgroundColor: '#030303',
-//           },
-//           },
-//           tabBarIcon:()=>      <Image source={require('./assets/homeicon.png')} resizeMode='center'/>
-
-//         }},
-//         Explore:{
-//           screen: ExploreScreen,
-//           navigationOptions:{
-//           tabBarLabel:"Explore",
-
-//           tabBarOptions: {
-//             showLabel: false,
-//             style: {
-//               borderTopWidth:0,
-//               elevation:-5,
-//               borderWidth:0,
-//               height:70,
-//               paddingBottom:2,
-//               color:'white',
-//               backgroundColor: 'black',
-//           },
-//           },
-//           tabBarIcon: () => (
-//             <Image source={require('./assets/exploreicon.png')} resizeMode='center'/>
-//             ),
-//         }},
-//         MainCreate:{
-//           screen: MainCreateScreen,
-//           navigationOptions:{
-//           tabBarLabel:"Answer",
-
-//           tabBarOptions: {
-//             showLabel: false,
-//             style: {
-//               borderTopWidth:0,
-//               elevation:-5,
-//               borderWidth:0,
-//               height:70,
-//               paddingBottom:2,
-//               color:'white',
-//               backgroundColor: 'black',
-//           },
-//           },
-//           tabBarIcon:()=>
-//          (
-//           <Image source={require('./assets/createicon.png')} resizeMode='center'/>
-
-//          )
-//         }},
-//         Vent:{
-//           screen: VentScreen,
-//           navigationOptions:{
-//           tabBarLabel:"Vent",
-
-//           tabBarOptions: {
-//             showLabel: false,
-//             style: {
-//               borderTopWidth:0,
-//               elevation:-5,
-//               borderWidth:0,
-//               height:70,
-//               paddingBottom:2,
-//               color:'white',
-//               backgroundColor: 'black',
-//           },
-//           },
-//           tabBarIcon: () => (
-
-//     <Image source={require('./assets/mindicon.png')} resizeMode='center'/>
-//     ),
-//         }},
-//         Account:{
-//           screen: AccountScreen,
-//           navigationOptions:{
-//           tabBarLabel:"Account",
-//           tabBarOptions: {
-//             showLabel: false,
-//             style: {
-//               borderTopWidth:0,
-//               elevation:-5,
-//               borderWidth:0,
-//               height:70,
-//               paddingBottom:2,
-//               color:'white',
-//               backgroundColor: '#030303',
-//           },
-//           },
-//           tabBarIcon:()=>
-//           (
-//             <Image source={require('./assets/accounticon.png')} resizeMode='center'/>
-
-//           )
-//         }},
-//        }),
-//       mainFlow2: createStackNavigator({
-//         HomeScreen:{
-//           screen: NewHomeScreen,
-//           navigationOptions:{
-//             headerShown:false,
-
-//           tabBarLabel:"Home",
-//           tabBarOptions: {
-//             showLabel: false,
-//             style: {
-//              // borderTopLeftRadius:12,
-//          //     marginHorizontal:5,
-//               borderTopWidth:0,
-//               elevation:-5,
-//               borderWidth:0,
-//               height:60,
-//               paddingBottom:2,
-//               color:'white',
-//               backgroundColor: '#030303',
-//           },
-//           },
-//           tabBarIcon:()=>      <Image source={require('./assets/homeicon.png')} resizeMode='center'/>
-
-//         }},
-//         Category:{
-//          screen: CategoryScreen,
-//          navigationOptions:{
-//            headerTransparent:"true",
-//            headerTintColor:'white',
-//            color:'white',
-//           //headerStyle:{backgroundColor:"grey"},
-//           HeaderTitle:"Home"
-//          }
-//         },
-//         RenderResponses:{
-//           screen:RenderResponses,
-//           navigationOptions:{
-//            // headerTransparent:"false",
-//             headerTintColor:'white',
-//             color:'white',
-//            headerStyle:{backgroundColor:"#121212",color:'white'},
-//            HeaderTitle:"Home"
-//           }
-//         },
-//         CategoryDrill:{
-//           screen: CategoryDrillScreen,
-//           navigationOptions:{
-//             headerTransparent:"true",
-//             headerTintColor:'white',
-//             color:'white',
-//            //headerStyle:{backgroundColor:"grey"},
-//            HeaderTitle:"Home"
-//           }
-//          }
-//        },navigationOptions = {
-//         headerShown: false,
-//       }),
-// })
-
-// const App  =  createAppContainer(switchNavigator)
-
-// export default() => {
-//   return(
-//     <AuthProvider>
-//       <NavigationContainer>
-//       <App ref = {(navigator) => {setNavigator(navigator)}}/>
-//       </NavigationContainer>
-//     </AuthProvider>
-//   )
-// }
 function HomeTabs() {
   return (
     <Tab.Navigator
@@ -356,6 +113,14 @@ function SignFlow() {
 
 
 export default () => {
+  useEffect(() => {
+    const checkToken = async () => {
+      messaging().onTokenRefresh(token => {
+        updatetoken(token)
+     })
+     }
+    checkToken();
+  }, []);
 
   return(
     <AuthProvider>

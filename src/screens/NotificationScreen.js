@@ -2,8 +2,25 @@ import { StyleSheet, Text, View,Image, TextInput, FlatList, ScrollView,Pressable
 import React,{useState,useEffect} from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
+import messaging from '@react-native-firebase/messaging';
+
 const NotificationScreen = ({route,navigation}) => {
   const windowHeight = Dimensions.get('window').height;
+
+  useEffect(() => {
+    const checkMessage = async () => {
+      messaging().onMessage(async remoteMessage => {
+        console.log('[FCMService] a new FCM message arrived!', remoteMessage);
+        if (remoteMessage) {
+         let notification = null;
+        notification = remoteMessage.notification;
+        console.log(notification)
+         //onNotification(notification);
+        }
+       })
+     }
+    checkMessage();
+  });
 
 
 
@@ -23,7 +40,7 @@ const NotificationScreen = ({route,navigation}) => {
     <View style={styles.header}>
     <Text style={styles.headerText}>Notifications! 🔔</Text>
     </View>
-    
+
     </LinearGradient>
     </ScrollView>
     </View>

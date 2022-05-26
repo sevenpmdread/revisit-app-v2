@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import createDataContext from './createDataContext'
 import tracker from '../api/tracker'
+import messaging from '@react-native-firebase/messaging';
 ///import { navigate } from '../navigationRef';
 import * as navigation from '../navigationRef';
 
@@ -110,7 +111,8 @@ const signUp = dispatch => async ({username,email,password}) => {
 
 
       console.log(username,email,password)
-      const response = await tracker.post('/api/v1/auth/signup',{username,email,password}).catch(function (error) {
+      const fcmToken = await messaging().getToken();
+      const response = await tracker.post('/api/v1/auth/signup',{username,email,password,devicetoken:fcmToken}).catch(function (error) {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx

@@ -12,7 +12,7 @@ import { Entypo } from '@expo/vector-icons';
 import { getCount,checkpinstatus,sharepost,unpinPost,pinpost } from '../context/restapi';
 import { ColorPicker } from "react-native-btr";
 import RenderItem from './RenderTrendingAnswers';
-const TrendingAnswers = ({onpress}) => {
+const TrendingAnswers = ({onpress,refresh}) => {
   const [sharecount,setsharecount] = useState()
   const [pincount,setpinscount] = useState()
   const [pinned,setpin] = useState(false)
@@ -39,7 +39,7 @@ const TrendingAnswers = ({onpress}) => {
     setloading(true)
     fetchHome()
 
-   },[])
+   },[refresh])
 
   return (
     <View>

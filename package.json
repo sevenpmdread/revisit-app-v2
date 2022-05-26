@@ -15,6 +15,7 @@
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/datetimepicker": "3.5.2",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-firebase/app": "^14.9.4",
     "@react-native-firebase/messaging": "^14.9.4",
     "@react-native-picker/picker": "^2.4.0",
     "@react-navigation/bottom-tabs": "^6.3.1",
@@ -87,8 +88,7 @@
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
     "react-navigation-tabs": "^2.11.1",
-    "react-time-ago": "^7.1.9",
-    "realm": "^10.17.0"
+    "react-time-ago": "^7.1.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
