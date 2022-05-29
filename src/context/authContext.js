@@ -4,6 +4,7 @@ import tracker from '../api/tracker'
 import messaging from '@react-native-firebase/messaging';
 ///import { navigate } from '../navigationRef';
 import * as navigation from '../navigationRef';
+import Storage from 'react-native-storage';
 
 const Reducer = (state,action) => {
   switch(action.type){
@@ -108,6 +109,28 @@ const fetchHomedata = dispatch => async () => {
 const signUp = dispatch => async ({username,email,password}) => {
 
     try {
+      const storage = new Storage({
+        // maximum capacity, default 1000
+        size: 1000,
+
+        // Use AsyncStorage for RN apps, or window.localStorage for web apps.
+        // If storageBackend is not set, data will be lost after reload.
+        storageBackend: AsyncStorage, // for web: window.localStorage
+
+        // expire time, default: 1 day (1000 * 3600 * 24 milliseconds).
+        // can be null, which means never expire.
+        defaultExpires: 1000 * 3600 * 24,
+
+        // cache data in the memory. default is true.
+        enableCache: true,
+
+        // if data was not found in storage or expired data was found,
+        // the corresponding sync method will be invoked returning
+        // the latest data.
+        sync: {
+          // we'll talk about the details later.
+        }
+      });
 
 
       console.log(username,email,password)
@@ -133,6 +156,16 @@ const signUp = dispatch => async ({username,email,password}) => {
      //console.log(response)
       await AsyncStorage.setItem('token',response.data.token)
       await AsyncStorage.setItem('username',username)
+      await storage.save({
+        key: 'notification', // Note: Do not use underscore("_") in key!
+        data: {
+          notification:[]
+        },
+
+        // if expires not specified, the defaultExpires will be applied instead.
+        // if set to null, then it will never expire.
+        expires: 1000 * 3600
+      });
 
      // //console.log(response)
       dispatch({type:'signin',payload:{token:response.data.token,username:username}})

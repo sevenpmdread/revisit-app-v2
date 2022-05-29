@@ -1,26 +1,39 @@
-import { StyleSheet, Text, View,Image, TextInput, FlatList, ScrollView,Pressable,Modal,ToastAndroid,Dimensions  } from 'react-native'
-import React,{useState,useEffect} from 'react'
+import { StyleSheet, Text, View,Image, TextInput, FlatList, ScrollView,Pressable,Modal,ToastAndroid,Dimensions,RefreshControl  } from 'react-native'
+import React,{useState,useEffect,useCallback} from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
 import messaging from '@react-native-firebase/messaging';
+import PushNotification from 'react-native-push-notification';
+import { getnotificationsall } from '../context/restapi';
+import LoadingScreennew from './Loadingnew';
+import { Entypo } from '@expo/vector-icons';
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 const NotificationScreen = ({route,navigation}) => {
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(500).then(() =>
+    {
+      setRefreshing(false)
+    }
+    );
+  }, []);
   const windowHeight = Dimensions.get('window').height;
-
+  const [notifs,setnotifs] = useState({notification:[]})
   useEffect(() => {
-    const checkMessage = async () => {
-      messaging().onMessage(async remoteMessage => {
-        console.log('[FCMService] a new FCM message arrived!', remoteMessage);
-        if (remoteMessage) {
-         let notification = null;
-        notification = remoteMessage.notification;
-        console.log(notification)
-         //onNotification(notification);
-        }
-       })
-     }
-    checkMessage();
-  });
+    let fetchData = async()=> {
+      let notifications = await getnotificationsall()
+      setnotifs(notifications)
+    //  console.log("notificationss",notifications)
+    //  setventanswers(ventquestions)
+    }
+    fetchData()
+   // console.log("notificationss",notifs.notification)
+
+  },[notifs]);
 
 
 
@@ -34,13 +47,75 @@ const NotificationScreen = ({route,navigation}) => {
 
   return (
     <View style={{backgroundColor:'transparent',flex:1,marginBottom:0}}>
-    <ScrollView>
+    <ScrollView
+     refreshControl={
+      <RefreshControl
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
+    }>
 
     <LinearGradient colors={['black', '#0c0c0c',]} style={{flex:1,minHeight:1000,marginBottom:48,paddingHorizontal:0}}>
     <View style={styles.header}>
     <Text style={styles.headerText}>Notifications! 🔔</Text>
     </View>
+   {
+   notifs.notification.length === 0 ?
+   <LoadingScreennew/>
+   :
+   <FlatList
+contentContainerStyle={{marginLeft:8,display:'flex'}}
+inverted={true}
+ style={styles.feed}
+data = {notifs.notification}
+ snapToAlignment ="start"
+ renderItem={(item)=>
+{
+  console.log("item",item)
+  return item.item.type == "share" ?
+  <View style={{backgroundColor:'#222222',marginVertical:6,padding:16,marginHorizontal:6,borderRadius:12}}>
+  <View style={{flexDirection:'row',paddingBottom:8}}>
+  <Entypo name="share" size={12} color="white" style={{paddingRight:6,paddingTop:4}}/>
+  <Text style={{color:'white',fontSize:14,opacity:0.8}}>Share!</Text>
+  </View>
+  <Text style={{color:'white',fontSize:18}}> Your response "{item.item.answer.answer_text}"  was shared!</Text>
+  </View> :
+  item.item.type === "upvote"
+  ?
+  <View style={{backgroundColor:'#222222',marginVertical:6,padding:16,marginHorizontal:6,borderRadius:12}}>
+  <View style={{flexDirection:'row',paddingBottom:8}}>
+  <Entypo name="arrow-with-circle-up" size={12} color="white" style={{paddingRight:6,paddingTop:4}}/>
+  <Text style={{color:'white',fontSize:14,opacity:0.8}}>Upvote!</Text>
+  </View>
+  <Text style={{color:'white',fontSize:18}}> Your question  "{item.item.question.question_text}""  was upvoted!</Text>
+  </View>
+  :item.item.type === "pin"
+  ?
+  <View style={{backgroundColor:'#222222',marginVertical:6,padding:16,marginHorizontal:6,borderRadius:12}}>
+  <View style={{flexDirection:'row',paddingBottom:8}}>
+  <Entypo name="pin" size={12} color="white" style={{paddingRight:6,paddingTop:4}}/>
+  <Text style={{color:'white',fontSize:14,opacity:0.8}}>Pinned!</Text>
+  </View>
+  <Text style={{color:'white',fontSize:18}}> Your answer  "{item.item.answer.answer_text}""  was pinned!</Text>
+  </View>
+ :item.item.type === "response"
+ ?
+ <View style={{backgroundColor:'#222222',marginVertical:6,padding:16,marginHorizontal:6,borderRadius:12}}>
+ <View style={{flexDirection:'row',paddingBottom:8}}>
+ <Entypo name="pin" size={12} color="white" style={{paddingRight:6,paddingTop:4}}/>
+ <Text style={{color:'white',fontSize:14,opacity:0.8}}>Pinned!</Text>
+ </View>
+ <Text style={{color:'white',fontSize:18}}> Your question  "{item.item.question.question_text}""  was has a new response - {item.item.answer_text} by {item.item.responseby}!</Text>
+ </View>
+ :<></>
 
+}
+ }
+ keyExtractor={item => item.id}
+ showsVerticalScrollIndicator={false}
+ extraData={notifs}
+
+ />}
     </LinearGradient>
     </ScrollView>
     </View>

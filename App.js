@@ -3,7 +3,7 @@ import {
   BaseButton,
   GestureHandlerRootView
 } from 'react-native-gesture-handler';
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 //import messaging from '@react-native-firebase/messaging';
 
 //import {createStackNavigator} from  '@react-navigation/stack'
@@ -46,13 +46,41 @@ import OnboardingTut from './src/comps/OnboardingTut'
 import NotificationScreen from './src/screens/NotificationScreen'
 import messaging from '@react-native-firebase/messaging';
 import updatetoken from './src/context/restapi'
+import PushNotification from 'react-native-push-notification';
+import {addNotifStore} from './src/context/restapi'
 LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
 
 LogBox.ignoreAllLogs()
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+PushNotification.configure({
+  onNotification: function (notification) {
+    console.log("I AM HERE:", notification);
+    var storenotifs = async() => {
+      console.log('DATA RECIEVED ON SHARE POST NOTIF BACKGROUND',notification)
 
+      var obj = JSON.parse(notification.data.keys)
+
+       await addNotifStore(obj,notification.messageId)
+
+    }
+    storenotifs()
+
+ //   setArray([...array,notification])
+
+  },
+  onAction: function (notification) {
+    console.log("ACTION:", notification.action);
+    console.log("NOTIFICATION:", notification);
+    console.log("texto", notification.reply_text)// this will contain the inline reply text.
+
+
+    // process the action
+  },
+
+  requestPermissions: Platform.OS === 'ios'
+})
 function HomeTabs() {
   return (
     <Tab.Navigator

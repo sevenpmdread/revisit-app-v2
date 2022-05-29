@@ -109,6 +109,33 @@ const getAllQuestions = async(skip) => {
   }
 }
 
+
+const addNotifStore = async(notification,id) =>{
+  try{
+    let response = []
+const ret = await storage.load({
+      key: 'notification',
+    })
+    console.log("notification ret",notification,ret)
+
+     console.log("ret",ret)
+     ret.notification.push(notification)
+    await storage.save({
+      key: 'notification', // Note: Do not use underscore("_") in key!
+      data: ret,
+      expires:null
+    });
+
+
+
+  }
+  catch(error)
+  {
+    console.log(error)
+    return false
+  }
+}
+
 const addventstore = async({question_text,answer_text,publised,id}) =>{
   try{
     let response = []
@@ -141,7 +168,6 @@ const ret = await storage.load({
   }
   catch(error)
   {
-    ("error",error)
     return false
   }
 }
@@ -165,6 +191,26 @@ const getvent = async() => {
      console.log("error",error)
      return false
    }
+}
+
+const getnotificationsall = async() => {
+
+  try{
+    let response = []
+   // await AsyncStorage.removeItem('Reminders');
+
+   return  await storage.load({
+    key: 'notification',
+  })
+
+
+
+  }
+  catch(error)
+  {
+    console.log("error",error)
+    return false
+  }
 }
 
 const getventall = async() => {
@@ -192,7 +238,7 @@ const getventall = async() => {
   }
   catch(error)
   {
-    ("error",error)
+    console.log("error",error)
     return false
   }
 }
@@ -228,45 +274,6 @@ const storeventnew = async(ventobj) => {
       // if set to null, then it will never expire.
       expires:null
     });
-
-
-
-    //await AsyncStorage.removeItem('Ventnotes')
-  //   console.log("ventobj",ventobj)
-  //  // await AsyncStorage.removeItem('Reminders');
-  //   if(ventobj)
-  //   {
-
-  //   let answerobj = {}
-  //   answerobj.answer_text = ventobj.answer_text
-  //   answerobj.timestamp = new Date()
-  //   answerobj.id = Math.floor(Math.random()*100)
-  //   ventobj.answer = []
-  //   ventobj.answer.push(answerobj)
-
-  //  //
-  //   let storedVent = await AsyncStorage.getItem('Ventnotes');
-  //   if (storedVent !== null) {
-  //     storedVent = JSON.parse(storedVent)
-  //     storedVent.filter(obj => {
-  //      obj.question_text !=ventobj.question_text
-  //       //hrow console.error("POST id already exists");
-  //     })
-  //     console.log("REACHED THIS PART")
-  //     storedVent.push(ventobj)
-
-  //   }
-  //   else
-  //   {
-  //     storedVent = []
-  //     storedVent.push(ventobj)
-  //   }
-  //   console.log("storedVent",storedVent.length,storedVent)
-  // //  (reminderArray, typeof reminderArray,storedReminders)
-  //   await AsyncStorage.setItem('Ventnotes', JSON.stringify(storedVent))
-  //   var stored = await AsyncStorage.getItem('Ventnotes')
-  //   console.log("AWAIT CONSOOLE SET REMINDER",stored)
-  // }
   }
   catch(error)
   {
@@ -736,4 +743,4 @@ const createContrast = async(contrastId,answerId) => {
 
   }
 }
-export {updatetoken,getrending,getQod,addventstore,removeventquestion,getvent,getventall,storeventnew,ventcreate,upvotequestion,createVentQuestion,ventexplore,postAnswer,getRandomQuestion,getAllQuestions,getAllreminders,getReminders,setReminders,fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}
+export {getnotificationsall,addNotifStore,updatetoken,getrending,getQod,addventstore,removeventquestion,getvent,getventall,storeventnew,ventcreate,upvotequestion,createVentQuestion,ventexplore,postAnswer,getRandomQuestion,getAllQuestions,getAllreminders,getReminders,setReminders,fetchHomedata,explore,answerforid,getResponsesbythisuser,getAnswersforid,getCount,pinpost,checkpinstatus,unpinPost,sharepost,getPinsbythisuser,createContrast}

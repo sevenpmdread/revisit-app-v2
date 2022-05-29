@@ -13,24 +13,30 @@ import 'expo-dev-client';
 
 import { registerRootComponent } from 'expo';
 import PushNotification from "react-native-push-notification";
-PushNotification.configure({
-  onNotification: function (notification) {
-    console.log("NOTIFICATION:", notification);
-  },
-  onAction: function (notification) {
-    console.log("ACTION:", notification.action);
-    console.log("NOTIFICATION:", notification);
-    console.log("texto", notification.reply_text)// this will contain the inline reply text.
 
 
-    // process the action
-  },
-
-  requestPermissions: Platform.OS === 'ios'
-})
 
 import App from './App';
+import { addNotifStore } from './src/context/restapi';
 
+import messaging from '@react-native-firebase/messaging';
+messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+ // console.log('Message handled in the background!', remoteMessage);
+ var obj = JSON.parse(remoteMessage.data.keys)
+
+ //console.log('DATA RECIEVED ON SHARE POST NOTIF BACKGROUND',obj)
+  await addNotifStore(obj,remoteMessage.messageId)
+
+});
+
+function HeadlessCheck({ isHeadless }) {
+  if (isHeadless) {
+    // App has been launched in the background by iOS, ignore
+    return null;
+  }
+
+  return <App />;
+}
 
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
