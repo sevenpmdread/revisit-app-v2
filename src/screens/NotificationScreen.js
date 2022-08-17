@@ -2,7 +2,6 @@ import { StyleSheet, Text, View,Image, TextInput, FlatList, ScrollView,Pressable
 import React,{useState,useEffect,useCallback} from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import { useFonts, Inter_500Medium,Inter_400Regular,Inter_600SemiBold} from '@expo-google-fonts/inter';
-import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import { getnotificationsall } from '../context/restapi';
 import LoadingScreennew from './Loadingnew';

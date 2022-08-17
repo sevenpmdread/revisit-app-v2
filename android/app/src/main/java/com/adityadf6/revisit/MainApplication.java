@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage;
 import com.henninghall.date_picker.DatePickerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.BV.LinearGradient.LinearGradientPackage;

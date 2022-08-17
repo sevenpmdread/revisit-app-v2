@@ -4,7 +4,6 @@ import createDataContext from './createDataContext'
 import tracker from '../api/tracker'
 import { navigate } from '../navigationRef';
 import uuid from 'react-native-uuid';
-import messaging from '@react-native-firebase/messaging';
 
 
 const storage = new Storage({
