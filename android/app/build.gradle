@@ -260,7 +260,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    compile project(':react-native-audio-recorder-player')
 }
 
 
